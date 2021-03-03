@@ -1,0 +1,33 @@
+html,
+body{
+    font-family: "Times New Roman", Times, serif;
+}
+
+.mat-card-content{
+    margin-bottom: 0px;
+}
+
+.mat-card{
+    margin-top: 2%;
+    margin-right: 200px;
+    width: 100%;
+    position: relative;
+    height: 400px;
+}
+
+.flex-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    position: relative;
+    flex-wrap: wrap;
+}
+
+.mat-card-footer{
+    position: absolute;
+    bottom: 10%;
+}
+
+.mat-stroked-button{
+    border: none;
+}

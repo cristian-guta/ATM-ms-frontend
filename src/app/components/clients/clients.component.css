@@ -1,0 +1,45 @@
+.mat-table{
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    min-width: 500px;
+  }
+  
+  ::ng-deep th.mat-header-cell{
+    width: 140px;
+    min-width: 140px;
+    padding-left: 10px;
+    
+  }
+
+  th.mat-header-cell:first-of-type{
+      padding-left: 0px;
+      padding-bottom: 20px;
+      padding-top: 20px;
+      padding-right: 20px;
+  }
+
+  .td{
+      margin: 2%;
+      padding-left: 10px;
+  }
+
+  .th{
+    margin: 2%;
+    padding-left: 10px;
+  }
+
+  .td.mat-cell{
+      border-bottom-style: none;
+  }
+
+  .td.mat-cell.last-of-type{
+      padding-right: 0px;
+  }
+  
+  .example-button-row button {
+    display: table-cell;
+    margin-right: 0px;
+    border: none;
+    width: 100%;
+  }

@@ -1,0 +1,97 @@
+<div fxLayout="row" fxLayoutAlign="center center" class = "login-wrapper">
+  
+    <div mat-card class="box">
+      <mat-card-header>
+        <mat-card-title>Create new account</mat-card-title>
+      </mat-card-header>
+  
+      <div *ngIf="!validRegister" class="alert alert-danger">Something went wrong</div>
+      
+      <mat-card-content>
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
+
+            <mat-form-field>
+                <input formControlName="firstName" type="text" [class.is-invalid]="isInvalid('firstName')"
+                [class.is-valid]="isValid('firstName')" class="form-control" matInput placeholder="First name">
+                <small *ngIf="isInvalid('firstName')" class="form-text text-danger">First name is required.</small>
+            </mat-form-field>
+    
+            <mat-form-field>
+                <input formControlName="lastName" type="text" [class.is-invalid]="isInvalid('lastName')"
+                [class.is-valid]="isValid('lastName')" class="form-control" matInput placeholder="Last name">
+                <small *ngIf="isInvalid('lastName')" class="form-text text-danger">Last name is required.</small>
+            </mat-form-field>
+
+          <mat-form-field>
+            <input formControlName="username" type="text" [class.is-invalid]="isInvalid('username')"
+              [class.is-valid]="isValid('username')" class="form-control" matInput placeholder="Username">
+            <small *ngIf="isInvalid('username')" class="form-text text-danger">Username is
+                  required.</small>
+            <small *ngIf="username.errors?.notUnique" class="form-text text-danger">Username
+                is not available.</small>
+          </mat-form-field>
+  
+          <mat-form-field>
+            <input formControlName="password" type="password" [class.is-invalid]="isInvalid('password')"
+              [class.is-valid]="isValid('password')" class="form-control" matInput placeholder="Password">
+            <small *ngIf="isInvalid('password')" class="form-text text-danger">Password is
+                  required.</small>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input formControlName="confirmPassword" type="password"
+                            [class.is-invalid]="isInvalid('confirmPassword') || registerForm.errors?.missMatch"
+                            [class.is-valid]="isValid('confirmPassword') && !registerForm.errors?.missMatch"
+                            class="form-control" matInput placeholder="Confirm password">
+            <small *ngIf="isInvalid('confirmPassword')" class="form-text text-danger">Confirm password is
+                    required.</small>
+            <small *ngIf="registerForm.errors?.missMatch" class="form-text text-danger">Password don't
+                    match.</small>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input formControlName="cnp" type="text" [class.is-invalid]="isInvalid('cnp')"
+              [class.is-valid]="isValid('cnp')" class="form-control" matInput placeholder="CNP">
+            <small *ngIf="isInvalid('cnp')" class="form-text text-danger">CNP is
+                  required.</small>
+            <small *ngIf="cnp.errors?.notUnique" class="form-text text-danger">CNP
+                is not available.</small>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input formControlName="email" type="text" [class.is-invalid]="isInvalid('email')"
+              [class.is-valid]="isValid('email')" class="form-control" matInput placeholder="Email">
+            <small *ngIf="isInvalid('email')" class="form-text text-danger">Email is
+                  required.</small>
+            <small *ngIf="email.errors?.email" class="form-text text-danger">Email
+                is not valid.</small>
+          </mat-form-field>
+  
+          <mat-card-actions class="example-button-row">
+            <button type="submit" value="Register" mat-stroked-button>Register</button>
+            <button mat-stroked-button routerLink="/login">Login</button>
+          </mat-card-actions>
+        </form>
+      </mat-card-content>
+    </div> 
+
+    <div class="box">
+        <h2>What can you do with this app?</h2>
+        <mat-divider></mat-divider>
+        
+        <p>Create a bank account</p>
+        <p>Depose, withdraw and transfer money</p>
+        <p>Delete account</p>
+        <p>View previous operations</p>
+        <p>Each client receives an email after executing any of the above operations</p>
+        <p>Activate subscriptions (similar to phone monthly plan)</p>
+    </div>
+
+    <div class="box">
+        <h2>TODO:</h2>
+        <mat-divider></mat-divider>
+        <mat-list>
+            <mat-list-item role="listitem">Subscription expires after 28 days</mat-list-item>
+        </mat-list>
+    </div>
+</div>

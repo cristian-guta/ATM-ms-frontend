@@ -1,0 +1,42 @@
+<div class="mat-elevation-z8">
+    <mat-table #table [dataSource] = "benefitsAudit" matSort>
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <th mat-cell *matCellDef="let benefit; ">{{ benefit.id }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="rev">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Rev</th>
+            <th mat-cell *matCellDef="let benefit; ">{{ benefit.rev }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="revTypeString">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Revision type</th>
+            <th mat-cell *matCellDef="let benefit; ">{{ benefit.revTypeString }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="user">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>User</th>
+            <th mat-cell *matCellDef="let benefit; ">{{ benefit.user }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+            <th mat-cell *matCellDef="let benefit">{{ benefit.description }}</th>
+        </ng-container> 
+
+        <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+
+    </mat-table>
+    <mat-paginator 
+                    [length]="length"
+                    [pageSize]="pageSize"
+                    [pageIndex]="pageIndex"
+                    (page)="handleRequest($event)"
+                    [pageSizeOptions]="[2, 5, 10, 20]"  showFirstLastButtons="true"></mat-paginator>
+</div>
+
+<div *ngIf="benefitsAudit?.data?.length === 0">
+    <p>There are no benefits audit informations</p>
+</div>

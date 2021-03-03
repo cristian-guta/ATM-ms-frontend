@@ -1,0 +1,35 @@
+<form [formGroup]="transferForm" (ngSubmit)="save()">
+
+    <div class="form-group">
+        <div class="input-group">
+            <input formControlName="receiverId" type="number" [class.is-invalid]="!isAccountValid('receiverId')"
+                [class.is-valid]="isValid('receiverId')" class="form-control" placeholder="To what account do you want to transfer?">
+        </div>
+        <small *ngIf="!isAccountValid('receiverId')" class="form-text text-danger">Account does not exit!</small>
+    </div>
+
+
+    <div class="form-group">
+        <div class="input-group">
+            <input formControlName="amount" type="number" [class.is-invalid]="isInvalid('amount')"
+                [class.is-valid]="isValid('amount')" class="form-control" placeholder="100">
+            <div class="input-group-append">
+                <span class="input-group-text">RON</span>
+            </div>
+        </div>
+        <small *ngIf="isInvalid('amount')" class="form-text text-danger">Amount is required.</small>
+        <small *ngIf="isGreater('amount')" class="form-text text-danger">You want to transfer more than you own.</small>
+    </div>
+
+    <div class="form-group">
+        <div class="input-group">
+            <input formControlName="message" type="text" [class.is-invalid]="isInvalid('message')"
+                [class.is-valid]="isValid('message')" class="form-control" placeholder="Additional message">
+        </div>
+    </div>
+
+    <div class="form-group mb-0">
+        <input  type="submit" [value]="amount ? 'Deposit': 'Please enter amount'"
+             class="btn btn-sm btn-success" > 
+    </div>
+</form>

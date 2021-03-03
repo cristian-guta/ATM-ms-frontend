@@ -1,0 +1,36 @@
+<div class="mat-elevation-z8" *ngIf="reviews?.data?.length!==0">
+            <mat-card *ngFor="let rev of reviews" class="flex-container" style="margin-right: 2%;" >
+                <mat-card-title>{{rev.title}}</mat-card-title>
+                <mat-card-content>
+                    {{rev.description}}
+                </mat-card-content>
+                <mat-card-content>
+                    <p>By {{rev.client?.firstName + ' ' + rev.client?.lastName}} </p>
+                </mat-card-content>
+            </mat-card>
+
+    <mat-paginator 
+                    [length]="length"
+                    [pageSize]="pageSize"
+                    [pageIndex]="pageIndex"
+                    (page)="handleRequest($event)"
+                    [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+<div *ngIf="reviews?.data?.length===0">
+    <mat-card>
+        There are no reviews!
+    </mat-card>
+</div>
+<form [formGroup]="reviewForm" (ngSubmit)="create()" *ngIf="isAdmin()==false">
+    <mat-form-field class="full-width">
+        <input matInput formControlName="title" placeholder="Title">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+        <textarea matInput formControlName="description" placeholder="Leave a review"></textarea>
+    </mat-form-field>
+
+    <mat-card-actions>
+        <button mat-stroked-button type="submit">Submit</button>
+    </mat-card-actions>
+</form>

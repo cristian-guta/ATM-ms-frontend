@@ -1,0 +1,48 @@
+<div class="mat-elevation-z8" *ngIf="operations?.data?.length!==0">
+    <mat-table #table [dataSource] = "operations" matSort matSortActive="date" matSortDirection="desc" >
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <th mat-cell *matCellDef="let operation; let i=index">{{ i+1 }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+            <th mat-cell *matCellDef="let operation">{{ operation.type }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+            <th mat-cell *matCellDef="let operation">{{ operation.amount }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+            <th mat-cell *matCellDef="let operation">{{ operation.date }}</th>
+        </ng-container>
+        
+        <ng-container  matColumnDef="client">
+            <th mat-header-cell *matHeaderCellDef>Owner's CNP</th>
+            <th mat-cell *matCellDef="let operation">{{ operation.client.cnp }}</th>
+        </ng-container>
+
+        <ng-container  matColumnDef="account">
+            <th mat-header-cell *matHeaderCellDef>Owner/Receiver account</th>
+            <th mat-cell *matCellDef="let operation">{{ operation.account.name }}</th>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+
+    </mat-table>
+    <mat-paginator 
+                    [length]="length"
+                    [pageSize]="pageSize"
+                    [pageIndex]="pageIndex"
+                    (page)="handleRequest($event)"
+                    [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+<div *ngIf="operations?.data?.length===0">
+    <mat-card>
+        You have no operations!
+    </mat-card>
+</div>

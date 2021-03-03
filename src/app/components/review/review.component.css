@@ -1,0 +1,11 @@
+full-width {
+    width: 100%;
+}
+
+.flex-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    flex-wrap: wrap;
+}

@@ -1,0 +1,11 @@
+table{
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    min-width: 500px;
+  }
+  
+  ::ng-deep th.mat-header-cell{
+    width: 140px;
+    min-width: 140px;
+  }

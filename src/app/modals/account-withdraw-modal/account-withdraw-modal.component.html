@@ -1,0 +1,17 @@
+<form [formGroup]="withdrawForm" (ngSubmit)="save()">
+    <div class="form-group">
+        <div class="input-group">
+            <input formControlName="amount" type="number" [class.is-invalid]="isInvalid('amount')"
+                [class.is-valid]="isValid('amount')" class="form-control" placeholder="100">
+            <div class="input-group-append">
+                <span class="input-group-text">RON</span>
+            </div>
+        </div>
+        <small *ngIf="isInvalid('amount')" class="form-text text-danger">Amount is required.</small>
+        <!-- <small *ngIf="isGreater('amount')" class="form-text text-danger">Amount is greater than how much you own.</small> -->
+    </div>
+    <div class="form-group mb-0">
+        <input  type="submit" [value]="amount ? 'Withdraw': 'Please enter amount'"
+             class="btn btn-sm btn-success"> 
+    </div>
+</form>

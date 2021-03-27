@@ -1,10 +1,10 @@
 import { ToastService } from './../../services/toast.service';
-import { RestService } from './../../services/rest.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Client } from 'src/app/models/client';
 import { ClientService } from 'src/app/services/client.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
     selector: 'app-account-information',
@@ -20,12 +20,21 @@ export class AccountInformationComponent implements OnInit {
 
     saving = false;
 
+    title = 'ImageUploaderFrontEnd';
+
+    public selectedFile: File;
+    public event1;
+    imgURL: any;
+    receivedImageData: any;
+    base64Data: any;
+    convertedImage: any;
+
     constructor(
         private _userService: ClientService,
-        private _rest: RestService,
         private _fb: FormBuilder,
         private _toast: ToastService,
-        private _modalRef: BsModalRef
+        private _modalRef: BsModalRef,
+        private httpClient: HttpClient
     ) { }
 
     ngOnInit() {
@@ -44,6 +53,7 @@ export class AccountInformationComponent implements OnInit {
     getUserInfo() {
         this._userService.getCurrentClient()
             .subscribe((rUser: Client) => {
+                console.log(rUser);
                 this.currentUser = rUser;
                 this.accountForm.patchValue({
                     firstName: this.currentUser.firstName,
@@ -72,6 +82,7 @@ export class AccountInformationComponent implements OnInit {
         this.email.disable();
         this.address.disable();
         this.cnp.disable();
+        this.username.disable();
     }
 
     // onChange(value) {
@@ -132,6 +143,7 @@ export class AccountInformationComponent implements OnInit {
             email: this.email.value,
             address: this.address.value
         };
+        console.log(userInfo.id + userInfo.firstName);
         this._userService.updateClient(userInfo)
             .subscribe(() => {
                 this.saving = false;
@@ -150,5 +162,38 @@ export class AccountInformationComponent implements OnInit {
     hideModal() {
         this._modalRef.hide();
     }
+  
+    public  onFileChanged(event) {
+      console.log(event);
+      this.selectedFile = event.target.files[0];
+      
+  
+      // Below part is used to display the selected image
+      let reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (event2) => {
+        this.imgURL = reader.result;
+    };
+  
+   }
+  
+   onUpload() {
+  
+    const uploadData = new FormData();
+    
+    console.log(this.selectedFile);
+    uploadData.append('myFile', this.selectedFile, this.selectedFile.name);
+    
+    this.httpClient.post('http://localhost:8765/check/upload', uploadData)
+    .subscribe(
+                 res => {console.log(res);
+                         this.receivedImageData = res;
+                         this.base64Data = this.receivedImageData.pic;
+                         this.convertedImage = 'data:image/jpeg;base64,' + this.base64Data; },
+                 err => console.log('Error Occured duringng saving: ' + err)
+              );
+  
+  
+   }
 
 }

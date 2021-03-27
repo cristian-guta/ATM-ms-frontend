@@ -14,8 +14,8 @@ export class AccountService{
 
     currAcct: Account;
 
-    getAccountByCNP(){
-        return this.rest.get(this.accountEnds.getAccountByCNP());
+    getAccountByCNP(id: number){
+        return this.rest.get(this.accountEnds.getAccountByCNP(id));
     }
 
     getAccount(id: number){

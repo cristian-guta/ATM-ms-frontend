@@ -2,14 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Validators, FormBuilder, AbstractControl, FormGroup } from '@angular/forms';
-import { OAuthEvent, OAuthService } from 'angular-oauth2-oidc';
-import { ClientService } from 'src/app/services/client.service';
 import { SocialUser, SocialAuthService, GoogleLoginProvider } from 'angularx-social-login';
 import { AuthEndpoints } from 'src/app/endpoints/auth-endpoints';
 import { Client } from 'src/app/models/client';
-import { RestService } from 'src/app/services/rest.service';
-import { AuthProvider } from 'src/app/models/authProvider';
-import { BsModalService } from 'ngx-bootstrap/modal';
 import { OauthService } from 'src/app/services/oauth.service';
 import { TokenService } from 'src/app/services/token.service';
 import { TokenDto } from 'src/app/models/token-dto';
@@ -34,9 +29,7 @@ export class LoginComponent implements OnInit {
     constructor(
         private _authService: AuthenticationService,
         private _fb: FormBuilder,
-        private clientService: ClientService,
         private authService: SocialAuthService,
-        private _rest: RestService,
         private _router: Router,
         private oauthService: OauthService,
         private tokenService: TokenService
@@ -101,7 +94,7 @@ export class LoginComponent implements OnInit {
               res => {
                 this.tokenService.setToken(res.value);
                 this.loggedIn = true;
-                this._router.navigate(['/updateUserData']);
+                this._router.navigate(['/subscriptions']);
               },
               err => {
                 console.log(err);

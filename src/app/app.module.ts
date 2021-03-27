@@ -56,7 +56,6 @@ export function tokenGetter() {
   imports: [
       BrowserModule,
       BrowserAnimationsModule,
-      
       AppRoutingModule,
       HttpClientModule,
       JwtModule.forRoot({

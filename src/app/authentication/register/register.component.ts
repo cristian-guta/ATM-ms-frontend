@@ -9,6 +9,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AuthEndpoints } from 'src/app/endpoints/auth-endpoints';
 import { Client } from 'src/app/models/client';
 import { AuthProvider } from 'src/app/models/authProvider';
+import { ToastService } from 'src/app/services/toast.service';
 
 export const uniqueUsername = (rest: RestService, time: number = 1000): AsyncValidatorFn => {
     return (control: AbstractControl): Observable<{ [key: string]: boolean } | null> => {
@@ -54,7 +55,8 @@ export class RegisterComponent implements OnInit {
         private _auth: AuthenticationService,
         private _router: Router,
         private _fb: FormBuilder,
-        private _rest: RestService
+        private _rest: RestService,
+        private _toast: ToastService
     ) { }
 
     ngOnInit() {
@@ -125,11 +127,12 @@ export class RegisterComponent implements OnInit {
             this._rest.post(this._authEnds.register, registerInfo)
                 .subscribe(
                     result => {
-
+                        this._toast.showSuccess("Account created successfully!");
                         this.loading = false;
                         this._router.navigate(['/login']);
                     },
                     error => {
+                        this._toast.showSuccess("Could not create account");
                         this.loading = false;
                         this.validRegister = false;
                     });

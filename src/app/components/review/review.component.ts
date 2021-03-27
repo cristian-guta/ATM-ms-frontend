@@ -39,8 +39,8 @@ export class ReviewComponent implements OnInit {
     private _reviewService: ReviewService,
     private _toast: ToastService,
     private _fb: FormBuilder,
-    private _rest: RestService,
-    private ref: ChangeDetectorRef,
+
+    
     private _clientService: ClientService
   ) { }
 

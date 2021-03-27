@@ -13,6 +13,7 @@ import { TransferMoneyModalComponent } from 'src/app/modals/transfer-money-modal
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import { ClientService } from 'src/app/services/client.service';
 
 @Component({
   selector: 'app-accounts',
@@ -28,6 +29,7 @@ export class AccountsComponent implements OnInit {
   displayColumnsAdmin: string[];
   
   clientAccount: Account;
+  currentClient: Client;
   loading = true;
   modalRef: BsModalRef;
   clients: Client[] = [];
@@ -40,7 +42,8 @@ export class AccountsComponent implements OnInit {
     private _auth: AuthenticationService,
     private _accountService: AccountService,
     private _modal: BsModalService,
-    private _toast: ToastService
+    private _toast: ToastService,
+    private _clientService: ClientService
   ) { }
 
   ngOnInit() {
@@ -51,17 +54,23 @@ export class AccountsComponent implements OnInit {
     else{
       this.displayColumnsAdmin = ['id', 'name', 'amount', 'details', 'operations'];
     }
+
+    this._clientService.getCurrentClient().subscribe((client: Client) => {
+      this.currentClient = client; 
+      if(!this.isAdmin()){
+        this._accountService.getAccountByCNP(this.currentClient.id)
+                  .subscribe((result: Account) => {
+                    
+                      this.clientAccount = result;
+                      this.loading = false;
+                  });
+      }
+      else{
+        this.getData(this.pageSize, this.pageIndex);
+      } 
+    });
     
-    if(!this.isAdmin()){
-      this._accountService.getAccountByCNP()
-                .subscribe((result: Account) => {
-                    this.clientAccount = result;
-                    this.loading = false;
-                });
-    }
-    else{
-      this.getData(this.pageSize, this.pageIndex);
-    }
+    
   }
 
   applyFilter(filterValue: string) {

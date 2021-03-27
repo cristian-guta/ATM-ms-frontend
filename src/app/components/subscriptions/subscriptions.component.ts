@@ -7,6 +7,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SubscriptionModalComponent } from 'src/app/modals/subscription-modal/subscription-modal.component';
 import { Client } from 'src/app/models/client';
 import { ToastService } from 'src/app/services/toast.service';
+import { ClientService } from 'src/app/services/client.service';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class SubscriptionsComponent implements OnInit {
     private subsService: SubscriptionService,
     private _modal: BsModalService,
     private _toast: ToastService,
+    private _clientService: ClientService
   ) {}
 
   ngOnInit(){
@@ -52,6 +54,10 @@ export class SubscriptionsComponent implements OnInit {
     else{
       this.getSubscriptions();
     }
+
+    this._clientService.getCurrentClient().subscribe((client2: Client) => {
+      this.client = client2;
+    });
   }
 
   getSubscriptions(){
@@ -84,8 +90,10 @@ export class SubscriptionsComponent implements OnInit {
   }
 
   activate(subscription: Subscription){
-        
+    
     this.subsService.activateSubscription(subscription).subscribe(() => {
+      this.client.subscriptionId = subscription.id;
+      this._clientService.updateClient(this.client).subscribe();
       this._toast.showSuccess('Successfully activated subscription ' + subscription.name + '!');
       this.hasSubscription = true;
       window.location.reload();
@@ -98,18 +106,20 @@ export class SubscriptionsComponent implements OnInit {
     
   }
 
-  deactivate(){ 
-    
-    this.subsService.cancelSubscription().subscribe(() => {
-      this._toast.showSuccess('Successfully deactivated subscription ' + this.subscription.name + '!');
-      this.hasSubscription = false;
-      this.deactivated = true;
-    },
-      () => {
-        this._toast.showSuccess('Failed to deactivate subscription ' + this.subscription.name + ', please contact support team.');
-        this.hasSubscription = true;
-      }
-    );
+  deactivate(){    
+    this.client.subscriptionId = 0;
+    this._clientService.updateClient(this.client).subscribe();
+    // this.subsService.cancelSubscription().subscribe(() => {
+
+    //   this._toast.showSuccess('Successfully deactivated subscription ' + this.subscription.name + '!');
+    //   this.hasSubscription = false;
+    //   this.deactivated = true;
+    // },
+    //   () => {
+    //     this._toast.showSuccess('Failed to deactivate subscription ' + this.subscription.name + ', please contact support team.');
+    //     this.hasSubscription = true;
+    //   }
+    // );
     window.location.reload();
   }
 

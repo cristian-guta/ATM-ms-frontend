@@ -2,6 +2,8 @@ import { RestService } from './rest.service';
 import { Injectable } from '@angular/core';
 import { ClientEndpoints } from '../endpoints/client-endpoints';
 import { Client } from '../models/client';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'

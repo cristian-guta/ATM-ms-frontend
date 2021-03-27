@@ -3,7 +3,7 @@ import { Account } from '../models/account';
 export class AccountEndpoints{
     api = 'account-service/';
     accountByCNP = 'accounts/client';
-    create = 'accounts/create';
+    create = 'account-service/accounts/create';
     delete = 'accounts/delete';
     // account = 'api/accounts';
     account = 'accounts';
@@ -41,7 +41,7 @@ export class AccountEndpoints{
         return this.api + this.transfer+ '/'+ senderId + '/' + receiverId + '/' + amount;
     }
 
-    getAccountByCNP(){
-        return this.api + this.accountByCNP;
+    getAccountByCNP(id: number){
+        return this.api + this.accountByCNP + '/' + id;
     }
 }

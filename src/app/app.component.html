@@ -47,8 +47,8 @@
               <a routerLinkActive="active" routerLink="/accounts" *ngIf="!isAdmin()" class="nav-item nav-link">My account</a>
               <a routerLinkActive="active" routerLink="/accounts" *ngIf="isAdmin()" class="nav-item nav-link">Accounts</a>
               <a routerLinkActive="active" routerLink="/reviews" class="nav-item nav-link">Reviews</a>
-              <a *ngIf="isAdmin()" routerLinkActive="active" routerLink="/clients" class="nav-item nav-link">Clients</a>
-              <a routerLinkActive="active" routerLink="/operations" class="nav-item nav-link">Operations</a>
+              <a routerLinkActive="active" routerLink="/clients" *ngIf="isAdmin()" class="nav-item nav-link">Clients</a>
+              <a routerLinkActive="active" routerLink="/operations" *ngIf="!isAdmin()" class="nav-item nav-link">Operations</a>
               <a routerLinkActive="active" routerLink="/benefitsAudit" *ngIf="isAdmin()" class="nav-item nav-link">Benefits audit</a>
               <a routerLinkActive="active" routerLink="/subscriptionsAudit" *ngIf="isAdmin()" class="nav-item nav-link">Subscriptions audit</a>
               <a routerLinkActive="active" routerLink="/clientRetention" *ngIf="isAdmin()" class="nav-item nav-link">Clients retention</a>

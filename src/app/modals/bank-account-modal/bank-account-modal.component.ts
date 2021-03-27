@@ -66,7 +66,6 @@ export class BankAccountModalComponent implements OnInit {
       amount: this.amount.value,
       details: this.details.value
     };
-    
     if(this.account){
       account.id = this.account.id;
       this.accountService.updateAccount(account)

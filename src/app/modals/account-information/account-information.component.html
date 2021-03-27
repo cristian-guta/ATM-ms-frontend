@@ -59,6 +59,13 @@
         <small *ngIf="isInvalid('address')" class="form-text text-danger">Address is
             required.</small>
     </div>
+
+    <div>
+        <input type="file" (change)="onFileChanged($event)">
+        <img [src]="imgURL" height="200" *ngIf="imgURL">
+    </div>
+    <input type="button" (click)="onUpload()" value="upload">
+    
     <div class="form-group">
         <input [disabled]="accountForm.invalid" type="submit" value="Save changes" class="btn btn-sm btn-success">
     </div>

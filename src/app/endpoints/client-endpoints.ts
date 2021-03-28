@@ -2,6 +2,7 @@ import { Client } from '../models/client';
 
 export class ClientEndpoints{
     api = 'client-service/clients/';
+    getAll = 'findAll';
     currentClient = 'current';
     updateClient = 'update';
     deactivateClient = 'delete';
@@ -13,6 +14,10 @@ export class ClientEndpoints{
 
     getAllClients(page, size){
         return this.api + page + '/' + size;
+    }
+
+    getUnpagedClients(){
+        return this.api + this.getAll;
     }
     
     getUpdateClient(client: Client){

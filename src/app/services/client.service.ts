@@ -23,11 +23,16 @@ export class ClientService {
         return this.rest.get(this.clientEnds.getAllClients(page, size));
     }
 
+    getAllUnpagedClients(){
+        return this.rest.get(this.clientEnds.getUnpagedClients());
+    }
+
     getCurrentClient(){
         return this.rest.get(this.clientEnds.getCurrentClient());
     }
 
     updateClient(client: Client){
+        console.log("update: " + client.subscriptionId)
         return this.rest.put(this.clientEnds.getUpdateClient(client), client);
     }
 

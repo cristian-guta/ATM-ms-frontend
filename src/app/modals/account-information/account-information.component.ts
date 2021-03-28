@@ -5,6 +5,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Client } from 'src/app/models/client';
 import { ClientService } from 'src/app/services/client.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
     selector: 'app-account-information',
@@ -22,19 +23,20 @@ export class AccountInformationComponent implements OnInit {
 
     title = 'ImageUploaderFrontEnd';
 
-    public selectedFile: File;
-    public event1;
-    imgURL: any;
-    receivedImageData: any;
+    selectedFile: File;
+    retrievedImage: any;
     base64Data: any;
-    convertedImage: any;
+    retrieveResonse: any;
+    message: string;
+    imageName: any;
 
     constructor(
         private _userService: ClientService,
         private _fb: FormBuilder,
         private _toast: ToastService,
         private _modalRef: BsModalRef,
-        private httpClient: HttpClient
+        private httpClient: HttpClient,
+        private _authService: AuthenticationService
     ) { }
 
     ngOnInit() {
@@ -157,43 +159,52 @@ export class AccountInformationComponent implements OnInit {
                     this.saving = false;
                     this._toast.showError('Failed to save changes!');
                 });
+                window.location.reload();
     }
 
     hideModal() {
         this._modalRef.hide();
     }
   
-    public  onFileChanged(event) {
-      console.log(event);
-      this.selectedFile = event.target.files[0];
+    public onFileChanged(event) {
+        //Select File
+        this.selectedFile = event.target.files[0];
+      }
+  
+      onUpload() {
+        console.log(this.selectedFile);
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${this._authService.getToken()}`
+        });
+        headers.append('Content-Type', 'multipart/form-data');
+        
+        //FormData API provides methods and properties to allow us easily prepare form data to be sent with POST HTTP requests.
+        const uploadImageData = new FormData();
+        uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
       
-  
-      // Below part is used to display the selected image
-      let reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (event2) => {
-        this.imgURL = reader.result;
-    };
-  
-   }
-  
-   onUpload() {
-  
-    const uploadData = new FormData();
-    
-    console.log(this.selectedFile);
-    uploadData.append('myFile', this.selectedFile, this.selectedFile.name);
-    
-    this.httpClient.post('http://localhost:8765/check/upload', uploadData)
-    .subscribe(
-                 res => {console.log(res);
-                         this.receivedImageData = res;
-                         this.base64Data = this.receivedImageData.pic;
-                         this.convertedImage = 'data:image/jpeg;base64,' + this.base64Data; },
-                 err => console.log('Error Occured duringng saving: ' + err)
-              );
-  
-  
-   }
+        //Make a call to the Spring Boot Application to save the image
+        this.httpClient.post('http://localhost:8765/image/upload', uploadImageData, { observe: 'response', headers: headers })
+          .subscribe((response) => {
+            if (response.status === 200) {
+              this.message = 'Image uploaded successfully';
+            } else {
+              this.message = 'Image not uploaded successfully';
+            }
+          }
+          );
+      }
+
+      //Gets called when the user clicks on retieve image button to get the image from back end
+    getImage() {
+        //Make a call to Sprinf Boot to get the Image Bytes.
+        this.httpClient.get('http://localhost:8765/image/get/' + this.imageName)
+          .subscribe(
+            res => {
+              this.retrieveResonse = res;
+              this.base64Data = this.retrieveResonse.picByte;
+              this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+            }
+          );
+      }
 
 }

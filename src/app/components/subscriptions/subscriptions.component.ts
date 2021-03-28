@@ -27,6 +27,7 @@ export class SubscriptionsComponent implements OnInit {
   hasSubscription: boolean = false;
   deactivated: boolean = false;
   deleteLoading = false;
+  listOfClients: Client[];
 
   constructor(
     private _auth: AuthenticationService,
@@ -38,26 +39,39 @@ export class SubscriptionsComponent implements OnInit {
 
   ngOnInit(){
     this.isActivated=false;
-    if(!this.isAdmin()){
-      this.subsService.getSubscription().subscribe((sub: Subscription) => {
-        if(sub.id>0){
-          
+    this._clientService.getCurrentClient().subscribe((result: Client) => {
+      this.client = result;
+      if(result.subscriptionId>0 && !this.isAdmin()){
+        this.subsService.getSubscription().subscribe((sub: Subscription) => {
           this.hasSubscription = true;
           this.subscription = sub;
-        }
-        else{
-          this.hasSubscription = false;
-          this.getSubscriptions();
-        }
-      });
-    }
-    else{
-      this.getSubscriptions();
-    }
-
-    this._clientService.getCurrentClient().subscribe((client2: Client) => {
-      this.client = client2;
+        });
+      }
+      else{
+        this.hasSubscription = false;
+        this.getSubscriptions();
+      }
     });
+    // if(!this.isAdmin()){
+    //   this.subsService.getSubscription().subscribe((sub: Subscription) => {
+    //     if(sub.id>0){
+          
+    //       this.hasSubscription = true;
+    //       this.subscription = sub;
+    //     }
+    //     else{
+    //       this.hasSubscription = false;
+    //       this.getSubscriptions();
+    //     }
+    //   });
+    // }
+    // else{
+    //   this.getSubscriptions();
+    // }
+
+    // this._clientService.getCurrentClient().subscribe((client2: Client) => {
+    //   this.client = client2;
+    // });
   }
 
   getSubscriptions(){
@@ -124,18 +138,20 @@ export class SubscriptionsComponent implements OnInit {
   }
 
   delete(subscription: Subscription) {
+    
     this.deleteLoading = true;
+
     this.subsService.deleteSubscription(subscription)
-        .subscribe(() => {
-            this.subscription.deleted=true;
-            this._toast.showSuccess('Subscription successfully deleted.');
-            this.deleteAction.emit(subscription);
+    .subscribe(() => {
+        this._toast.showSuccess('Subscription successfully deleted.');
+        this.deleteAction.emit(subscription);
+        this.deleteLoading = false;
+    },
+        () => {
+            this._toast.showError('Failed to delete subscription.');
             this.deleteLoading = false;
-        },
-            () => {
-                this._toast.showError('Failed to delete subscription.');
-                this.deleteLoading = false;
-            });
+        });
+    
     window.location.reload();
   }
 

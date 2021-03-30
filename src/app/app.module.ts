@@ -35,6 +35,7 @@ import { BenefitAuditComponent } from './components/benefit-audit/benefit-audit.
 import { SubscriptionAuditComponent } from './components/subscription-audit/subscription-audit.component';
 import { ReviewComponent } from './components/review/review.component';
 import { ClientRetentionComponent } from './components/client-retention/client-retention.component';
+import { WebcamModule } from 'ngx-webcam';
 
 
 
@@ -78,6 +79,7 @@ export function tokenGetter() {
       AuthenticationModule,
       OAuthModule.forRoot(),
       SocialLoginModule,
+      WebcamModule
   ],
   providers: [
     {

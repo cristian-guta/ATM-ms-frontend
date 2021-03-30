@@ -1,11 +1,13 @@
 import { ToastService } from './../../services/toast.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Client } from 'src/app/models/client';
 import { ClientService } from 'src/app/services/client.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Observable, Observer, Subject } from 'rxjs';
+import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 
 @Component({
     selector: 'app-account-information',
@@ -19,16 +21,13 @@ export class AccountInformationComponent implements OnInit {
     currentUser: Client;
     isModal = false;
 
+    // begining og web camera declarations
+
+    // end of declarations for web camera
+
     saving = false;
 
     title = 'ImageUploaderFrontEnd';
-
-    selectedFile: File;
-    retrievedImage: any;
-    base64Data: any;
-    retrieveResonse: any;
-    message: string;
-    imageName: any;
 
     constructor(
         private _userService: ClientService,
@@ -55,7 +54,6 @@ export class AccountInformationComponent implements OnInit {
     getUserInfo() {
         this._userService.getCurrentClient()
             .subscribe((rUser: Client) => {
-                console.log(rUser);
                 this.currentUser = rUser;
                 this.accountForm.patchValue({
                     firstName: this.currentUser.firstName,
@@ -143,9 +141,11 @@ export class AccountInformationComponent implements OnInit {
             username: this.username.value,
             cnp: this.cnp.value,
             email: this.email.value,
-            address: this.address.value
+            address: this.address.value,
+            status: this.currentUser.status,
+            authProvider: this.currentUser.authProvider,
+            subscriptionId: this.currentUser.subscriptionId
         };
-        console.log(userInfo.id + userInfo.firstName);
         this._userService.updateClient(userInfo)
             .subscribe(() => {
                 this.saving = false;
@@ -158,53 +158,16 @@ export class AccountInformationComponent implements OnInit {
                 () => {
                     this.saving = false;
                     this._toast.showError('Failed to save changes!');
-                });
-                window.location.reload();
+        });
+        window.location.reload();   
     }
 
     hideModal() {
         this._modalRef.hide();
     }
-  
-    public onFileChanged(event) {
-        //Select File
-        this.selectedFile = event.target.files[0];
-      }
-  
-      onUpload() {
-        console.log(this.selectedFile);
-        const headers = new HttpHeaders({
-            'Authorization': `Bearer ${this._authService.getToken()}`
-        });
-        headers.append('Content-Type', 'multipart/form-data');
-        
-        //FormData API provides methods and properties to allow us easily prepare form data to be sent with POST HTTP requests.
-        const uploadImageData = new FormData();
-        uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
-      
-        //Make a call to the Spring Boot Application to save the image
-        this.httpClient.post('http://localhost:8765/image/upload', uploadImageData, { observe: 'response', headers: headers })
-          .subscribe((response) => {
-            if (response.status === 200) {
-              this.message = 'Image uploaded successfully';
-            } else {
-              this.message = 'Image not uploaded successfully';
-            }
-          }
-          );
-      }
 
-      //Gets called when the user clicks on retieve image button to get the image from back end
-    getImage() {
-        //Make a call to Sprinf Boot to get the Image Bytes.
-        this.httpClient.get('http://localhost:8765/image/get/' + this.imageName)
-          .subscribe(
-            res => {
-              this.retrieveResonse = res;
-              this.base64Data = this.retrieveResonse.picByte;
-              this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-            }
-          );
-      }
+    // implementation for web camera
 
+    
+    // end of implementation for web camera
 }

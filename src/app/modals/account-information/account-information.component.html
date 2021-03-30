@@ -8,6 +8,8 @@
 </div>
 <form [formGroup]="accountForm" (ngSubmit)="save()" [ngClass]="{'pl-3 pr-3 pb-3': isModal}">
     <div class="form-group">
+        <br>
+        <span>First name</span>
         <div class="input-group">
             <input formControlName="firstName" type="text" [class.is-invalid]="isInvalid('firstName')"
                 [class.is-valid]="isValid('firstName')" class="form-control" placeholder="First name">
@@ -16,6 +18,7 @@
             required.</small>
     </div>
     <div class="form-group">
+        <span>Last name</span>
         <div class="input-group">
             <input formControlName="lastName" type="text" [class.is-invalid]="isInvalid('lastName')"
                 [class.is-valid]="isValid('lastName')" class="form-control" placeholder="Last name">
@@ -24,6 +27,7 @@
             required.</small>
     </div>
     <div class="form-group">
+        <span>Username</span>
         <div class="input-group">
             <input formControlName="username" type="text" [class.is-invalid]="isInvalid('username')"
                 [class.is-valid]="isValid('username')" class="form-control" placeholder="Username">
@@ -33,6 +37,7 @@
     </div>
 
     <div class="form-group">
+        <span>CNP</span>
         <div class="input-group">
             <input formControlName="cnp" type="text" [class.is-invalid]="isInvalid('cnp')"
                 [class.is-valid]="isValid('cnp')" class="form-control" placeholder="CNP">
@@ -42,6 +47,7 @@
     </div>
 
     <div class="form-group">
+        <span>Email</span>
         <div class="input-group">
             <input formControlName="email" type="text" [class.is-invalid]="isInvalid('email')"
                 [class.is-valid]="isValid('email')" class="form-control" placeholder="Email">
@@ -52,49 +58,14 @@
             is not valid.</small>
     </div>
     <div class="form-group">
+        <span>Address</span>
         <div class="input-group">
             <textarea formControlName="address" [class.is-invalid]="isInvalid('address')"
                 [class.is-valid]="isValid('address')" class="form-control" placeholder="Address"></textarea>
         </div>
         <small *ngIf="isInvalid('address')" class="form-text text-danger">Address is
             required.</small>
-    </div>
-
-    <div class="container row">
-        <div class="col-md-12">
-            <h1>Upload Image</h1>
-        </div>
-    </div>
-    <div class="container row">
-        <div class="col-md-6">
-            <input type="file" (change)="onFileChanged($event)">
-        </div>
-        <div class="col-md-6">
-            <input type="button" (click)="onUpload()" value="upload">
-        </div>
-    </div>
-    <hr />
-    <div class="container row">
-        <div class="col-md-12">
-            <div *ngIf=message>{{message}}</div>
-        </div>
-    </div>
-    <div class="container row">
-        <div class="col-md-6">
-            <input type="text" class="form-control" id="name" placeholder="image name" [(ngModel)]="imageName"
-                name="name" />
-        </div>
-        <div class="col-md-6">
-            <input type="button" (click)="getImage()" value="Get Image">
-        </div>
-    </div>
-    <div class="container row">
-        <div class="col-md-12">
-            <div *ngIf=retrievedImage>
-                <img [src]="retrievedImage">
-            </div>
-        </div>
-    </div>
+    </div>  
     
     <div class="form-group">
         <input [disabled]="accountForm.invalid" type="submit" value="Save changes" class="btn btn-sm btn-success">

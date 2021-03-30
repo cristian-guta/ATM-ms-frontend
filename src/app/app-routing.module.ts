@@ -8,7 +8,7 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'subscriptions',
+    redirectTo: 'accounts',
     pathMatch: 'full',
     canActivate: [AuthGuard],
     data: {

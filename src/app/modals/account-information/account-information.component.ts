@@ -71,8 +71,7 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
         this.httpClient.get('http://localhost:8765/image/get').subscribe((image: ImageModel) => {
                 this.profilePic = image;
                 this.imgSrc = image.picByte.toString();
-                // this.sanitization.bypassSecurityTrustHtml(this.imgSrc);
-            });
+        });
     }
 
     getUserInfo() {

@@ -8,6 +8,9 @@ import { Title } from '@angular/platform-browser';
 import { SocialAuthService } from 'angularx-social-login';
 import { TokenService } from './services/token.service';
 import { Observable } from 'rxjs';
+import { Client } from './models/client';
+import { ImageModel } from './models/image-model';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -20,6 +23,9 @@ export class AppComponent{
     currentUser: Observable<any>;
     loginOrRegister = false;
     loggedIn: boolean;
+    client: Client;
+    profilePicture: ImageModel;
+    imgSrc: String;
 
 
     constructor(
@@ -29,10 +35,17 @@ export class AppComponent{
         private _title: Title,
         private _modal: BsModalService,
         private authService: SocialAuthService,
-        private tokenService: TokenService
+        private tokenService: TokenService,
+        private httpClient: HttpClient
     ) {
         this.currentUser = this._auth.currentUser;
-
+        this.currentUser.subscribe((client: Client) => {
+            this.client = client;
+        });
+        this.httpClient.get('http://localhost:8765/image/get').subscribe((image: ImageModel) => {
+            this.profilePicture = image;
+            this.imgSrc = image.picByte.toString();
+        });
         this._router.events.pipe(
             filter(event => event instanceof NavigationEnd),
             map(() => {

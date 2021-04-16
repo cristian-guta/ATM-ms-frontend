@@ -6,7 +6,7 @@
     <span class="label pl-0">Edit information</span>
     <!-- <ui-switch size="small" [disabled]="saving" [ngModel]="allowEdit" (ngModelChange)="onChange($event)"></ui-switch> -->
 </div>
-<form [formGroup]="accountForm" (ngSubmit)="save()" [ngClass]="{'pl-3 pr-3 pb-3': isModal}">
+<form [formGroup]="accountForm" enctype="multipart/form-data" (ngSubmit)="save()" [ngClass]="{'pl-3 pr-3 pb-3': isModal}">
     <div class="form-group">
         <br>
         <span>First name</span>
@@ -66,6 +66,19 @@
         <small *ngIf="isInvalid('address')" class="form-text text-danger">Address is
             required.</small>
     </div>  
+
+    <div class="video-container" *ngIf="!error">
+        <video [class.show]="!isCaptured" [class.hide]="isCaptured" #video id="video" [width]="WIDTH" [height]="HEIGHT"
+            autoplay></video>
+        <canvas [class.show]="isCaptured" [class.hide]="!isCaptured" #canvas id="canvas" [width]="WIDTH"
+            [height]="HEIGHT" name="imageFile"></canvas>
+    </div>
+
+    <div class="snap-container">
+        <button class="btn btn-primary" *ngIf="!isCaptured" (click)="capture()">Snap Photo</button>
+        <button class="btn btn-danger" *ngIf="isCaptured" (click)="removeCurrent()">Take Another</button>
+        <button class="btn btn-danger" *ngIf="isCaptured" (click)="savePhoto()">Save photo</button>
+    </div>
     
     <div class="form-group">
         <input [disabled]="accountForm.invalid" type="submit" value="Save changes" class="btn btn-sm btn-success">

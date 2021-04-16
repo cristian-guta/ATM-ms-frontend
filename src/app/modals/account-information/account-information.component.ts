@@ -14,7 +14,7 @@ import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
     templateUrl: './account-information.component.html',
     styleUrls: ['./account-information.component.css']
 })
-export class AccountInformationComponent implements OnInit {
+export class AccountInformationComponent implements OnInit, AfterViewInit {
 
     // @Input() allowEdit = false;
     accountForm: FormGroup;
@@ -22,6 +22,22 @@ export class AccountInformationComponent implements OnInit {
     isModal = false;
 
     // begining og web camera declarations
+
+    selectedFIle: File;
+
+    WIDTH = 400;
+    HEIGHT = 400;
+
+    @ViewChild("video")
+    public video: ElementRef;
+
+    @ViewChild("canvas")
+    public canvas: ElementRef;
+
+    captures: string[] = [];
+    imageUrl: string;
+    error: any;
+    isCaptured: boolean;
 
     // end of declarations for web camera
 
@@ -159,7 +175,6 @@ export class AccountInformationComponent implements OnInit {
                     this.saving = false;
                     this._toast.showError('Failed to save changes!');
         });
-        window.location.reload();   
     }
 
     hideModal() {
@@ -168,6 +183,84 @@ export class AccountInformationComponent implements OnInit {
 
     // implementation for web camera
 
+    async ngAfterViewInit() {
+        await this.setupDevices();
+      }
+    
+    async setupDevices() {
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+              video: true
+            });
+            if (stream) {
+              this.video.nativeElement.srcObject = stream;
+              this.video.nativeElement.play();
+              this.error = null;
+            } else {
+              this.error = "You have no output video device";
+            }
+          } catch (e) {
+            this.error = e;
+          }
+        }
+    }
+    
+    capture() {
+        this.drawImageToCanvas(this.video.nativeElement);
+        // this.captures.push(this.canvas.nativeElement.toDataURL("image/png"));
+        // this.selectedFIle = event.target.files[0];
+        this.imageUrl = this.canvas.nativeElement.toDataURL("image/png");
+        this.isCaptured = true;
+    }
+    
+    removeCurrent() {
+        this.isCaptured = false;
+    }
+    
+    setPhoto(idx: number) {
+        this.isCaptured = true;
+        var image = new Image();
+        image.src = this.captures[idx];
+        // console.log(image.src)
+        this.drawImageToCanvas(image);
+    }
+
+    savePhoto(){
+        const imageName = this.currentUser.username + '.png';
+        const blob = this.dataURItoBlob(this.imageUrl);
+        const imageFile = new File([blob], imageName, { type: 'image/png' });
+        console.log(imageFile);
+        const uploadImageData: FormData = new FormData();
+        uploadImageData.append('imageFile', imageFile, imageName);
+
+        // const headers = new HttpHeaders({'Content-Type': 'multipart/form-data'});
+        // const httpOptions = {
+        //     headers: headers
+        // }
+          
+        this.httpClient.post('http://localhost:8765/image/upload', uploadImageData)
+            .subscribe((response) => {
+                console.log(response);
+            }
+        );
+    }
+    
+    drawImageToCanvas(image: any) {
+        this.canvas.nativeElement
+          .getContext("2d")
+          .drawImage(image, 0, 0, this.WIDTH, this.HEIGHT);
+    }
+
+    dataURItoBlob(dataURI) {
+        
+            var arr = dataURI.split(','), mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+            while(n--){
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new Blob([u8arr], {type:mime});
+     }
     
     // end of implementation for web camera
 }

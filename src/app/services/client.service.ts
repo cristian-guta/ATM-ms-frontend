@@ -32,7 +32,6 @@ export class ClientService {
     }
 
     updateClient(client: Client){
-        console.log("update: " + client.subscriptionId)
         return this.rest.put(this.clientEnds.getUpdateClient(client), client);
     }
 

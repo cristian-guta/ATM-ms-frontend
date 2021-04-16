@@ -6,8 +6,9 @@ import { Client } from 'src/app/models/client';
 import { ClientService } from 'src/app/services/client.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { Observable, Observer, Subject } from 'rxjs';
-import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
+import { ImageModel } from 'src/app/models/image-model';
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 @Component({
     selector: 'app-account-information',
@@ -23,7 +24,8 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
 
     // begining og web camera declarations
 
-    selectedFIle: File;
+    profilePic: ImageModel;
+    imgSrc: String;
 
     WIDTH = 400;
     HEIGHT = 400;
@@ -51,7 +53,8 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
         private _toast: ToastService,
         private _modalRef: BsModalRef,
         private httpClient: HttpClient,
-        private _authService: AuthenticationService
+        private _authService: AuthenticationService,
+        private sanitization: DomSanitizer
     ) { }
 
     ngOnInit() {
@@ -65,6 +68,11 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
             cnp: [{ value: '' }, Validators.required],
         });
         this.getUserInfo();
+        this.httpClient.get('http://localhost:8765/image/get').subscribe((image: ImageModel) => {
+                this.profilePic = image;
+                this.imgSrc = image.picByte.toString();
+                // this.sanitization.bypassSecurityTrustHtml(this.imgSrc);
+            });
     }
 
     getUserInfo() {
@@ -80,6 +88,11 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
                     address: this.currentUser.address,
                     cnp: this.currentUser.cnp
                 });
+            });
+            this.httpClient.get('http://localhost:8765/image/get').subscribe((image: ImageModel) => {
+                this.profilePic = image;
+                this.imgSrc = image.picByte.toString();
+                // this.sanitization.bypassSecurityTrustHtml(this.imgSrc);
             });
     }
 
@@ -179,6 +192,7 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
 
     hideModal() {
         this._modalRef.hide();
+        window.location.reload();
     }
 
     // implementation for web camera
@@ -205,11 +219,10 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
           }
         }
     }
+
     
     capture() {
         this.drawImageToCanvas(this.video.nativeElement);
-        // this.captures.push(this.canvas.nativeElement.toDataURL("image/png"));
-        // this.selectedFIle = event.target.files[0];
         this.imageUrl = this.canvas.nativeElement.toDataURL("image/png");
         this.isCaptured = true;
     }
@@ -230,7 +243,6 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
         const imageName = this.currentUser.username + '.png';
         const blob = this.dataURItoBlob(this.imageUrl);
         const imageFile = new File([blob], imageName, { type: 'image/png' });
-        console.log(imageFile);
         const uploadImageData: FormData = new FormData();
         uploadImageData.append('imageFile', imageFile, imageName);
 

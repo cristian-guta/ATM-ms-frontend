@@ -67,6 +67,11 @@
             required.</small>
     </div>  
 
+    <div *ngIf="profilePic!==null">
+        Current profile picture
+        <img src="data:image/jpg;base64,{{imgSrc}}" [height]="HEIGHT" [width]="WIDTH">
+    </div>
+
     <div class="video-container" *ngIf="!error">
         <video [class.show]="!isCaptured" [class.hide]="isCaptured" #video id="video" [width]="WIDTH" [height]="HEIGHT"
             autoplay></video>

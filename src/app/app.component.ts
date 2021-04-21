@@ -18,7 +18,7 @@ import { HttpClient } from '@angular/common/http';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
 })
-export class AppComponent{
+export class AppComponent implements OnInit{
     title = 'ATM - Project';
     currentUser: Observable<any>;
     loginOrRegister = false;
@@ -26,6 +26,17 @@ export class AppComponent{
     client: Client;
     profilePicture: ImageModel;
     imgSrc: String;
+
+    ngOnInit(){
+        this.currentUser = this._auth.currentUser;
+        this.currentUser.subscribe((client: Client) => {
+            this.client = client;
+        });
+        this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
+            this.profilePicture = image;
+            this.imgSrc = image.picByte.toString();
+        });
+    }
 
 
     constructor(
@@ -38,14 +49,7 @@ export class AppComponent{
         private tokenService: TokenService,
         private httpClient: HttpClient
     ) {
-        this.currentUser = this._auth.currentUser;
-        this.currentUser.subscribe((client: Client) => {
-            this.client = client;
-        });
-        this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
-            this.profilePicture = image;
-            this.imgSrc = image.picByte.toString();
-        });
+        
         this._router.events.pipe(
             filter(event => event instanceof NavigationEnd),
             map(() => {
@@ -100,6 +104,7 @@ export class AppComponent{
     // }
 
     logout(): void {
+        this.profilePicture=null;
         this._auth.logout();
         this.authService.signOut().then(
             data => {

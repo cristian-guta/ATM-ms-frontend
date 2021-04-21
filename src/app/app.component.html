@@ -13,7 +13,7 @@
 
     <div class="btn-group ml-auto">
         <button *ngIf="currentUser" (click)="openAccountInfoModal()" class="btn btn-link">          
-          <!-- <button mat-mini-fab color="white">
+          <!-- <button *ngIf="imgSrc===null" mat-mini-fab color="white">
             <mat-icon>i</mat-icon>
           </button> -->
           <img src="data:image/jpg;base64,{{imgSrc}}" class="avatar">

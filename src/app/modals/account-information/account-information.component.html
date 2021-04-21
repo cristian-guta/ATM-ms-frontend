@@ -67,7 +67,7 @@
             required.</small>
     </div>  
 
-    <div *ngIf="profilePic!==null">
+    <div *ngIf="profilePic.name!==null">
         Current profile picture
         <img src="data:image/jpg;base64,{{imgSrc}}" [width]="WIDTH" [height]="HEIGHT">
     </div>

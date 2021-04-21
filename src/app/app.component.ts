@@ -42,7 +42,7 @@ export class AppComponent{
         this.currentUser.subscribe((client: Client) => {
             this.client = client;
         });
-        this.httpClient.get('http://localhost:8765/image/get').subscribe((image: ImageModel) => {
+        this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
             this.profilePicture = image;
             this.imgSrc = image.picByte.toString();
         });

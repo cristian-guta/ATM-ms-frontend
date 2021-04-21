@@ -28,7 +28,7 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
     imgSrc: String;
 
     WIDTH = 400;
-    HEIGHT = 400;
+    HEIGHT = 300;
 
     @ViewChild("video")
     public video: ElementRef;
@@ -68,7 +68,7 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
             cnp: [{ value: '' }, Validators.required],
         });
         this.getUserInfo();
-        this.httpClient.get('http://localhost:8765/image/get').subscribe((image: ImageModel) => {
+        this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
                 this.profilePic = image;
                 this.imgSrc = image.picByte.toString();
         });
@@ -88,7 +88,7 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
                     cnp: this.currentUser.cnp
                 });
             });
-            this.httpClient.get('http://localhost:8765/image/get').subscribe((image: ImageModel) => {
+            this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
                 this.profilePic = image;
                 this.imgSrc = image.picByte.toString();
                 // this.sanitization.bypassSecurityTrustHtml(this.imgSrc);
@@ -244,13 +244,8 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
         const imageFile = new File([blob], imageName, { type: 'image/png' });
         const uploadImageData: FormData = new FormData();
         uploadImageData.append('imageFile', imageFile, imageName);
-
-        // const headers = new HttpHeaders({'Content-Type': 'multipart/form-data'});
-        // const httpOptions = {
-        //     headers: headers
-        // }
           
-        this.httpClient.post('http://localhost:8765/image/upload', uploadImageData)
+        this.httpClient.post('http://localhost:8765/client-service/image/upload', uploadImageData)
             .subscribe((response) => {
                 console.log(response);
             }

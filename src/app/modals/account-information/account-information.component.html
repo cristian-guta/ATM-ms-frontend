@@ -69,7 +69,7 @@
 
     <div *ngIf="profilePic!==null">
         Current profile picture
-        <img src="data:image/jpg;base64,{{imgSrc}}" [height]="HEIGHT" [width]="WIDTH">
+        <img src="data:image/jpg;base64,{{imgSrc}}" [width]="WIDTH" [height]="HEIGHT">
     </div>
 
     <div class="video-container" *ngIf="!error">

@@ -5,9 +5,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Client } from 'src/app/models/client';
 import { ClientService } from 'src/app/services/client.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ImageModel } from 'src/app/models/image-model';
-import { DomSanitizer } from '@angular/platform-browser';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 
 @Component({
@@ -52,9 +51,7 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
         private _fb: FormBuilder,
         private _toast: ToastService,
         private _modalRef: BsModalRef,
-        private httpClient: HttpClient,
-        private _authService: AuthenticationService,
-        private sanitization: DomSanitizer
+        private httpClient: HttpClient
     ) { }
 
     ngOnInit() {
@@ -91,7 +88,6 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
             this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
                 this.profilePic = image;
                 this.imgSrc = image.picByte.toString();
-                // this.sanitization.bypassSecurityTrustHtml(this.imgSrc);
             });
     }
 

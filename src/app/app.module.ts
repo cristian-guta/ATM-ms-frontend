@@ -36,6 +36,7 @@ import { SubscriptionAuditComponent } from './components/subscription-audit/subs
 import { ReviewComponent } from './components/review/review.component';
 import { ClientRetentionComponent } from './components/client-retention/client-retention.component';
 import { WebcamModule } from 'ngx-webcam';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 

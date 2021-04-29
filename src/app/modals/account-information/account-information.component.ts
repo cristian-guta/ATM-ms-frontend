@@ -5,9 +5,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Client } from 'src/app/models/client';
 import { ClientService } from 'src/app/services/client.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ImageModel } from 'src/app/models/image-model';
-import { DomSanitizer } from '@angular/platform-browser';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 
 @Component({
@@ -53,8 +52,12 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
         private _fb: FormBuilder,
         private _toast: ToastService,
         private _modalRef: BsModalRef,
+<<<<<<< HEAD
         private httpClient: HttpClient,
         private sanitizer: DomSanitizer
+=======
+        private httpClient: HttpClient
+>>>>>>> e67097340c56708c476d188ccc863b441d882c27
     ) { }
 
     ngOnInit() {
@@ -91,6 +94,7 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
             });
             this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
                 this.profilePic = image;
+<<<<<<< HEAD
                 
                 if(this.imgSrc!=null){
                     this.imgName = image.name;
@@ -98,6 +102,9 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
                     this.sanitizer.bypassSecurityTrustResourceUrl(this.imgSrc.toString());
                 }
                 
+=======
+                this.imgSrc = image.picByte.toString();
+>>>>>>> e67097340c56708c476d188ccc863b441d882c27
             });
     }
 

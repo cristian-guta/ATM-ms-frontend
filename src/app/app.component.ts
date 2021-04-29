@@ -1,5 +1,5 @@
 import { AccountInformationComponent } from './modals/account-information/account-information.component';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './services/authentication.service';
 import { Router, NavigationEnd, ActivatedRoute, RouterOutlet } from '@angular/router';
@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { Client } from './models/client';
 import { ImageModel } from './models/image-model';
 import { HttpClient } from '@angular/common/http';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 
 @Component({
@@ -38,7 +39,6 @@ export class AppComponent implements OnInit{
         });
     }
 
-
     constructor(
         private _auth: AuthenticationService,
         private _router: Router,
@@ -47,7 +47,8 @@ export class AppComponent implements OnInit{
         private _modal: BsModalService,
         private authService: SocialAuthService,
         private tokenService: TokenService,
-        private httpClient: HttpClient
+        private httpClient: HttpClient,
+        
     ) {
         
         this._router.events.pipe(

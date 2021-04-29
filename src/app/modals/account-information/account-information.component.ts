@@ -21,6 +21,7 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
     accountForm: FormGroup;
     currentUser: Client;
     isModal = false;
+    imgName: String;
 
     // begining og web camera declarations
 
@@ -53,8 +54,7 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
         private _toast: ToastService,
         private _modalRef: BsModalRef,
         private httpClient: HttpClient,
-        private _authService: AuthenticationService,
-        private sanitization: DomSanitizer
+        private sanitizer: DomSanitizer
     ) { }
 
     ngOnInit() {
@@ -68,10 +68,11 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
             cnp: [{ value: '' }, Validators.required],
         });
         this.getUserInfo();
-        this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
-                this.profilePic = image;
-                this.imgSrc = image.picByte.toString();
-        });
+        // this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
+        //         this.profilePic = image;
+        //         this.imgName = image.name;
+        //         this.imgSrc = image.picByte.toString();
+        // });
     }
 
     getUserInfo() {
@@ -90,8 +91,13 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
             });
             this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
                 this.profilePic = image;
-                this.imgSrc = image.picByte.toString();
-                // this.sanitization.bypassSecurityTrustHtml(this.imgSrc);
+                
+                if(this.imgSrc!=null){
+                    this.imgName = image.name;
+                    this.imgSrc = image.picByte.toString();
+                    this.sanitizer.bypassSecurityTrustResourceUrl(this.imgSrc.toString());
+                }
+                
             });
     }
 
@@ -234,7 +240,6 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
         this.isCaptured = true;
         var image = new Image();
         image.src = this.captures[idx];
-        // console.log(image.src)
         this.drawImageToCanvas(image);
     }
 
@@ -247,7 +252,7 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
           
         this.httpClient.post('http://localhost:8765/client-service/image/upload', uploadImageData)
             .subscribe((response) => {
-                console.log(response);
+                console.log("Image uploaded successfully!");
             }
         );
     }

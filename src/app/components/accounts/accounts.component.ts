@@ -60,7 +60,6 @@ export class AccountsComponent implements OnInit {
       if(!this.isAdmin()){
         this._accountService.getAccountByCNP(this.currentClient.id)
                   .subscribe((result: Account) => {
-                    
                       this.clientAccount = result;
                       this.loading = false;
                   });

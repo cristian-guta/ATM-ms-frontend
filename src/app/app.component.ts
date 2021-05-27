@@ -35,7 +35,7 @@ export class AppComponent implements OnInit{
         });
         this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
             this.profilePicture = image;
-            this.imgSrc = image.picByte.toString();
+            this.imgSrc = new String(image.picByte);
         });
     }
 

@@ -52,6 +52,7 @@
               <a routerLinkActive="active" routerLink="/benefitsAudit" *ngIf="isAdmin()" class="nav-item nav-link">Benefits audit</a>
               <a routerLinkActive="active" routerLink="/subscriptionsAudit" *ngIf="isAdmin()" class="nav-item nav-link">Subscriptions audit</a>
               <a routerLinkActive="active" routerLink="/clientRetention" *ngIf="isAdmin()" class="nav-item nav-link">Clients retention</a>
+              <a routerLinkActive="active" routerLink="/clientEmotions" *ngIf="isAdmin()" class="nav-item nav-link">Clients emotions</a>
           </div>
           <button mat-button (click)="logout()" *ngIf="checkCurrentUser()" class="logout nav-item nav-link">Logout</button>
       </div>

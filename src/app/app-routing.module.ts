@@ -106,6 +106,14 @@ const routes: Routes = [
       roles: ['ADMIN']
     }
   },
+  {
+    path: 'clientEmotions',
+    loadChildren: () => import('./components/client-emotions/client-emotions-routing.module').then(m => m.ClientEmotionsRoutingModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['ADMIN']
+    }
+  },
 ];
 
 @NgModule({

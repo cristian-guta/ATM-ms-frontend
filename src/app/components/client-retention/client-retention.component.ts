@@ -39,7 +39,7 @@ export class ClientRetentionComponent implements OnInit {
     this._clRetentionService.getAllRetentionData(index, size).subscribe(data => {
       this.retentionData = data.content;
       this.retentionData.paginator = this.paginator;
-      this.length = this.length;
+      this.length = data.totalElements;
       
       data.content.forEach((retention: ClientRetention) => {
         this.clientService.getById(retention.clientId).subscribe((client: Client) => {

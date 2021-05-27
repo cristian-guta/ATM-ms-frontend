@@ -10,6 +10,13 @@
         <small *ngIf="isInvalid('amount')" class="form-text text-danger">Amount is required.</small>
         <!-- <small *ngIf="isGreater('amount')" class="form-text text-danger">Amount is greater than how much you own.</small> -->
     </div>
+
+    <div class="video-container" *ngIf="!error">
+        <video [class.hide]="!isCaptured" [class.hide]="isCaptured" #video id="video" [width]="WIDTH" [height]="HEIGHT"
+            autoplay></video>
+        <canvas [class.hide]="isCaptured" [class.hide]="!isCaptured" #canvas id="canvas" [width]="WIDTH"
+            [height]="HEIGHT" name="imageFile"></canvas>
+    </div>
     <div class="form-group mb-0">
         <input  type="submit" [value]="amount ? 'Withdraw': 'Please enter amount'"
              class="btn btn-sm btn-success"> 

@@ -1,0 +1,28 @@
+<div class="mat-elevation-z8">
+    <mat-table #table [dataSource] = "clientEmotionsData" matSort>
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <th mat-cell *matCellDef="let retention; let i=index">{{ i+1 }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="emotion">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Emotion</th>
+            <th mat-cell *matCellDef="let emotion">{{ emotion.emotion }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="client">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
+            <th mat-cell *matCellDef="let emotion">{{ emotion.client?.username }}</th>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+
+    </mat-table>
+    <mat-paginator 
+                [length]="length"
+                [pageSize]="pageSize"
+                [pageIndex]="pageIndex"
+                (page)="handleRequest($event)"
+                [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons="true"></mat-paginator>
+</div>

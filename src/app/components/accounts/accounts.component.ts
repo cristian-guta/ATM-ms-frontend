@@ -48,7 +48,6 @@ export class AccountsComponent implements OnInit {
 
   ngOnInit() {
     if(this.isAdmin()){
-      // this.displayColumnsAdmin = ['id', 'name', 'amount', 'details', 'owner'];
       this.displayColumnsAdmin = ['id', 'name', 'amount', 'details'];
     }
     else{
@@ -68,8 +67,6 @@ export class AccountsComponent implements OnInit {
         this.getData(this.pageSize, this.pageIndex);
       } 
     });
-    
-    
   }
 
   applyFilter(filterValue: string) {

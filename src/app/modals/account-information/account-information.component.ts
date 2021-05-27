@@ -8,6 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ImageModel } from 'src/app/models/image-model';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ImageService } from 'src/app/services/image.service';
 
 
 @Component({
@@ -54,7 +55,8 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
         private _toast: ToastService,
         private _modalRef: BsModalRef,
         private httpClient: HttpClient,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        private imageService: ImageService
     ) { }
 
     ngOnInit() {
@@ -68,11 +70,11 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
             cnp: [{ value: '' }, Validators.required],
         });
         this.getUserInfo();
-        // this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
-        //         this.profilePic = image;
-        //         this.imgName = image.name;
-        //         this.imgSrc = image.picByte.toString();
-        // });
+        this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
+                this.profilePic = image;
+                this.imgName = image.name;
+                this.imgSrc = image.picByte.toString();
+        });
     }
 
     getUserInfo() {
@@ -97,6 +99,7 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
                     this.sanitizer.bypassSecurityTrustResourceUrl(this.imgSrc.toString());
                 }
                 this.imgSrc = image.picByte.toString();
+                
             });
     }
 
@@ -248,12 +251,12 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
         const imageFile = new File([blob], imageName, { type: 'image/png' });
         const uploadImageData: FormData = new FormData();
         uploadImageData.append('imageFile', imageFile, imageName);
-          
-        this.httpClient.post('http://localhost:8765/client-service/image/upload', uploadImageData)
-            .subscribe((response) => {
-                console.log("Image uploaded successfully!");
-            }
-        );
+        this.imageService.saveProfilePic(uploadImageData);
+ 
+        // this.httpClient.post('http://localhost:8765/client-service/image/aws', uploadImageData)
+        //     .subscribe((response) => {
+        //         console.log(response);
+        // });
     }
     
     drawImageToCanvas(image: any) {

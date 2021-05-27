@@ -19,9 +19,10 @@ export class BenefitsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  benefits: MatTableDataSource<Benefit>;
+  // benefits: MatTableDataSource<Benefit>;
+  benefits: Benefit[] = [];
   subscription: Subscription;
-  length: number;
+  length: number = 0;
   pageSize: number=5;
   pageIndex:number = 0;
 
@@ -35,7 +36,7 @@ export class BenefitsComponent implements OnInit {
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.benefits.filter = filterValue;
+    // this.benefits.filter = filterValue;
   }
 
   ngOnInit() { 
@@ -46,18 +47,21 @@ export class BenefitsComponent implements OnInit {
     if(this.isAdmin()==false){  
       this.benefitService.getBenefitsBySubscription(index, size).subscribe(result => {
         this.benefits = result.content;
-        this.benefits.paginator = this.paginator;
+        // this.benefits.paginator = this.paginator;
         this.length = result.totalElements;
-      })
+      });
     }
     else{
       this.benefitService.getAllBenefits(index, size)
         .subscribe(result => {
           this.benefits = result.content;
-          this.benefits.paginator = this.paginator;
+          // this.benefits.paginator = this.paginator;
           this.length = result.totalElements;
        });
     }
+    // if(this.benefits.length ===0){
+    //   this.benefits=[];
+    // }
   }
 
   handleRequest(event: any){

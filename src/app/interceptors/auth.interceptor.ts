@@ -41,7 +41,7 @@ export class AuthInterceptor implements HttpInterceptor {
                     if (err.status !== 401) {
                         return;
                     }
-                    this._router.navigate(['/login'], { queryParams: { returnUrl: this._router.url } });
+                    this._router.navigate(['/register'], { queryParams: { returnUrl: this._router.url } });
                 }
             }));
     }

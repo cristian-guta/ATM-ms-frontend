@@ -9,6 +9,7 @@ import { ImageModel } from 'src/app/models/image-model';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImageService } from 'src/app/services/image.service';
+import { ConvertActionBindingResult } from '@angular/compiler/src/compiler_util/expression_converter';
 
 
 @Component({
@@ -63,7 +64,7 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
         this.accountForm = this._fb.group({
             firstName: [{ value: '' }, Validators.required],
             lastName: [{ value: '' }, Validators.required],
-            username: [{ value: ''}, Validators.required],
+            username: [{ value: '' }, Validators.required],
             role: [{ value: '', disabled: true }, Validators.required],
             email: [{ value: '' }, [Validators.required, Validators.email]],
             address: [{ value: '' }, Validators.required],
@@ -71,9 +72,10 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
         });
         this.getUserInfo();
         this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
-                this.profilePic = image;
-                this.imgName = image.name;
-                this.imgSrc = image.picByte.toString();
+            this.profilePic = image;
+            this.imgName = image.name;
+            this.imgSrc = image.picByte.toString();
+            console.log(image.picByte)
         });
     }
 
@@ -87,20 +89,20 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
                     username: this.currentUser.username,
                     role: this.currentUser.role,
                     email: this.currentUser.email,
-                    address: this.currentUser.address,
-                    cnp: this.currentUser.cnp
+                    address: this.currentUser.address
+                    // cnp: this.currentUser.cnp
                 });
             });
-            this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
-                this.profilePic = image;
-                if(this.imgSrc!=null){
-                    this.imgName = image.name;
-                    this.imgSrc = image.picByte.toString();
-                    this.sanitizer.bypassSecurityTrustResourceUrl(this.imgSrc.toString());
-                }
+        this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
+            this.profilePic = image;
+            if (this.imgSrc != null) {
+                this.imgName = image.name;
                 this.imgSrc = image.picByte.toString();
-                
-            });
+                this.sanitizer.bypassSecurityTrustResourceUrl(this.imgSrc.toString());
+            }
+            this.imgSrc = image.picByte.toString();
+
+        });
     }
 
     enableFields() {
@@ -194,7 +196,7 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
                 () => {
                     this.saving = false;
                     this._toast.showError('Failed to save changes!');
-        });
+                });
     }
 
     hideModal() {
@@ -206,38 +208,38 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
 
     async ngAfterViewInit() {
         await this.setupDevices();
-      }
-    
+    }
+
     async setupDevices() {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-          try {
-            const stream = await navigator.mediaDevices.getUserMedia({
-              video: true
-            });
-            if (stream) {
-              this.video.nativeElement.srcObject = stream;
-              this.video.nativeElement.play();
-              this.error = null;
-            } else {
-              this.error = "You have no output video device";
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: true
+                });
+                if (stream) {
+                    this.video.nativeElement.srcObject = stream;
+                    this.video.nativeElement.play();
+                    this.error = null;
+                } else {
+                    this.error = "You have no output video device";
+                }
+            } catch (e) {
+                this.error = e;
             }
-          } catch (e) {
-            this.error = e;
-          }
         }
     }
 
-    
+
     capture() {
         this.drawImageToCanvas(this.video.nativeElement);
         this.imageUrl = this.canvas.nativeElement.toDataURL("image/png");
         this.isCaptured = true;
     }
-    
+
     removeCurrent() {
         this.isCaptured = false;
     }
-    
+
     setPhoto(idx: number) {
         this.isCaptured = true;
         var image = new Image();
@@ -245,35 +247,30 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
         this.drawImageToCanvas(image);
     }
 
-    savePhoto(){
+    savePhoto() {
         const imageName = this.currentUser.username + '.png';
         const blob = this.dataURItoBlob(this.imageUrl);
         const imageFile = new File([blob], imageName, { type: 'image/png' });
         const uploadImageData: FormData = new FormData();
         uploadImageData.append('imageFile', imageFile, imageName);
         this.imageService.saveProfilePic(uploadImageData);
- 
-        // this.httpClient.post('http://localhost:8765/client-service/image/aws', uploadImageData)
-        //     .subscribe((response) => {
-        //         console.log(response);
-        // });
     }
-    
+
     drawImageToCanvas(image: any) {
         this.canvas.nativeElement
-          .getContext("2d")
-          .drawImage(image, 0, 0, this.WIDTH, this.HEIGHT);
+            .getContext("2d")
+            .drawImage(image, 0, 0, this.WIDTH, this.HEIGHT);
     }
 
     dataURItoBlob(dataURI) {
-        
-            var arr = dataURI.split(','), mime = arr[0].match(/:(.*?);/)[1],
-                bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-            while(n--){
-                u8arr[n] = bstr.charCodeAt(n);
-            }
-            return new Blob([u8arr], {type:mime});
-     }
-    
+
+        var arr = dataURI.split(','), mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new Blob([u8arr], { type: mime });
+    }
+
     // end of implementation for web camera
 }

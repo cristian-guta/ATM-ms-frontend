@@ -13,17 +13,17 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: 'login',
-        component: LoginComponent,
-        data: {
-            title: 'Login'
-        }
-      },
-      {
         path: 'register',
         component: RegisterComponent,
         data: {
             title: 'Register'
+        }
+      },
+      {
+        path: 'login',
+        component: LoginComponent,
+        data: {
+            title: 'Login'
         }
       }
     ]

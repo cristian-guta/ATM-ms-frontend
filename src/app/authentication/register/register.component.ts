@@ -10,6 +10,8 @@ import { AuthEndpoints } from 'src/app/endpoints/auth-endpoints';
 import { Client } from 'src/app/models/client';
 import { AuthProvider } from 'src/app/models/authProvider';
 import { ToastService } from 'src/app/services/toast.service';
+import { SubscriptionService } from 'src/app/services/subscription.service';
+import { Subscription } from 'src/app/models/subscription';
 
 export const uniqueUsername = (rest: RestService, time: number = 1000): AsyncValidatorFn => {
     return (control: AbstractControl): Observable<{ [key: string]: boolean } | null> => {
@@ -36,6 +38,11 @@ function checkPassword(group: FormGroup): { [key: string]: boolean } | null {
         password.value !== confirmPassword.value) {
         return { missMatch: true };
     }
+    else{
+        if(password.value<6){
+            return { missMatch: true };
+        }
+    }
     return null;
 }
 
@@ -50,23 +57,28 @@ export class RegisterComponent implements OnInit {
     validRegister = true;
     loading = false;
     registerForm: AbstractControl;
+    subscriptions: Subscription[] = [];
 
     constructor(
         private _auth: AuthenticationService,
         private _router: Router,
         private _fb: FormBuilder,
         private _rest: RestService,
-        private _toast: ToastService
+        private _toast: ToastService,
+        private subsService: SubscriptionService
     ) { }
 
     ngOnInit() {
+        this.getSubscriptions();
         this.registerForm = this._fb.group({
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
             username: ['', [Validators.required]],//, uniqueUsername(this._rest)],
             cnp: ['', [Validators.required]],
             email: ['', [Validators.required, Validators.email]],
-            password: ['', Validators.required],
+            password: ['', [Validators.required, Validators.minLength(6)], Validators.pattern(
+                "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{8,}"
+              ),],
             confirmPassword: ['', Validators.required]
         },
             {
@@ -132,11 +144,18 @@ export class RegisterComponent implements OnInit {
                         this._router.navigate(['/login']);
                     },
                     error => {
-                        this._toast.showSuccess("Could not create account");
+                        this._toast.showError("Could not create account: " + error.error.message);
                         this.loading = false;
                         this.validRegister = false;
                     });
         }
     }
 
+    getSubscriptions(){
+        this.subsService.getAllSubscriptions().subscribe((subs: Subscription[]) => {
+          this.subscriptions = subs;     
+        });
+      }
+
 }
+

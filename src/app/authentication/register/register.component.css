@@ -73,3 +73,31 @@ width:100%;
 .login-wrapper .mat-card{padding:40px 70px 50px;}
 .login-wrapper .mat-stroked-button{border:1px solid currentColor;line-height:54px;background:#FFF7FA;}
 .login-wrapper .mat-form-field-appearance-legacy .mat-form-field-infix{padding:0.8375em 0;}
+
+.flex-container-subscriptions{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+.flex-container-page{
+  display: flex;
+  flex-direction: row;
+  width: 120%;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+.mat-card-content{
+  margin-bottom: 0px;
+}
+
+.mat-card{
+  margin-top: 2%;
+  margin-right: 200px;
+  width: 100%;
+  position: relative;
+  height: 400px;
+}

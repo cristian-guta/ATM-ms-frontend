@@ -20,6 +20,11 @@
             <th mat-cell *matCellDef="let client">{{ client.username }}</th>
         </ng-container>
 
+        <ng-container  matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef>Role</th>
+            <th mat-cell *matCellDef="let client">{{ client.roleName }}</th>
+        </ng-container>
+
         <ng-container matColumnDef="email">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
             <th mat-cell *matCellDef="let client">{{ client.email }}</th>
@@ -28,11 +33,6 @@
         <ng-container  matColumnDef="address">
             <th mat-header-cell *matHeaderCellDef>Address</th>
             <th mat-cell *matCellDef="let client">{{ client.address }}</th>
-        </ng-container>
-
-        <ng-container  matColumnDef="cnp">
-            <th mat-header-cell *matHeaderCellDef>CNP</th>
-            <th mat-cell *matCellDef="let client">{{ client.cnp }}</th>
         </ng-container>
 
         <ng-container  matColumnDef="actions">

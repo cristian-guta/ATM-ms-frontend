@@ -1,9 +1,9 @@
-<div>
+<div fxLayout="row" fxLayoutAlign="space-around center" >
     <div *ngIf="!hasSubscription && !isAdmin()">
         <h2>No active subscription!</h2>
     </div>
     <button mat-stroked-button (click)="openModal()"  *ngIf="isAdmin()">New subscription</button>
-    <div *ngIf="!hasSubscription && !isAdmin()" class="flex-container">
+    <div  *ngIf="!hasSubscription && !isAdmin()" class="flex-container">
         <div *ngFor="let sub of subscriptions" style="margin-right: 2%;">
             <mat-card>
                 <mat-card-title>{{ sub.name }}</mat-card-title>
@@ -42,9 +42,7 @@
         </mat-card>
     </div>
 
-    <div *ngIf="!hasSubscription && !isAdmin()">
-        <p>No active subscription!</p>
-    </div>
+
 
     <div *ngIf="isAdmin()" class="flex-container">
         

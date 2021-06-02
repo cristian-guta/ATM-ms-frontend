@@ -1,9 +1,9 @@
-<form [formGroup]="depositForm" (ngSubmit)="save()">
+<form [formGroup]="depositForm" (ngSubmit)="save()" fxLayout="column">
     <div class="form-group">
-        <div class="input-group">
-            <input formControlName="amount" type="number" [class.is-invalid]="isInvalid('amount')"
-                [class.is-valid]="isValid('amount')" class="form-control" placeholder="100">
+        <div class="input-group" class="flex-container">
             <div class="input-group-append">
+                <input formControlName="amount" type="number" [class.is-invalid]="isInvalid('amount')"
+                    [class.is-valid]="isValid('amount')" class="form-control" placeholder="100">
                 <span class="input-group-text">RON</span>
             </div>
             <div>
@@ -12,11 +12,11 @@
             <div>
                 <input type="text" class="form-control" placeholder="Expiration Month" formControlName="expMonth">
             </div>
-            
+
             <div>
                 <input type="text" class="form-control" placeholder="Expiration Year" formControlName="expYear">
             </div>
-            
+
             <div>
                 <input type="text" class="form-control" placeholder="CVC" formControlName="cvc">
             </div>
@@ -24,7 +24,6 @@
         <small *ngIf="isInvalid('amount')" class="form-text text-danger">Amount is required.</small>
     </div>
     <div class="form-group mb-0">
-        <input  type="submit" [value]="amount ? 'Deposit': 'Please enter amount'"
-             class="btn btn-sm btn-success" > 
+        <input type="submit" [value]="amount ? 'Deposit': 'Please enter amount'" class="btn btn-sm btn-success">
     </div>
 </form>

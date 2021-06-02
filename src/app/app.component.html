@@ -1,37 +1,34 @@
 <nav *ngIf="!loginOrRegister" class="navbar navbar-expand navbar-dark bg-dark">
-  <div class = "container">
-    <button class="d-inline-block d-sm-none navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+  <div class="container">
+    <button class="d-inline-block d-sm-none navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
+      aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="navbar-nav">
       <a routerLink="/subscriptions" class="navbar-brand ml-10px">
-          <h2>ATM - Project</h2>
+        <h2>ATM - Online</h2>
       </a>
     </div>
 
     <div class="btn-group ml-auto">
-        <button *ngIf="currentUser" (click)="openAccountInfoModal()" class="btn btn-link">          
-          <!-- <button *ngIf="imgSrc===null" mat-mini-fab color="white">
-            <mat-icon>i</mat-icon>
-          </button> -->
-          <img src="data:image/jpg;base64,{{imgSrc}}" class="avatar">
-        </button>
+      <button *ngIf="currentUser" (click)="openAccountInfoModal()" class="btn btn-link">
+        <img src="data:image/jpg;base64,{{imgSrc}}" class="avatar">
+      </button>
 
       <div *ngIf="!currentUser" class="dropdown">
-          <button type="button" class="h-100 btn btn-link" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              <button mat-mini-fab color="white">
-                <mat-icon>Go to</mat-icon>
-              </button>
-              <span class="text-dark d-none d-lg-inline-block d-xl-inline-block ml-2">My Account</span>
+        <button type="button" class="h-100 btn btn-link" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          <button mat-mini-fab color="white">
+            <mat-icon>Go to</mat-icon>
           </button>
-          <div class="dropdown-menu dropdown-menu-right">
-              <a routerLink="/login" class="dropdown-item">Login</a>
-              <a routerLink="/register" class="dropdown-item">Register</a>
-              
-          </div>
+          <span class="text-dark d-none d-lg-inline-block d-xl-inline-block ml-2">My Account</span>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a routerLink="/login" class="dropdown-item">Login</a>
+          <a routerLink="/register" class="dropdown-item">Register</a>
+
+        </div>
       </div>
     </div>
   </div>
@@ -39,23 +36,30 @@
 
 <nav *ngIf="!loginOrRegister" class="navbar navbar-expand navbar-dark bg-dark">
   <div class="container">
-      <div id="navbar" class="collapse navbar-collapse">
-          <div class="navbar-nav">
-              <a routerLinkActive="active" routerLink="/subscriptions" class="nav-item nav-link" *ngIf="isAdmin()">Subscriptions</a>
-              <a routerLinkActive="active" routerLink="/subscriptions" class="nav-item nav-link" *ngIf="!isAdmin()">My subscription</a>
-              <a routerLinkActive="active" routerLink="/benefits" class="nav-item nav-link">Benefits</a>
-              <a routerLinkActive="active" routerLink="/accounts" *ngIf="!isAdmin()" class="nav-item nav-link">My account</a>
-              <a routerLinkActive="active" routerLink="/accounts" *ngIf="isAdmin()" class="nav-item nav-link">Accounts</a>
-              <a routerLinkActive="active" routerLink="/reviews" class="nav-item nav-link">Reviews</a>
-              <a routerLinkActive="active" routerLink="/clients" *ngIf="isAdmin()" class="nav-item nav-link">Clients</a>
-              <a routerLinkActive="active" routerLink="/operations" *ngIf="!isAdmin()" class="nav-item nav-link">Operations</a>
-              <a routerLinkActive="active" routerLink="/benefitsAudit" *ngIf="isAdmin()" class="nav-item nav-link">Benefits audit</a>
-              <a routerLinkActive="active" routerLink="/subscriptionsAudit" *ngIf="isAdmin()" class="nav-item nav-link">Subscriptions audit</a>
-              <a routerLinkActive="active" routerLink="/clientRetention" *ngIf="isAdmin()" class="nav-item nav-link">Clients retention</a>
-              <a routerLinkActive="active" routerLink="/clientEmotions" *ngIf="isAdmin()" class="nav-item nav-link">Clients emotions</a>
-          </div>
-          <button mat-button (click)="logout()" *ngIf="checkCurrentUser()" class="logout nav-item nav-link">Logout</button>
+    <div id="navbar" class="collapse navbar-collapse">
+      <div class="navbar-nav">
+        <a routerLinkActive="active" routerLink="/subscriptions" class="nav-item nav-link"
+          *ngIf="isAdmin()">Subscriptions</a>
+        <a routerLinkActive="active" routerLink="/subscriptions" class="nav-item nav-link" *ngIf="!isAdmin()">My
+          subscription</a>
+        <a routerLinkActive="active" routerLink="/benefits" class="nav-item nav-link">Benefits</a>
+        <a routerLinkActive="active" routerLink="/accounts" *ngIf="!isAdmin()" class="nav-item nav-link">My account</a>
+        <a routerLinkActive="active" routerLink="/accounts" *ngIf="isAdmin()" class="nav-item nav-link">Accounts</a>
+        <a routerLinkActive="active" routerLink="/reviews" class="nav-item nav-link">Reviews</a>
+        <a routerLinkActive="active" routerLink="/clients" *ngIf="isAdmin()" class="nav-item nav-link">Clients</a>
+        <a routerLinkActive="active" routerLink="/operations" *ngIf="!isAdmin()"
+          class="nav-item nav-link">Operations</a>
+        <a routerLinkActive="active" routerLink="/benefitsAudit" *ngIf="isAdmin()" class="nav-item nav-link">Benefits
+          audit</a>
+        <a routerLinkActive="active" routerLink="/subscriptionsAudit" *ngIf="isAdmin()"
+          class="nav-item nav-link">Subscriptions audit</a>
+        <a routerLinkActive="active" routerLink="/clientRetention" *ngIf="isAdmin()" class="nav-item nav-link">Clients
+          retention</a>
+        <a routerLinkActive="active" routerLink="/clientEmotions" *ngIf="isAdmin()" class="nav-item nav-link">Clients
+          emotions</a>
       </div>
+      <button mat-button (click)="logout()" *ngIf="checkCurrentUser()" class="logout nav-item nav-link">Logout</button>
+    </div>
   </div>
 </nav>
 

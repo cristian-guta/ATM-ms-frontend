@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
             if (!userRole.includes('ANONYMOUS')) {
                 this.authenticationService.logout();
             } else{
-                this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+                this.router.navigate(['/register'], { queryParams: { returnUrl: state.url } });
             }
             return false;
         }

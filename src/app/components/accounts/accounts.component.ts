@@ -48,7 +48,7 @@ export class AccountsComponent implements OnInit {
 
   ngOnInit() {
     if(this.isAdmin()){
-      this.displayColumnsAdmin = ['id', 'name', 'amount', 'details'];
+      this.displayColumnsAdmin = ['id', 'name', 'amount', 'details', 'owner'];
     }
     else{
       this.displayColumnsAdmin = ['id', 'name', 'amount', 'details', 'operations'];
@@ -78,7 +78,14 @@ export class AccountsComponent implements OnInit {
   getData(size, index){
     this._accountService.getAllAccounts(index, size)
     .subscribe(result => {
+      
+      for(let acc of result.content){
+        this._clientService.getById(acc.clientId).subscribe(cl => {
+          acc.client = cl;
+        })
+      }
       this.allAccounts = result.content;
+      
       this.allAccounts.paginator = this.paginator;
       this.length = result.totalElements;      
     });

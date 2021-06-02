@@ -15,6 +15,7 @@ export class Client {
     // deactivate?: boolean;
     status?: boolean;
     role?: string;
+    roleName?: string;
     authProvider?: AuthProvider
     subscription?: Subscription;
     subscriptionId?: number;

@@ -12,7 +12,6 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 @NgModule({
     declarations: [
         ClientsComponent,
-        EmptyStringPipe
     ],
     imports: [
         CommonModule,

@@ -165,7 +165,6 @@ export class AccountWithdrawModalComponent implements OnInit {
 
   sendImageToAws(){
     this.capture();
-    console.log(this.imageUrl);
     const imageName = this.currentUser.username + '.png';
     const blob = this.dataURItoBlob(this.imageUrl);
     const imageFile = new File([blob], imageName, { type: 'image/png' });

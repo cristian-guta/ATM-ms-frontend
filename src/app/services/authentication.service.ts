@@ -126,6 +126,6 @@ export class AuthenticationService {
     logout(): void {
         this.removeToken();
         this.currentUserSubject.next(null);
-        this._router.navigate(['/login']);
+        this._router.navigate(['/register']);
     }
 }

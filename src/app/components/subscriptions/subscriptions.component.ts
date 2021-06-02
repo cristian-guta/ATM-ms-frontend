@@ -52,26 +52,6 @@ export class SubscriptionsComponent implements OnInit {
         this.getSubscriptions();
       }
     });
-    // if(!this.isAdmin()){
-    //   this.subsService.getSubscription().subscribe((sub: Subscription) => {
-    //     if(sub.id>0){
-          
-    //       this.hasSubscription = true;
-    //       this.subscription = sub;
-    //     }
-    //     else{
-    //       this.hasSubscription = false;
-    //       this.getSubscriptions();
-    //     }
-    //   });
-    // }
-    // else{
-    //   this.getSubscriptions();
-    // }
-
-    // this._clientService.getCurrentClient().subscribe((client2: Client) => {
-    //   this.client = client2;
-    // });
   }
 
   getSubscriptions(){

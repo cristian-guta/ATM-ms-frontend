@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import { Client } from './models/client';
 import { ImageModel } from './models/image-model';
 import { HttpClient } from '@angular/common/http';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @Component({
@@ -19,7 +19,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
     title = 'ATM - Project';
     currentUser: Observable<any>;
     loginOrRegister = false;
@@ -28,14 +28,14 @@ export class AppComponent implements OnInit{
     profilePicture: ImageModel;
     imgSrc: String;
 
-    ngOnInit(){
+    ngOnInit() {
         this.currentUser = this._auth.currentUser;
         this.currentUser.subscribe((client: Client) => {
             this.client = client;
-        });
-        this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
-            this.profilePicture = image;
-            this.imgSrc = new String(image.picByte);
+            this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
+                this.profilePicture = image;
+                this.imgSrc = new String(image.picByte);
+            });
         });
     }
 
@@ -48,9 +48,9 @@ export class AppComponent implements OnInit{
         private authService: SocialAuthService,
         private tokenService: TokenService,
         private httpClient: HttpClient,
-        
+
     ) {
-        
+
         this._router.events.pipe(
             filter(event => event instanceof NavigationEnd),
             map(() => {
@@ -71,23 +71,23 @@ export class AppComponent implements OnInit{
             }
             this._title.setTitle(title);
         });
-        
+
     }
 
     isAdmin() {
         return this._auth.getRole().includes('ADMIN');
     }
 
-    isUser(){
+    isUser() {
         return this._auth.getRole().includes('ROLE');
     }
 
-    checkCurrentUser(){
+    checkCurrentUser() {
 
-        if(this.currentUser){
+        if (this.currentUser) {
             return true;
         }
-        else{
+        else {
             this._auth.currentUser.subscribe(user => {
                 this.currentUser = user;
             });
@@ -105,16 +105,16 @@ export class AppComponent implements OnInit{
     // }
 
     logout(): void {
-        this.profilePicture=null;
+        this.profilePicture = null;
         this._auth.logout();
         this.authService.signOut().then(
             data => {
-              this.tokenService.logOut();
-              this.loggedIn = false;
+                this.tokenService.logOut();
+                this.loggedIn = false;
             }
         );
     }
 
 
-    
+
 }

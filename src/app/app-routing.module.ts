@@ -12,7 +12,7 @@ const routes: Routes = [
     pathMatch: 'full',
     canActivate: [AuthGuard],
     data: {
-        roles: ['ANONYMOUS', 'USER', 'ADMIN'],
+      roles: ['ANONYMOUS', 'USER', 'ADMIN'],
     }
   },
   {
@@ -20,7 +20,7 @@ const routes: Routes = [
     loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule),
     canActivate: [AuthGuard],
     data: {
-        roles: ['ANONYMOUS']
+      roles: ['ANONYMOUS']
     }
   },
   {
@@ -28,7 +28,7 @@ const routes: Routes = [
     loadChildren: () => import('./components/subscriptions/subscriptions.module').then(m => m.SubscriptionsModule),
     canActivate: [AuthGuard],
     data: {
-        roles: ['ANONYMOUS', 'USER', 'ADMIN']
+      roles: ['ANONYMOUS', 'USER', 'ADMIN']
     },
     // runGuardsAndResolvers: 'always'
   },
@@ -37,7 +37,7 @@ const routes: Routes = [
     loadChildren: () => import('./components/operations/operations.module').then(m => m.OperationsModule),
     canActivate: [AuthGuard],
     data: {
-        roles: ['ANONYMOUS', 'USER', 'ADMIN']
+      roles: ['ANONYMOUS', 'USER', 'ADMIN']
     },
     runGuardsAndResolvers: 'always'
   },
@@ -46,7 +46,7 @@ const routes: Routes = [
     loadChildren: () => import('./components/benefits/benefits.module').then(m => m.BenefitsModule),
     canActivate: [AuthGuard],
     data: {
-        roles: ['ANONYMOUS', 'USER', 'ADMIN']
+      roles: ['ANONYMOUS', 'USER', 'ADMIN']
     }
   },
   {
@@ -54,7 +54,7 @@ const routes: Routes = [
     loadChildren: () => import('./components/accounts/accounts.module').then(m => m.AccountsModule),
     canActivate: [AuthGuard],
     data: {
-        roles: ['USER', 'ADMIN']
+      roles: ['USER', 'ADMIN']
     }
   },
   {
@@ -62,16 +62,16 @@ const routes: Routes = [
     loadChildren: () => import('./components/clients/clients.module').then(m => m.ClientsModule),
     canActivate: [AuthGuard],
     data: {
-        roles: ['ADMIN'],
-        animationsState: 'ClientsAnimation'
+      roles: ['ADMIN'],
+      animationsState: 'ClientsAnimation'
     }
   },
   {
     path: 'updateUserData',
-    loadChildren: () => import('./components/update-user-data/updateUserData.module').then(m => m.UpdateUserDataModule  ),
+    loadChildren: () => import('./components/update-user-data/updateUserData.module').then(m => m.UpdateUserDataModule),
     canActivate: [AuthGuard],
     data: {
-        roles: ['ANONYMOUS', 'USER']
+      roles: ['ANONYMOUS', 'USER']
     }
   },
   {

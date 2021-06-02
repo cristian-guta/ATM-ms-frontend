@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { SubscriptionsModule } from '../components/subscriptions/subscriptions.module';
 
 
 
@@ -34,7 +35,8 @@ import { MatListModule } from '@angular/material/list';
         MatInputModule,
         MatFormFieldModule,
         MatSidenavModule,
-        MatListModule
+        MatListModule,
+        SubscriptionsModule
     ],
     exports:[
         MatCardModule,

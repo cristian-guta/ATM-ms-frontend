@@ -1,7 +1,10 @@
 <div>
     <div *ngIf="!isAdmin()">
-        <button mat-stroked-button *ngIf = "clientAccount===null" (click)="openModal()" class="btn btn-sm btn-primary">New account</button>
-        <mat-card *ngIf = "clientAccount!==null">
+        <button mat-stroked-button *ngIf = "clientAccount?.name===null" (click)="openModal()" class="btn btn-sm btn-primary">New account</button>
+        <mat-card *ngIf="clientAccount?.name===null">
+            <p>You don't have an account. Would you like to open a new one?</p>
+        </mat-card>
+        <mat-card *ngIf = "clientAccount?.name!==null">
             <mat-card-title>{{ clientAccount?.name }}</mat-card-title>
             <mat-card-subtitle>{{ clientAccount?.details }}</mat-card-subtitle>
             <mat-card-content>
@@ -14,10 +17,6 @@
                 <button mat-stroked-button (click)="withdraw(clientAccount)">Withdraw</button>
                 <button mat-stroked-button (click)="transfer(clientAccount)">Transfer</button> 
             </mat-card-actions>
-        </mat-card>
-
-        <mat-card *ngIf="clientAccount===null">
-            <p>You don't have an account. Would you like to open a new one?</p>
         </mat-card>
     </div>
     
@@ -43,11 +42,11 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Details</th>
                 <th mat-cell *matCellDef="let account">{{ account?.details }}</th>
             </ng-container>
-<!--             
+            
             <ng-container  matColumnDef="owner">
                 <th mat-header-cell *matHeaderCellDef>Owner's username</th>
-                <th mat-cell *matCellDef="let account">{{ account?.client.cnp }}</th>
-            </ng-container> -->
+                <th mat-cell *matCellDef="let account">{{ account?.client?.username }}</th>
+            </ng-container>
 
             <ng-container matColumnDef="operations">
                 <th mat-header-cell *matHeaderCellDef>Operations</th>

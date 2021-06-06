@@ -5,6 +5,7 @@ import { Operation } from 'src/app/models/operation';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { ClientService } from 'src/app/services/client.service';
 
 @Component({
   selector: 'app-operations',
@@ -25,7 +26,8 @@ export class OperationsComponent implements OnInit {
 
   constructor(
     private _auth: AuthenticationService,
-    private operationsService: OperationsService
+    private operationsService: OperationsService,
+    private _clientService: ClientService
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +37,11 @@ export class OperationsComponent implements OnInit {
   getAllOperations(size, index){
     this.operationsService.getAllOperations(index, size)
     .subscribe(result => {
+      for(let op of result.content){
+        this._clientService.getById(op.clientId).subscribe(cl => {
+          op.client = cl;
+        })
+      }
       this.operations=result.content;
       this.operations.paginator = this.paginator;
       this.length = result.totalElements;

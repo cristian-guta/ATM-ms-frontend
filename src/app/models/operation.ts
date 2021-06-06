@@ -7,5 +7,6 @@ export class Operation{
     amount?: number;
     dateOfOperation?: Date;
     client?: Client;
+    clientId?: number;
     account?: Account;
 }

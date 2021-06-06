@@ -22,7 +22,7 @@
         
         <ng-container  matColumnDef="client">
             <th mat-header-cell *matHeaderCellDef>Owner's CNP</th>
-            <th mat-cell *matCellDef="let operation">{{ operation.client.cnp }}</th>
+            <th mat-cell *matCellDef="let operation">{{ operation?.client?.username }}</th>
         </ng-container>
 
         <ng-container  matColumnDef="account">

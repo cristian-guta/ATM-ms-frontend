@@ -2,7 +2,6 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { AccountsComponent } from './accounts.component';
 import { AccountsRoutingModule } from './accounts-routing.module';
-import { EmptyStringPipe } from 'src/app/pipes/empty-string.pipe';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BankAccountModalComponent } from 'src/app/modals/bank-account-modal/bank-account-modal.component';
@@ -28,7 +27,7 @@ import { MatCardModule } from '@angular/material/card';
     MatPaginatorModule,
     MatButtonModule,
     MatButtonToggleModule,
-    MatCardModule
+    MatCardModule,
   ],
   entryComponents: [BankAccountModalComponent],
   exports: [

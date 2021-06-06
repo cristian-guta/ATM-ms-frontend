@@ -19,6 +19,9 @@
         </div>
         <small *ngIf="isInvalid('amount')" class="form-text text-danger">Amount is required.</small>
         <small *ngIf="isGreater('amount')" class="form-text text-danger">You want to transfer more than you own.</small>
+        <mat-error *ngIf="transferForm.get('amount').hasError('min')">
+            Minimum sum is 1 unit!
+          </mat-error>
     </div>
 
     <div class="form-group">
@@ -29,7 +32,7 @@
     </div>
 
     <div class="form-group mb-0">
-        <input  type="submit" [value]="amount ? 'Deposit': 'Please enter amount'"
+        <input  type="submit" [disabled]="transferForm.invalid" [value]="amount ? 'Deposit': 'Please enter amount'"
              class="btn btn-sm btn-success" > 
     </div>
 </form>

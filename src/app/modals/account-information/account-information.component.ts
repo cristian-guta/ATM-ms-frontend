@@ -1,15 +1,13 @@
 import { ToastService } from './../../services/toast.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Client } from 'src/app/models/client';
 import { ClientService } from 'src/app/services/client.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ImageModel } from 'src/app/models/image-model';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImageService } from 'src/app/services/image.service';
-import { ConvertActionBindingResult } from '@angular/compiler/src/compiler_util/expression_converter';
 
 
 @Component({
@@ -19,7 +17,6 @@ import { ConvertActionBindingResult } from '@angular/compiler/src/compiler_util/
 })
 export class AccountInformationComponent implements OnInit, AfterViewInit {
 
-    // @Input() allowEdit = false;
     accountForm: FormGroup;
     currentUser: Client;
     isModal = false;
@@ -68,14 +65,12 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
             role: [{ value: '', disabled: true }, Validators.required],
             email: [{ value: '' }, [Validators.required, Validators.email]],
             address: [{ value: '' }, Validators.required],
-            cnp: [{ value: '' }, Validators.required],
         });
         this.getUserInfo();
         this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
             this.profilePic = image;
             this.imgName = image.name;
             this.imgSrc = image.picByte.toString();
-            console.log(image.picByte)
         });
     }
 
@@ -90,7 +85,6 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
                     role: this.currentUser.role,
                     email: this.currentUser.email,
                     address: this.currentUser.address
-                    // cnp: this.currentUser.cnp
                 });
             });
         this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
@@ -111,7 +105,6 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
         this.username.enable();
         this.email.enable();
         this.address.enable();
-        this.cnp.enable();
     }
 
     disableFields() {
@@ -119,18 +112,8 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
         this.lastName.disable();
         this.email.disable();
         this.address.disable();
-        this.cnp.disable();
         this.username.disable();
     }
-
-    // onChange(value) {
-    //     this.allowEdit = value;
-    //     if (this.allowEdit) {
-    //         this.enableFields();
-    //     } else {
-    //         this.disableFields();
-    //     }
-    // }
 
     get firstName(): AbstractControl {
         return this.accountForm.get('firstName');
@@ -138,10 +121,6 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
 
     get lastName(): AbstractControl {
         return this.accountForm.get('lastName');
-    }
-
-    get cnp(): AbstractControl {
-        return this.accountForm.get('cnp');
     }
 
     get username(): AbstractControl {
@@ -177,7 +156,6 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
             firstName: this.firstName.value,
             lastName: this.lastName.value,
             username: this.username.value,
-            cnp: this.cnp.value,
             email: this.email.value,
             address: this.address.value,
             status: this.currentUser.status,

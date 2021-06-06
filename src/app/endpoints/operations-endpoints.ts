@@ -1,7 +1,8 @@
 export class OperationsEndpoints{
-    allOperations='api/operations';
+    api = 'account-service/';
+    allOperations='operations';
 
     getAllOperations(page, size){
-        return this.allOperations + '/' + page + '/' + size;
+        return this.api + this.allOperations + '/' + page + '/' + size;
     }
 }

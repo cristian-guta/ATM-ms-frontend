@@ -36,7 +36,7 @@ export class TransferMoneyModalComponent implements OnInit {
     this.onClose = new Subject();
     this.transferForm = this._fb.group({
       receiverId: ['', Validators.required],
-      amount: ['', Validators.required],
+      amount: ['', [Validators.required, Validators.min(1)]],
       message: ['', Validators.required]
     });
   }
@@ -77,6 +77,11 @@ export class TransferMoneyModalComponent implements OnInit {
     const control = this.transferForm.get(field);
     return control.value>this.transferFrom.amount;
   }
+
+  isPositive(field): boolean {
+    const control = this.transferForm.get(field);
+    return control.value>0;
+  }
   
   save(): void{
     this.saving=true;
@@ -87,7 +92,9 @@ export class TransferMoneyModalComponent implements OnInit {
           this.onClose.next();
           this.hideModal();
           this._toast.showSuccess('Amount successfully transfered!');
-          window.location.reload();
+          // window.location.reload();
+        }, err => {
+          this._toast.showError(err.error.message);
         });
     }
     else{

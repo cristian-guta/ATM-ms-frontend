@@ -81,7 +81,7 @@ export function tokenGetter() {
       AuthenticationModule,
       OAuthModule.forRoot(),
       SocialLoginModule,
-      WebcamModule
+      WebcamModule,
   ],
   providers: [
     {

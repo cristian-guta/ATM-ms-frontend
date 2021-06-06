@@ -22,15 +22,16 @@ export class ReviewComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  IsWait: boolean = true;
   reviews: MatTableDataSource<Review>;
   reviewForm: FormGroup;
   user: Client;
   revEnds = new ReviewEndpoints();
 
-  
+
   length: number;
-  pageSize: number=5;
-  pageIndex:number = 0;
+  pageSize: number = 5;
+  pageIndex: number = 0;
 
   displayColumns: string[] = [];
 
@@ -39,8 +40,6 @@ export class ReviewComponent implements OnInit {
     private _reviewService: ReviewService,
     private _toast: ToastService,
     private _fb: FormBuilder,
-
-    
     private _clientService: ClientService
   ) { }
 
@@ -54,25 +53,25 @@ export class ReviewComponent implements OnInit {
     });
   }
 
-  get title(): AbstractControl{
+  get title(): AbstractControl {
     return this.reviewForm.get('title');
   }
 
-  get description(): AbstractControl{
+  get description(): AbstractControl {
     return this.reviewForm.get('description');
   }
 
-  get clientId(): AbstractControl{
+  get clientId(): AbstractControl {
     return this.reviewForm.get('clientId');
   }
 
-  get client(): AbstractControl{
+  get client(): AbstractControl {
     return this.reviewForm.get('client')
   }
 
-  getData(index, size){
+  getData(index, size) {
     this._reviewService.getAllReviews(index, size).subscribe(data => {
-      this.reviews=data.content;
+      this.reviews = data.content;
       this.reviews.paginator = this.paginator;
       this.length = data.totalElements;
       data.content.forEach(rev => {
@@ -80,27 +79,26 @@ export class ReviewComponent implements OnInit {
           rev.client = client;
         });
       });
-      
+      this.IsWait = false;
     });
-    // console.log(this.reviews);
   }
 
-  create(){
+  create() {
     const review: Review = {
       title: this.title.value,
       description: this.description.value,
       clientId: this.clientId.value,
       client: this.client.value
     };
-    
-    this._reviewService.createReview(review).subscribe( res => {
+
+    this._reviewService.createReview(review).subscribe(res => {
       window.location.reload();
     }, err => {
       console.log(err.error.message);
     })
   }
 
-  handleRequest(event: any){
+  handleRequest(event: any) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.getData(this.pageIndex, this.pageSize);

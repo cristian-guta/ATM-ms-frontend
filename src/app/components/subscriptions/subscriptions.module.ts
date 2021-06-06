@@ -12,6 +12,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
     declarations: [
@@ -26,7 +27,8 @@ import { MatCardModule } from '@angular/material/card';
         MatTableModule,
         MatButtonModule,
         MatButtonToggleModule,
-        MatCardModule
+        MatCardModule,
+        MatProgressSpinnerModule
     ],
     entryComponents: [SubscriptionModalComponent],
     exports: [

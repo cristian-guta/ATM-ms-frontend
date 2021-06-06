@@ -33,7 +33,7 @@ export class AccountsComponent implements OnInit {
   loading = true;
   modalRef: BsModalRef;
   clients: Client[] = [];
-
+  IsWait: boolean = true;
   length: number;
   pageSize: number = 5;
   pageIndex: number = 0;
@@ -61,6 +61,7 @@ export class AccountsComponent implements OnInit {
           .subscribe((result: Account) => {
             this.clientAccount = result;
             this.loading = false;
+            this.IsWait=false;
           });
       }
       else {
@@ -88,6 +89,7 @@ export class AccountsComponent implements OnInit {
 
         this.allAccounts.paginator = this.paginator;
         this.length = result.totalElements;
+        this.IsWait=false;
       });
 
   }

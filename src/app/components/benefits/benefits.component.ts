@@ -25,7 +25,7 @@ export class BenefitsComponent implements OnInit {
   length: number = 0;
   pageSize: number=5;
   pageIndex:number = 0;
-
+  IsWait: boolean = true;
   displayColumns: string[] = ['id', 'description'];
 
   constructor(
@@ -49,6 +49,7 @@ export class BenefitsComponent implements OnInit {
         this.benefits = result.content;
         // this.benefits.paginator = this.paginator;
         this.length = result.totalElements;
+        this.IsWait=false;
       });
     }
     else{
@@ -57,6 +58,7 @@ export class BenefitsComponent implements OnInit {
           this.benefits = result.content;
           // this.benefits.paginator = this.paginator;
           this.length = result.totalElements;
+          this.IsWait=false;
        });
     }
     // if(this.benefits.length ===0){

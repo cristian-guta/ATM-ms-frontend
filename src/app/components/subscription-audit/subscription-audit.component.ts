@@ -19,7 +19,7 @@ export class SubscriptionAuditComponent implements OnInit {
   length: number;
   pageSize: number=5;
   pageIndex:number = 0;
-
+  IsWait: boolean = true;
   displayColumns: string[] = ['id', 'rev', 'revTypeString','name', 'price', 'user'];
 
   constructor(
@@ -48,7 +48,8 @@ export class SubscriptionAuditComponent implements OnInit {
       this.subscriptionsAudit = data.content;
       this.subscriptionsAudit.paginator = data.paginator;
       this.length = data.totalElements;
-    })
+      this.IsWait = false;
+    });
   }
 
   handleRequest(event: any){

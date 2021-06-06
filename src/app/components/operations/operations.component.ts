@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { OperationsService } from 'src/app/services/operations.service';
 import { Operation } from 'src/app/models/operation';
@@ -21,8 +21,9 @@ export class OperationsComponent implements OnInit {
   displayColumns: string[] = ['id', 'type', 'amount', 'date', 'client', 'account'];
 
   length: number;
-  pageSize: number=5;
-  pageIndex:number = 0;
+  pageSize: number = 5;
+  pageIndex: number = 0;
+  IsWait: boolean = true;
 
   constructor(
     private _auth: AuthenticationService,
@@ -34,21 +35,24 @@ export class OperationsComponent implements OnInit {
     this.getAllOperations(this.pageSize, this.pageIndex)
   }
 
-  getAllOperations(size, index){
+  getAllOperations(size, index) {
+
     this.operationsService.getAllOperations(index, size)
-    .subscribe(result => {
-      for(let op of result.content){
-        this._clientService.getById(op.clientId).subscribe(cl => {
-          op.client = cl;
-        })
-      }
-      this.operations=result.content;
-      this.operations.paginator = this.paginator;
-      this.length = result.totalElements;
-    });
+      .subscribe(result => {
+        for (let op of result.content) {
+          this._clientService.getById(op.clientId).subscribe(cl => {
+            op.client = cl;
+          })
+        }
+        this.operations = result.content;
+        this.operations.paginator = this.paginator;
+        this.length = result.totalElements;
+        this.IsWait = false;
+      });
+
   }
 
-  handleRequest(event: any){
+  handleRequest(event: any) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.getAllOperations(this.pageSize, this.pageIndex);
@@ -65,8 +69,8 @@ export class OperationsComponent implements OnInit {
     return this._auth.getRole().includes('ADMIN');
   }
 
-  isUser(){
+  isUser() {
     return this._auth.getRole().includes('ROLE');
-}
+  }
 
 }

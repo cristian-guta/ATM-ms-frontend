@@ -20,6 +20,7 @@ export class BenefitAuditComponent implements OnInit {
   length: number;
   pageSize: number=5;
   pageIndex:number = 0;
+  IsWait: boolean = true;
 
   displayColumns: string[] = ['id', 'rev', 'revTypeString', 'user', 'description'];
 
@@ -49,7 +50,8 @@ export class BenefitAuditComponent implements OnInit {
       this.benefitsAudit = data.content;
       this.benefitsAudit.paginator = data.paginator;
       this.length = data.totalElements;
-    })
+      this.IsWait = false;
+    });
   }
 
   handleRequest(event: any){

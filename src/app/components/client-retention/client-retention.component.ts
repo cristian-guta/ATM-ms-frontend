@@ -22,9 +22,9 @@ export class ClientRetentionComponent implements OnInit {
   displayColumns: string[] = ['id', 'firstName', 'lastName', 'username', 'email'];
 
   length: number;
-  pageSize: number=5;
-  pageIndex:number = 0;
-
+  pageSize: number = 5;
+  pageIndex: number = 0;
+  IsWait: boolean = true;
 
   constructor(
     private clientService: ClientService,
@@ -35,22 +35,21 @@ export class ClientRetentionComponent implements OnInit {
     this.getData(this.pageIndex, this.pageSize);
   }
 
-  getData(index: number, size: number){
+  getData(index: number, size: number) {
     this._clRetentionService.getAllRetentionData(index, size).subscribe(data => {
       this.retentionData = data.content;
       this.retentionData.paginator = this.paginator;
       this.length = data.totalElements;
-      
       data.content.forEach((retention: ClientRetention) => {
         this.clientService.getById(retention.clientId).subscribe((client: Client) => {
           retention.client = client;
         });
       });
-
+      this.IsWait = false;
     });
   }
 
-  handleRequest(event: any){
+  handleRequest(event: any) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.getData(this.pageIndex, this.pageSize);

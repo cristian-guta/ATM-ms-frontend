@@ -28,6 +28,7 @@ export class SubscriptionsComponent implements OnInit {
   deactivated: boolean = false;
   deleteLoading = false;
   listOfClients: Client[];
+  IsWait: boolean = true;
 
   constructor(
     private _auth: AuthenticationService,
@@ -46,6 +47,7 @@ export class SubscriptionsComponent implements OnInit {
           this.hasSubscription = true;
           this.subscription = sub;
         });
+        this.IsWait = false;
       }
       else{
         this.hasSubscription = false;
@@ -56,7 +58,8 @@ export class SubscriptionsComponent implements OnInit {
 
   getSubscriptions(){
     this.subsService.getAllSubscriptions().subscribe((subs: Subscription[]) => {
-      this.subscriptions = subs;     
+      this.subscriptions = subs;   
+      this.IsWait = false;  
     });
   }
 

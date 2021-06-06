@@ -1,34 +1,36 @@
 import { NgModule } from "@angular/core";
-import { BenefitsComponent } from './benefits.component';
 import { CommonModule } from '@angular/common';
-import { BenefitsRoutingModule } from './benefits-routing.module';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
-import { MatSortModule } from '@angular/material/sort';
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { SubscriptionAuditComponent } from "./subscription-audit.component";
+import { SubscriptionAuditRoutingModule } from "./subscription-audit-routing.module";
 
 @NgModule({
     declarations: [
-        BenefitsComponent,
+        SubscriptionAuditComponent,
     ],
     imports: [
         CommonModule,
-        BenefitsRoutingModule,
+        SubscriptionAuditRoutingModule,
         FormsModule,
         MatTableModule,
         MatSortModule,
         MatPaginatorModule,
         MatButtonModule,
         MatButtonToggleModule,
+        MatCardModule,
         MatProgressSpinnerModule
     ],
     exports: [
         MatTableModule,
         MatButtonModule,
         MatButtonToggleModule,
-      ]
+    ]
 })
-export class BenefitsModule{}
+export class SubscriptionAuditModule{}

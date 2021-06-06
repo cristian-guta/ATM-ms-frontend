@@ -7,15 +7,16 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
-import { ClientEmotionsComponent } from "./client-emotions.component";
+import { BenefitAuditRoutingModule } from "./benefit-audit-routing.module";
+import { BenefitAuditComponent } from "./benefit-audit.component";
 
 @NgModule({
     declarations: [
-        ClientEmotionsComponent,
+        BenefitAuditComponent,
     ],
     imports: [
         CommonModule,
-        ClientEmotionsModule,
+        BenefitAuditRoutingModule,
         FormsModule,
         MatTableModule,
         MatSortModule,
@@ -30,4 +31,4 @@ import { ClientEmotionsComponent } from "./client-emotions.component";
         MatButtonToggleModule,
       ]
 })
-export class ClientEmotionsModule{}
+export class BenefitsAuditModule{}

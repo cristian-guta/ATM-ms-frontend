@@ -1,7 +1,5 @@
 import { NgModule } from "@angular/core";
-import { BenefitsComponent } from './benefits.component';
 import { CommonModule } from '@angular/common';
-import { BenefitsRoutingModule } from './benefits-routing.module';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
@@ -9,14 +7,16 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { ClientRetentionComponent } from "./client-retention.component";
+import { ClientsRetentionRoutingModule } from "./client-retention-routing.module";
 
 @NgModule({
     declarations: [
-        BenefitsComponent,
+        ClientRetentionComponent,
     ],
     imports: [
         CommonModule,
-        BenefitsRoutingModule,
+        ClientsRetentionRoutingModule,
         FormsModule,
         MatTableModule,
         MatSortModule,
@@ -29,6 +29,6 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
         MatTableModule,
         MatButtonModule,
         MatButtonToggleModule,
-      ]
+    ]
 })
-export class BenefitsModule{}
+export class ClientRetentionModule { }

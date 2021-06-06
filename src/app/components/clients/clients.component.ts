@@ -22,6 +22,7 @@ export class ClientsComponent implements OnInit {
   length: number;
   pageSize: number = 5;
   pageIndex: number = 0;
+  IsWait: boolean = true;
 
   constructor(
     private clientService: ClientService,
@@ -45,6 +46,7 @@ export class ClientsComponent implements OnInit {
         this.clients = result.content;
         this.clients.paginator = this.paginator;
         this.length = result.totalElements;
+        this.IsWait = false;
       });
   }
 

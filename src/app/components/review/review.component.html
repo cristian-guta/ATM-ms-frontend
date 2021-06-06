@@ -3,24 +3,23 @@
         There are no reviews!
     </mat-card>
 </div>
-
+<div class="center">
+    <mat-progress-spinner mode="indeterminate" *ngIf="IsWait">
+    </mat-progress-spinner>
+</div>
 <div class="mat-elevation-z8" *ngIf="reviews?.data?.length!==0">
-            <mat-card *ngFor="let rev of reviews" class="flex-container" style="margin-right: 2%;" >
-                <mat-card-title>{{rev.title}}</mat-card-title>
-                <mat-card-content>
-                    {{rev.description}}
-                </mat-card-content>
-                <mat-card-content>
-                    <p>By {{rev.client?.firstName + ' ' + rev.client?.lastName}} </p>
-                </mat-card-content>
-            </mat-card>
+    <mat-card *ngFor="let rev of reviews" class="flex-container" style="margin-right: 2%;">
+        <mat-card-title>{{rev.title}}</mat-card-title>
+        <mat-card-content>
+            {{rev.description}}
+        </mat-card-content>
+        <mat-card-content>
+            <p>By {{rev.client?.firstName + ' ' + rev.client?.lastName}} </p>
+        </mat-card-content>
+    </mat-card>
 
-    <mat-paginator 
-                    [length]="length"
-                    [pageSize]="pageSize"
-                    [pageIndex]="pageIndex"
-                    (page)="handleRequest($event)"
-                    [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" (page)="handleRequest($event)"
+        [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
 
 <form [formGroup]="reviewForm" (ngSubmit)="create()" *ngIf="isAdmin()==false">

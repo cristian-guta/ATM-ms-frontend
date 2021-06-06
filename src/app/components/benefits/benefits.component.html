@@ -1,3 +1,8 @@
+<div class="center">
+    <mat-progress-spinner mode="indeterminate" *ngIf="IsWait">
+    </mat-progress-spinner>
+</div>
+
 <div class="mat-elevation-z8" *ngIf="benefits.length !== 0">
     <mat-table #table class="mat-elevation-z8" [dataSource]="benefits" *ngIf="benefits.length !== 0" matSort>
         <ng-container matColumnDef="id">

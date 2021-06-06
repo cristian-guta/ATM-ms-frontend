@@ -9,6 +9,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { ReviewRoutingModule } from "./review-routing.module";
 import { ReviewComponent } from "./review.component";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import { ReviewComponent } from "./review.component";
         MatPaginatorModule,
         MatButtonModule,
         MatButtonToggleModule,
-        MatCardModule
+        MatCardModule,
+        MatProgressSpinnerModule
     ],
     exports: [
         MatTableModule,

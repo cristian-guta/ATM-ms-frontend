@@ -29,6 +29,7 @@ export class ClientEmotionsComponent implements OnInit {
   length: number;
   pageSize: number = 5;
   pageIndex: number = 0;
+  IsWait: boolean = true;
 
   ngOnInit(): void {
     this.getData(this.pageIndex, this.pageSize);
@@ -45,7 +46,7 @@ export class ClientEmotionsComponent implements OnInit {
           emotions.client = client;
         });
       });
-
+      this.IsWait = false;
     });
   }
 

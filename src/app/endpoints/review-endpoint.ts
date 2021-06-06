@@ -14,10 +14,10 @@ export class ReviewEndpoints{
     }
 
     getCreate(){
-        return this.api + this.create;
+        return this.api;
     }
 
     getDelete(id: number){
-        return this.api + this.delete + '/' + id;
+        return this.api + '/' + id;
     }
 }

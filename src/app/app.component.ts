@@ -12,6 +12,9 @@ import { Client } from './models/client';
 import { ImageModel } from './models/image-model';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ImageEndpoints } from './endpoints/image-endpoints';
+import { RestService } from './services/rest.service';
+import { ImageService } from './services/image.service';
 
 
 @Component({
@@ -20,6 +23,9 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
     styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+
+    private imageEndpoint: ImageEndpoints;
+
     title = 'ATM - Project';
     currentUser: Observable<any>;
     loginOrRegister = false;
@@ -32,7 +38,15 @@ export class AppComponent implements OnInit {
         this.currentUser = this._auth.currentUser;
         this.currentUser.subscribe((client: Client) => {
             this.client = client;
-            this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
+            // this.httpClient.get('http://localhost:8765/client-service/image').subscribe((image: ImageModel) => {
+            //     this.profilePicture = image;
+            //     this.imgSrc = new String(image.picByte);
+            // });
+            // this._rest.get(this.imageEndpoint.getImage()).subscribe((image: ImageModel) => {
+            //     this.profilePicture = image;
+            //     this.imgSrc = new String(image.picByte);
+            // });
+            this._imageService.getImage().subscribe((image: ImageModel) => {
                 this.profilePicture = image;
                 this.imgSrc = new String(image.picByte);
             });
@@ -48,7 +62,8 @@ export class AppComponent implements OnInit {
         private authService: SocialAuthService,
         private tokenService: TokenService,
         private httpClient: HttpClient,
-
+        private _rest: RestService,
+        private _imageService: ImageService
     ) {
 
         this._router.events.pipe(
@@ -93,7 +108,6 @@ export class AppComponent implements OnInit {
             });
             return true;
         }
-        return false;
     }
 
     openAccountInfoModal() {

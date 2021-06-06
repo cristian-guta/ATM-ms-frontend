@@ -10,9 +10,9 @@ import { AccountDepositModalComponent } from 'src/app/modals/account-deposit-mod
 import { AccountWithdrawModalComponent } from 'src/app/modals/account-withdraw-modal/account-withdraw-modal.component';
 import { Client } from 'src/app/models/client';
 import { TransferMoneyModalComponent } from 'src/app/modals/transfer-money-modal/transfer-money-modal.component';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ClientService } from 'src/app/services/client.service';
 
 @Component({
@@ -27,7 +27,7 @@ export class AccountsComponent implements OnInit {
 
   allAccounts: MatTableDataSource<Account>;
   displayColumnsAdmin: string[];
-  
+
   clientAccount: Account;
   currentClient: Client;
   loading = true;
@@ -35,8 +35,8 @@ export class AccountsComponent implements OnInit {
   clients: Client[] = [];
 
   length: number;
-  pageSize: number=5;
-  pageIndex:number = 0;
+  pageSize: number = 5;
+  pageIndex: number = 0;
 
   constructor(
     private _auth: AuthenticationService,
@@ -47,25 +47,25 @@ export class AccountsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if(this.isAdmin()){
+    if (this.isAdmin()) {
       this.displayColumnsAdmin = ['id', 'name', 'amount', 'details', 'owner'];
     }
-    else{
+    else {
       this.displayColumnsAdmin = ['id', 'name', 'amount', 'details', 'operations'];
     }
 
     this._clientService.getCurrentClient().subscribe((client: Client) => {
-      this.currentClient = client; 
-      if(!this.isAdmin()){
+      this.currentClient = client;
+      if (!this.isAdmin()) {
         this._accountService.getAccountByCNP(this.currentClient.id)
-                  .subscribe((result: Account) => {
-                      this.clientAccount = result;
-                      this.loading = false;
-                  });
+          .subscribe((result: Account) => {
+            this.clientAccount = result;
+            this.loading = false;
+          });
       }
-      else{
+      else {
         this.getData(this.pageSize, this.pageIndex);
-      } 
+      }
     });
   }
 
@@ -75,24 +75,24 @@ export class AccountsComponent implements OnInit {
     this.allAccounts.filter = filterValue;
   }
 
-  getData(size, index){
+  getData(size, index) {
     this._accountService.getAllAccounts(index, size)
-    .subscribe(result => {
-      
-      for(let acc of result.content){
-        this._clientService.getById(acc.clientId).subscribe(cl => {
-          acc.client = cl;
-        })
-      }
-      this.allAccounts = result.content;
-      
-      this.allAccounts.paginator = this.paginator;
-      this.length = result.totalElements;      
-    });
-    
+      .subscribe(result => {
+
+        for (let acc of result.content) {
+          this._clientService.getById(acc.clientId).subscribe(cl => {
+            acc.client = cl;
+          })
+        }
+        this.allAccounts = result.content;
+
+        this.allAccounts.paginator = this.paginator;
+        this.length = result.totalElements;
+      });
+
   }
 
-  handleRequest(event: any){
+  handleRequest(event: any) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.getData(this.pageSize, this.pageIndex);
@@ -109,7 +109,7 @@ export class AccountsComponent implements OnInit {
   openModal() {
     this.modalRef = this._modal.show(BankAccountModalComponent);
     this.modalRef.content.onClose.subscribe((account: Account) => {
-        this.allAccounts.data.push(account);
+      this.allAccounts.data.push(account);
     });
   }
 
@@ -120,17 +120,17 @@ export class AccountsComponent implements OnInit {
     window.location.reload();
   }
 
-  deposit(account: Account){
+  deposit(account: Account) {
     this._accountService.currAcct = account;
     this.modalRef = this._modal.show(AccountDepositModalComponent);
   }
 
-  withdraw(account: Account){
+  withdraw(account: Account) {
     this._accountService.currAcct = account;
     this.modalRef = this._modal.show(AccountWithdrawModalComponent);
   }
 
-  transfer(account: Account){
+  transfer(account: Account) {
     this._accountService.currAcct = account;
     this.modalRef = this._modal.show(TransferMoneyModalComponent);
   }

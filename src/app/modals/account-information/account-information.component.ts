@@ -67,7 +67,12 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
             address: [{ value: '' }, Validators.required],
         });
         this.getUserInfo();
-        this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
+        // this.httpClient.get('http://localhost:8765/client-service/image').subscribe((image: ImageModel) => {
+        //     this.profilePic = image;
+        //     this.imgName = image.name;
+        //     this.imgSrc = image.picByte.toString();
+        // });
+        this.imageService.getImage().subscribe((image: ImageModel) => {
             this.profilePic = image;
             this.imgName = image.name;
             this.imgSrc = image.picByte.toString();
@@ -87,7 +92,8 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
                     address: this.currentUser.address
                 });
             });
-        this.httpClient.get('http://localhost:8765/client-service/image/get').subscribe((image: ImageModel) => {
+
+        this.imageService.getImage().subscribe((image: ImageModel) => {
             this.profilePic = image;
             if (this.imgSrc != null) {
                 this.imgName = image.name;
@@ -95,8 +101,17 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
                 this.sanitizer.bypassSecurityTrustResourceUrl(this.imgSrc.toString());
             }
             this.imgSrc = image.picByte.toString();
-
         });
+        // this.httpClient.get('http://localhost:8765/client-service/image').subscribe((image: ImageModel) => {
+        //     this.profilePic = image;
+        //     if (this.imgSrc != null) {
+        //         this.imgName = image.name;
+        //         this.imgSrc = image.picByte.toString();
+        //         this.sanitizer.bypassSecurityTrustResourceUrl(this.imgSrc.toString());
+        //     }
+        //     this.imgSrc = image.picByte.toString();
+
+        // });
     }
 
     enableFields() {
@@ -231,7 +246,7 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
         const imageFile = new File([blob], imageName, { type: 'image/png' });
         const uploadImageData: FormData = new FormData();
         uploadImageData.append('imageFile', imageFile, imageName);
-        this.imageService.saveProfilePic(uploadImageData);
+        this.imageService.saveProfilePic(uploadImageData).subscribe();
     }
 
     drawImageToCanvas(image: any) {

@@ -3,12 +3,11 @@ import { Account } from '../models/account';
 export class AccountEndpoints{
     api = 'account-service/';
     accountByCNP = 'accounts/client';
-    create = 'account-service/accounts/create';
-    delete = 'accounts/delete';
-    // account = 'api/accounts';
+    create = 'account-service/accounts';
+    delete = 'accounts';
     account = 'accounts';
-    allAccounts = 'accounts/getAllAccounts';
-    update = 'accounts/update';
+    allAccounts = 'accounts';
+    update = 'accounts';
     deposit = 'accounts/deposit';
     withdraw = 'accounts/withdraw';
     transfer = 'accounts/transfer';

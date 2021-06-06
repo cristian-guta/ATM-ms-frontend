@@ -57,14 +57,14 @@ export class AccountWithdrawModalComponent implements OnInit {
     this.getUserInfo();
   }
 
-  getUserInfo(){
+  getUserInfo() {
     this._userService.getCurrentClient()
-            .subscribe((rUser: Client) => {
-                this.currentUser = rUser;
-            });
+      .subscribe((rUser: Client) => {
+        this.currentUser = rUser;
+      });
   }
 
-  get amount(){
+  get amount() {
     return this.withdrawForm.get('amount');
   }
 
@@ -74,18 +74,18 @@ export class AccountWithdrawModalComponent implements OnInit {
   }
 
   isInvalid(field): boolean {
-      const control = this.withdrawForm.get(field);
-      return control.touched && control.invalid;
-  }
-
-  isGreater(field): boolean{
     const control = this.withdrawForm.get(field);
-    return control.value>this.account.amount;
+    return control.touched && control.invalid;
   }
 
-  save(): void{
-    this.saving=true;
-    if(this.amount.value<=this.account.amount){
+  isGreater(field): boolean {
+    const control = this.withdrawForm.get(field);
+    return control.value > this.account.amount;
+  }
+
+  save(): void {
+    this.saving = true;
+    if (this.amount.value <= this.account.amount) {
       this.sendImageToAws();
       this.accountService.withdrawMoney(this.account.id, this.amount.value)
         .subscribe(() => {
@@ -96,7 +96,7 @@ export class AccountWithdrawModalComponent implements OnInit {
           window.location.reload();
         });
     }
-    else{
+    else {
       this._toast.showError('Amount is greater than how much you own!');
     }
   }
@@ -112,22 +112,22 @@ export class AccountWithdrawModalComponent implements OnInit {
   }
 
   async setupDevices() {
-      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({
-            video: true
-          });
-          if (stream) {
-            this.video.nativeElement.srcObject = stream;
-            this.video.nativeElement.play();
-            this.error = null;
-          } else {
-            this.error = "You have no output video device";
-          }
-        } catch (e) {
-          this.error = e;
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true
+        });
+        if (stream) {
+          this.video.nativeElement.srcObject = stream;
+          this.video.nativeElement.play();
+          this.error = null;
+        } else {
+          this.error = "You have no output video device";
         }
+      } catch (e) {
+        this.error = e;
       }
+    }
   }
 
   capture() {
@@ -137,16 +137,16 @@ export class AccountWithdrawModalComponent implements OnInit {
   }
 
   removeCurrent() {
-      this.isCaptured = false;
+    this.isCaptured = false;
   }
 
   setPhoto(idx: number) {
-      this.isCaptured = true;
-      var image = new Image();
-      image.src = this.captures[idx];
-    
+    this.isCaptured = true;
+    var image = new Image();
+    image.src = this.captures[idx];
+
   }
-  
+
   drawImageToCanvas(image: any) {
     this.canvas.nativeElement
       .getContext("2d")
@@ -154,23 +154,25 @@ export class AccountWithdrawModalComponent implements OnInit {
   }
 
   dataURItoBlob(dataURI) {
-      
-          var arr = dataURI.split(','), mime = arr[0].match(/:(.*?);/)[1],
-              bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-          while(n--){
-              u8arr[n] = bstr.charCodeAt(n);
-          }
-          return new Blob([u8arr], {type:mime});
+
+    var arr = dataURI.split(','), mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
   }
 
-  sendImageToAws(){
+  sendImageToAws() {
     this.capture();
     const imageName = this.currentUser.username + '.png';
     const blob = this.dataURItoBlob(this.imageUrl);
     const imageFile = new File([blob], imageName, { type: 'image/png' });
     const uploadImageData: FormData = new FormData();
     uploadImageData.append('imageFile', imageFile, imageName);
-    this.imageService.uploadToAws(uploadImageData);
+    this.imageService.uploadToAws(uploadImageData).subscribe(response => {
+      console.log(response);
+    });
   }
   // end of camera impl
 

@@ -1,5 +1,5 @@
 <div class="mat-elevation-z8" *ngIf="operations?.data?.length!==0">
-    <mat-table #table [dataSource] = "operations" matSort matSortActive="date" matSortDirection="desc" >
+    <mat-table #table [dataSource]="operations" matSort matSortActive="date" matSortDirection="desc">
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
             <th mat-cell *matCellDef="let operation; let i=index">{{ i+1 }}</th>
@@ -19,13 +19,13 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
             <th mat-cell *matCellDef="let operation">{{ operation.date }}</th>
         </ng-container>
-        
-        <ng-container  matColumnDef="client">
+
+        <ng-container matColumnDef="client">
             <th mat-header-cell *matHeaderCellDef>Owner's CNP</th>
             <th mat-cell *matCellDef="let operation">{{ operation?.client?.username }}</th>
         </ng-container>
 
-        <ng-container  matColumnDef="account">
+        <ng-container matColumnDef="account">
             <th mat-header-cell *matHeaderCellDef>Owner/Receiver account</th>
             <th mat-cell *matCellDef="let operation">{{ operation.account.name }}</th>
         </ng-container>
@@ -34,12 +34,8 @@
         <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
 
     </mat-table>
-    <mat-paginator 
-                    [length]="length"
-                    [pageSize]="pageSize"
-                    [pageIndex]="pageIndex"
-                    (page)="handleRequest($event)"
-                    [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" (page)="handleRequest($event)"
+        [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
 <div *ngIf="operations?.data?.length===0">
     <mat-card>

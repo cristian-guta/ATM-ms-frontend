@@ -5,12 +5,11 @@ export class SubscriptionEndpoints{
     currentSubscription = 'getSubscription';
     cancelSubscription = 'cancelSubscription';
     createSubscription = 'createSubscription';
-    deleteSubscription = 'deleteSubscription';
     updateSubscription = 'updateSubscription';
     activateSubscription = 'activateSubscription';
 
     getDelete(subscription: Subscription): string{
-        return this.api + this.deleteSubscription + '/' + subscription.id;
+        return this.api + subscription.id;
     }
 
     getUpdate(subscription: Subscription): string{

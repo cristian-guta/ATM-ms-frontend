@@ -5,13 +5,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { SubscriptionsModule } from 'src/app/components/subscriptions/subscriptions.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
     imports: [
@@ -25,9 +26,10 @@ import { SubscriptionsModule } from 'src/app/components/subscriptions/subscripti
         MatFormFieldModule,
         MatSidenavModule,
         MatListModule,
-        SubscriptionsModule
+        SubscriptionsModule,
+        MatProgressSpinnerModule
     ],
-    exports:[
+    exports: [
         MatCardModule,
         CommonModule,
         MatButtonModule,
@@ -39,4 +41,4 @@ import { SubscriptionsModule } from 'src/app/components/subscriptions/subscripti
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class RegisterModule{}
+export class RegisterModule { }

@@ -61,7 +61,7 @@ export class AccountsComponent implements OnInit {
           .subscribe((result: Account) => {
             this.clientAccount = result;
             this.loading = false;
-            this.IsWait=false;
+            this.IsWait = false;
           });
       }
       else {
@@ -89,7 +89,7 @@ export class AccountsComponent implements OnInit {
 
         this.allAccounts.paginator = this.paginator;
         this.length = result.totalElements;
-        this.IsWait=false;
+        this.IsWait = false;
       });
 
   }
@@ -116,9 +116,13 @@ export class AccountsComponent implements OnInit {
   }
 
   delete(account: Account) {
-    this._accountService.deleteAccount(account).subscribe(() => {
-      this._toast.showSuccess('Account successfully deleted!');
-    });
+    this._accountService.deleteAccount(account)
+      .subscribe(() => {
+        this._toast.showSuccess('Account successfully deleted!');
+      }, 
+      err => {
+        this._toast.showError('Error');
+      });
     window.location.reload();
   }
 

@@ -38,8 +38,8 @@ function checkPassword(group: FormGroup): { [key: string]: boolean } | null {
         password.value !== confirmPassword.value) {
         return { missMatch: true };
     }
-    else{
-        if(password.value<6){
+    else {
+        if (password.value < 6) {
             return { missMatch: true };
         }
     }
@@ -53,6 +53,7 @@ function checkPassword(group: FormGroup): { [key: string]: boolean } | null {
 })
 export class RegisterComponent implements OnInit {
 
+    IsWait: boolean = true;
     _authEnds = new AuthEndpoints();
     validRegister = true;
     loading = false;
@@ -78,7 +79,7 @@ export class RegisterComponent implements OnInit {
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(6)], Validators.pattern(
                 "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{8,}"
-              ),],
+            ),],
             confirmPassword: ['', Validators.required]
         },
             {
@@ -109,8 +110,8 @@ export class RegisterComponent implements OnInit {
     get confirmPassword(): AbstractControl {
         return this.registerForm.get('confirmPassword');
     }
-    
-    get cnp(): AbstractControl{
+
+    get cnp(): AbstractControl {
         return this.registerForm.get('cnp');
     }
 
@@ -142,6 +143,7 @@ export class RegisterComponent implements OnInit {
                         this._toast.showSuccess("Account created successfully!");
                         this.loading = false;
                         this._router.navigate(['/login']);
+                        this.IsWait = false;
                     },
                     error => {
                         this._toast.showError("Could not create account: " + error.error.message);
@@ -151,11 +153,12 @@ export class RegisterComponent implements OnInit {
         }
     }
 
-    getSubscriptions(){
+    getSubscriptions() {
         this.subsService.getAllSubscriptions().subscribe((subs: Subscription[]) => {
-          this.subscriptions = subs;     
+            this.subscriptions = subs;
+            this.IsWait = false;
         });
-      }
+    }
 
 }
 

@@ -26,3 +26,4 @@
 <div *ngIf="benefits.length === 0">
     <p>There are no benefits</p>
 </div>
+<button mat-stroked-button (click)="openModal()"  *ngIf="isAdmin()">Add benefit</button>

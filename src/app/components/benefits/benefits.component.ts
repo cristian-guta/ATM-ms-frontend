@@ -7,6 +7,8 @@ import { SubscriptionService } from 'src/app/services/subscription.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { AddBenefitModalComponent } from 'src/app/modals/add-benefit-modal/add-benefit-modal.component';
 
 
 @Component({
@@ -21,16 +23,20 @@ export class BenefitsComponent implements OnInit {
 
   // benefits: MatTableDataSource<Benefit>;
   benefits: Benefit[] = [];
+  benefit: Benefit;
   subscription: Subscription;
   length: number = 0;
   pageSize: number=5;
   pageIndex:number = 0;
   IsWait: boolean = true;
   displayColumns: string[] = ['id', 'description'];
+  modalRef: BsModalRef;
 
   constructor(
     private _auth: AuthenticationService,
-    private benefitService: BenefitService,    
+    private benefitService: BenefitService,  
+    private _modal: BsModalService,
+      
   ) { }
 
   applyFilter(filterValue: string) {
@@ -70,6 +76,13 @@ export class BenefitsComponent implements OnInit {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.getData(this.pageIndex, this.pageSize);
+  }
+
+  openModal() {
+    this.modalRef = this._modal.show(AddBenefitModalComponent);
+    this.modalRef.content.onClose.subscribe((benefit: Benefit) => {
+        this.benefits.push(benefit);
+    });
   }
 
   isAdmin() {

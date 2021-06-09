@@ -29,7 +29,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import { OAuthModule } from 'angular-oauth2-oidc';
-import { GoogleLoginProvider, SocialLoginModule } from 'angularx-social-login';
+import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { UpdateUserDataComponent } from './components/update-user-data/update-user-data.component';
 import { BenefitAuditComponent } from './components/benefit-audit/benefit-audit.component';
 import { SubscriptionAuditComponent } from './components/subscription-audit/subscription-audit.component';
@@ -38,6 +38,7 @@ import { ClientRetentionComponent } from './components/client-retention/client-r
 import { WebcamModule } from 'ngx-webcam';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ClientEmotionsComponent } from './components/client-emotions/client-emotions.component';
+import { AddBenefitModalComponent } from './modals/add-benefit-modal/add-benefit-modal.component';
 
 
 
@@ -53,7 +54,7 @@ export function tokenGetter() {
   declarations: [
     AppComponent,
     AccountInformationComponent, SubscriptionModalComponent, BankAccountModalComponent, AccountDepositModalComponent, AccountWithdrawModalComponent, TransferMoneyModalComponent, UpdateUserDataComponent, 
-    BenefitAuditComponent, SubscriptionAuditComponent, ReviewComponent, ClientRetentionComponent, ClientEmotionsComponent,
+    BenefitAuditComponent, SubscriptionAuditComponent, ReviewComponent, ClientRetentionComponent, ClientEmotionsComponent, AddBenefitModalComponent,
     
   ],
   imports: [
@@ -94,9 +95,13 @@ export function tokenGetter() {
           provider: new GoogleLoginProvider(
             '1035830881982-cbb7aagoc449t8s0u6h5gimknkf2fh7d.apps.googleusercontent.com'
           ),
-        }
+        },
+        {
+          id: FacebookLoginProvider.PROVIDER_ID,
+          provider: new FacebookLoginProvider('1460255810995848'),
+        },
       ]
-    }
+    } as SocialAuthServiceConfig,
   },
     {
       

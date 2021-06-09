@@ -1,28 +1,26 @@
+<div class="center">
+  <mat-progress-spinner mode="indeterminate" *ngIf="IsWait">
+  </mat-progress-spinner>
+</div>
 <nav class="navbar navbar-expand navbar-dark bg-dark">
-  <div class="container">
+  <div class="container" style="width: 100%; ">
     <div class="navbar-nav">
       <a href="#" class="navbar-brand ml-10px">
         <h2>ATM - Online</h2>
       </a>
     </div>
-    <!-- <div class="dropdown-menu-right">
-      <button mat-stroked-button routerLink="/login" class="dropdown-item">Login</button>
-      <button mat-stroked-button routerLink="/register" class="dropdown-item">Register</button>
-    </div> -->
-
-
   </div>
 </nav>
 
-<div style="margin-top: 3%;">
-  <h3>All in one!</h3>
-  <h2>Join our app to activate directly a phone subscription without using other third-party apps!</h2>
+<div style="margin-top: 3%; width: 100%; ">
+  <h1>All in one!</h1>
+  <h2>Join our app to directly activate a phone subscription without using other third-party apps!</h2>
 </div>
 
 
 <div fxLayout="row" fxLayoutAlign="space-between center" class="login-wrapper" class="flex-container-page"
-  style="margin-top: 3%;">
-  <div class="flex-container-subscriptions">
+  style="margin-top: 3%; width: 100%;">
+  <div class="flex-container-subscriptions" style="align-items: center;">
     <div *ngFor="let sub of subscriptions" style="margin-right: 2%;">
       <mat-card>
         <mat-card-title>{{ sub.name }}</mat-card-title>

@@ -16,4 +16,8 @@ export class BenefitEndpoints{
         return this.api + this.unpagedBenefits;
     }
 
+    getCreate(){
+        return this.api;
+    }
+
 }

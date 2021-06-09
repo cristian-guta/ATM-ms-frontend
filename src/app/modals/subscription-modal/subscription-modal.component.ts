@@ -45,26 +45,26 @@ export class SubscriptionModalComponent implements OnInit {
 
   }
 
-  getBenefits(){
+  getBenefits() {
     this.benefitService.getAllUnpagedBenefits()
       .subscribe((benefits: Benefit[]) => {
         benefits.forEach(element => {
-          this.benefitsList.push(element);  
+          this.benefitsList.push(element);
         });
-        
+
       });
-      
+
   }
 
-  get name(): AbstractControl{
+  get name(): AbstractControl {
     return this.subscriptionForm.get('name');
   }
 
-  get price(): AbstractControl{
+  get price(): AbstractControl {
     return this.subscriptionForm.get('price');
   }
 
-  get benefits(): AbstractControl{
+  get benefits(): AbstractControl {
     return this.subscriptionForm.get('benefits');
   }
 
@@ -74,51 +74,51 @@ export class SubscriptionModalComponent implements OnInit {
   }
 
   isInvalid(field): boolean {
-      const control = this.subscriptionForm.get(field);
-      return control.touched && control.invalid;
+    const control = this.subscriptionForm.get(field);
+    return control.touched && control.invalid;
   }
 
-  save(): void{
-    this.saving=true;
+  save(): void {
+    this.saving = true;
     const subscription: Subscription = {
       name: this.name.value,
       price: this.price.value,
       benefitIds: this.benefits.value
-      .filter((benefit: number) => this.benefitsList
-      .map((ben: Benefit) => ben.id)
-      .includes(benefit))
-      
+        .filter((benefit: number) => this.benefitsList
+          .map((ben: Benefit) => ben.id)
+          .includes(benefit))
+
     };
-    
-    if(this.subscription){
+
+    if (this.subscription) {
       subscription.id = this.subscription.id;
       this.subService.updateSubscription(subscription)
         .subscribe((uSubscription: Subscription) => {
-          this.saving=true;
+          this.saving = true;
           this.onClose.next(uSubscription);
           this.hideModal();
           this._toast.showSuccess('Changes successfully saved!');
         },
-        () => {
-          this.saving=false;
-          this._toast.showError('Failed saving changes!');
-        });
-    } else{
-      this.subService.createSubscription(subscription)
-          .subscribe((rSubscription: Subscription) => {
+          () => {
             this.saving = false;
-            this.onClose.next(rSubscription);
-            this.hideModal();
-            this._toast.showSuccess('Subscription successfully added!');
-          },
+            this._toast.showError('Failed saving changes!');
+          });
+    } else {
+      this.subService.createSubscription(subscription)
+        .subscribe((rSubscription: Subscription) => {
+          this.saving = false;
+          this.onClose.next(rSubscription);
+          this.hideModal();
+          this._toast.showSuccess('Subscription successfully added!');
+        },
           () => {
             this.saving = false;
             this._toast.showError('Failed to add subscription!');
-        });
-        
+          });
+
     }
   }
-  
+
   hideModal(): void {
     this._bsModalRef.hide();
   }

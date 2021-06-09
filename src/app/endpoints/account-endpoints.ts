@@ -1,6 +1,7 @@
+import { HttpParams } from '@angular/common/http';
 import { Account } from '../models/account';
 
-export class AccountEndpoints{
+export class AccountEndpoints {
     api = 'account-service/';
     accountByCNP = 'accounts/client';
     create = 'account-service/accounts';
@@ -12,35 +13,36 @@ export class AccountEndpoints{
     withdraw = 'accounts/withdraw';
     transfer = 'accounts/transfer';
 
-    getAllAccounts(page, size){
+    getAllAccounts(page, size) {
         return this.api + this.allAccounts + '/' + page + '/' + size;
     }
 
-    getDelete(id: number): string{
-        return this.api + this.delete + '/' + id;
+    getDelete(): string {
+
+        return this.api + this.delete;
     }
 
-    getAccount(id: number): string{
+    getAccount(id: number): string {
         return this.api + this.account + '/' + id;
     }
 
-    getUpdate(account: Account): string{
+    getUpdate(account: Account): string {
         return this.api + this.account + '/' + account.id;
     }
 
-    getDeposit(id: number, amount: number): string{
+    getDeposit(id: number, amount: number): string {
         return this.api + this.deposit + '/' + id + '/' + amount;
     }
 
-    getWithdraw(id: number, amount: number): string{
+    getWithdraw(id: number, amount: number): string {
         return this.api + this.withdraw + '/' + id + '/' + amount;
     }
 
-    getTransfer(senderId: number, receiverId: number, amount: number): string{
-        return this.api + this.transfer+ '/'+ senderId + '/' + receiverId + '/' + amount;
+    getTransfer(senderId: number, receiverId: number, amount: number): string {
+        return this.api + this.transfer + '/' + senderId + '/' + receiverId + '/' + amount;
     }
 
-    getAccountByCNP(id: number){
+    getAccountByCNP(id: number) {
         return this.api + this.accountByCNP + '/' + id;
     }
 }

@@ -32,7 +32,7 @@ export class OperationsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getAllOperations(this.pageSize, this.pageIndex)
+    this.getAllOperations(this.pageSize, this.pageIndex);
   }
 
   getAllOperations(size, index) {
@@ -42,7 +42,8 @@ export class OperationsComponent implements OnInit {
         for (let op of result.content) {
           this._clientService.getById(op.clientId).subscribe(cl => {
             op.client = cl;
-          })
+            
+          });
         }
         this.operations = result.content;
         this.operations.paginator = this.paginator;

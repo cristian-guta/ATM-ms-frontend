@@ -1,7 +1,7 @@
 import { Subscription } from './subscription';
 
 export class Benefit {
-    id: number;
+    id?: number;
     description: string;
-    subscriptions: Subscription[];
+    subscriptions?: Subscription[];
 }

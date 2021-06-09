@@ -24,7 +24,7 @@ export class AccountWithdrawModalComponent implements OnInit {
 
   WIDTH = 400;
   HEIGHT = 300;
-  isCaptured: boolean;
+  isCaptured: boolean = false;
   error: any;
 
   @ViewChild("video")
@@ -62,6 +62,7 @@ export class AccountWithdrawModalComponent implements OnInit {
       .subscribe((rUser: Client) => {
         this.currentUser = rUser;
       });
+      
   }
 
   get amount() {
@@ -165,7 +166,12 @@ export class AccountWithdrawModalComponent implements OnInit {
 
   sendImageToAws() {
     this.capture();
-    const imageName = this.currentUser.username + '.png';
+    this._userService.getCurrentClient()
+      .subscribe((rUser: Client) => {
+        this.currentUser = rUser;
+        console.log(this.currentUser);
+      });
+    const imageName = this.currentUser?.username + '.png';
     const blob = this.dataURItoBlob(this.imageUrl);
     const imageFile = new File([blob], imageName, { type: 'image/png' });
     const uploadImageData: FormData = new FormData();

@@ -11,6 +11,7 @@
     box-shadow: none;
 }
 
+
 html,
 body {
     width: 100%;
@@ -212,11 +213,12 @@ body {
 
 @media screen and (min-width: 1200px){
     .container{
-        max-width: 1300px;
+        /* max-width: 1300px; */
+        max-width: 100%;
     }
     .mat-table{
         width: 100%;
-        max-width: 1400px;
+        /* max-width: 1400px; */
     }
     .box{
         max-width: 400px;

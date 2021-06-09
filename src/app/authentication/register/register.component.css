@@ -11,10 +11,12 @@ background-size:cover;
 background-repeat:no-repeat;
 min-height:100vh;
 font-family:'Roboto', sans-serif;
+width: 100%;
 }
 
 .app-header{
 justify-content:space-between;
+width: 100%;
 position:fixed;
 top:0;
 left:0;
@@ -79,7 +81,9 @@ width:100%;
   flex-direction: row;
   width: 100%;
   position: relative;
+  align-self: auto;
   flex-wrap: wrap;
+  /* max-width: 100%; */
 }
 
 .flex-container-page{
@@ -100,4 +104,15 @@ width:100%;
   width: 100%;
   position: relative;
   height: 400px;
+}
+
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 10;
 }

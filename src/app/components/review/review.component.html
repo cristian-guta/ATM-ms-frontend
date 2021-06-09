@@ -1,11 +1,11 @@
+<div class="center">
+    <mat-progress-spinner mode="indeterminate" *ngIf="IsWait">
+    </mat-progress-spinner>
+</div>
 <div *ngIf="length===0">
     <mat-card>
         There are no reviews!
     </mat-card>
-</div>
-<div class="center">
-    <mat-progress-spinner mode="indeterminate" *ngIf="IsWait">
-    </mat-progress-spinner>
 </div>
 <div class="mat-elevation-z8" *ngIf="reviews?.data?.length!==0">
     <mat-card *ngFor="let rev of reviews" class="flex-container" style="margin-right: 2%;">

@@ -6,6 +6,8 @@ import { ToastService } from 'src/app/services/toast.service';
 import { Account } from 'src/app/models/account';
 import { Subject } from 'rxjs';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { ClientService } from 'src/app/services/client.service';
+import { Client } from 'src/app/models/client';
 
 @Component({
   selector: 'app-bank-account-modal',
@@ -19,13 +21,15 @@ export class BankAccountModalComponent implements OnInit {
   accountForm: FormGroup;
   saving = false;
   hasAccount: boolean = false;
+  client: Client;
 
   constructor(
     private _auth: AuthenticationService,
     private accountService: AccountService,
     private _bsModalRef: BsModalRef,
     private _fb: FormBuilder,
-    private _toast: ToastService
+    private _toast: ToastService,
+    private _clientService: ClientService
   ) { }
 
   ngOnInit(): void {
@@ -33,7 +37,11 @@ export class BankAccountModalComponent implements OnInit {
     this.accountForm = this._fb.group({
       name: [this.account ? this.account.name : '', Validators.required],
       amount: [this.account ? this.account.amount : null, Validators.required],
-      details: [this.account ? this.account.details : null, Validators.required]
+      details: [this.account ? this.account.details : null, Validators.required],
+      clientId: [this.account ? this.account.clientId : null]
+    });
+    this._clientService.getCurrentClient().subscribe((result:Client) => {
+      this.client = result;
     });
   }
 
@@ -59,12 +67,14 @@ export class BankAccountModalComponent implements OnInit {
       return control.touched && control.invalid;
   }
 
+
   save(): void{
     this.saving=true;
     const account: Account = {
       name: this.name.value,
       amount: this.amount.value,
-      details: this.details.value
+      details: this.details.value,
+      clientId: this.client.id
     };
     if(this.account){
       account.id = this.account.id;

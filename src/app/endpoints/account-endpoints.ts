@@ -22,27 +22,27 @@ export class AccountEndpoints {
         return this.api + this.delete;
     }
 
-    getAccount(id: number): string {
-        return this.api + this.account + '/' + id;
+    getAccount(): string {
+        return this.api + this.account;
     }
 
     getUpdate(account: Account): string {
         return this.api + this.account + '/' + account.id;
     }
 
-    getDeposit(id: number, amount: number): string {
-        return this.api + this.deposit + '/' + id + '/' + amount;
+    getDeposit(): string {
+        return this.api + this.deposit;
     }
 
-    getWithdraw(id: number, amount: number): string {
-        return this.api + this.withdraw + '/' + id + '/' + amount;
+    getWithdraw(): string {
+        return this.api + this.withdraw;
     }
 
-    getTransfer(senderId: number, receiverId: number, amount: number): string {
-        return this.api + this.transfer + '/' + senderId + '/' + receiverId + '/' + amount;
+    getTransfer(): string {
+        return this.api + this.transfer;
     }
 
-    getAccountByCNP(id: number) {
-        return this.api + this.accountByCNP + '/' + id;
+    getAccountByCNP() {
+        return this.api + this.accountByCNP;
     }
 }

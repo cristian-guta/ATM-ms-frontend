@@ -4,7 +4,6 @@ export class SubscriptionEndpoints{
     api = 'subscription-service/subscriptions/';
     currentSubscription = 'getSubscription';
     cancelSubscription = 'cancelSubscription';
-    createSubscription = 'createSubscription';
     updateSubscription = 'updateSubscription';
     activateSubscription = 'activateSubscription';
 
@@ -29,6 +28,6 @@ export class SubscriptionEndpoints{
     }
 
     getCreateSubscription(){
-        return this.api + this.createSubscription;
+        return this.api;
     }
 }

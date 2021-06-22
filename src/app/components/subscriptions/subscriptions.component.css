@@ -12,6 +12,7 @@ body{
     margin-top: 2%;
     margin-right: 200px;
     width: 100%;
+    min-width: 250px;
     position: relative;
     height: 400px;
 }

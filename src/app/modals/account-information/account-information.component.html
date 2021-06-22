@@ -1,12 +1,14 @@
-<div *ngIf="isModal" class="p-3 d-flex justify-content-between" >
-    <div>Account information</div>
+<div *ngIf="isModal" class="p-3 d-flex justify-content-between">
+    <!-- <div>Account information</div> -->
+    <div [ngClass]="{'pl-3 pr-3': isModal}" class="toggle w-fit d-flex align-items-center">
+        <span class="label pl-0">Edit information</span>
+        <!-- <ui-switch size="small" [disabled]="saving" [ngModel]="allowEdit" (ngModelChange)="onChange($event)"></ui-switch> -->
+    </div>
     <i (click)="hideModal()" class="fas fa-times cursor-pointer"></i>
 </div>
-<div [ngClass]="{'pl-3 pr-3': isModal}" class="toggle w-fit d-flex align-items-center">
-    <span class="label pl-0">Edit information</span>
-    <!-- <ui-switch size="small" [disabled]="saving" [ngModel]="allowEdit" (ngModelChange)="onChange($event)"></ui-switch> -->
-</div>
-<form [formGroup]="accountForm" enctype="multipart/form-data" (ngSubmit)="save()" [ngClass]="{'pl-3 pr-3 pb-3': isModal}">
+
+<form [formGroup]="accountForm" enctype="multipart/form-data" (ngSubmit)="save()"
+    [ngClass]="{'pl-3 pr-3 pb-3': isModal}">
     <div class="form-group">
         <br>
         <span>First name</span>
@@ -35,7 +37,7 @@
         <small *ngIf="isInvalid('username')" class="form-text text-danger">Username
             is required.</small>
     </div>
-    
+
     <div class="form-group">
         <span>Email</span>
         <div class="input-group">
@@ -55,7 +57,7 @@
         </div>
         <small *ngIf="isInvalid('address')" class="form-text text-danger">Address is
             required.</small>
-    </div>  
+    </div>
 
     <div *ngIf="profilePic?.name!==null">
         Current profile picture
@@ -74,7 +76,7 @@
         <button class="btn btn-danger" *ngIf="isCaptured" (click)="removeCurrent()">Take Another</button>
         <button class="btn btn-danger" *ngIf="isCaptured" (click)="savePhoto()">Save photo</button>
     </div>
-    
+
     <div class="form-group">
         <input [disabled]="accountForm.invalid" type="submit" value="Save changes" class="btn btn-sm btn-success">
     </div>

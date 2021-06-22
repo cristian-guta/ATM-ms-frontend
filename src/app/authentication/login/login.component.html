@@ -2,7 +2,7 @@
   <div class="container">
     <div class="navbar-nav" style="width: 100%;">
       <a href="#" class="navbar-brand ml-10px">
-        <h2>ATM - Online</h2>
+        <h2>ATM</h2>
       </a>
     </div>
   </div>
@@ -37,36 +37,21 @@
         <mat-card-actions class="example-button-row">
           <button mat-stroked-button>Log in</button>
           <button mat-stroked-button routerLink="/register">Register</button>
-          <button (click)="signInWithGoogle()">Sign in with Google</button>
-          <button (click)="signInWithFB()">Sign in with facebook</button>
+          <button type="button" (click)="signInWithFB()" mdbBtn color="fb" class="waves-light" mdbWavesEffect>
+            <i class="fab fa-facebook-f left"></i>Facebook
+          </button>
+          <button type="button" (click)="signInWithGoogle()" mdbBtn color="gplus" class="waves-light" mdbWavesEffect>
+            <i class="fab fa-google left"></i>Google
+          </button>
         </mat-card-actions>
-
       </form>
     </mat-card-content>
   </div>
 
   <div class="box">
     <h2>Features</h2>
-    <p>Simulates operations over a bank account, such as deposit, withdraw and transfer money, also delete account.</p>
-    <p>After each operation, user receives a receipt via email containg details about his action.</p>
+    <p>User can open a bank account and can perform specific actions, such as deposit, withdraw and transfer money.</p>
     <p>User can activate phone subscriptions</p>
-
+    <p>After each operation, user receives a receipt via email containg details about his action.</p>
   </div>
-
-  <!-- <div class="box>">
-    <h2>TODO:</h2>
-    <mat-divider></mat-divider>
-    <mat-list>
-      <mat-list-item role="listitem">Subscription expires after 28 days</mat-list-item>
-    </mat-list>
-  </div>
-
-  <div class="box">
-    <h2>Used technologies</h2>
-    <p>Java 8</p>
-    <p>Angular 9</p>
-    <p>Spring Framework</p>
-    <p>Login via JWT</p>
-    <p>OAuth2 for Google Login</p>
-  </div> -->
 </div>

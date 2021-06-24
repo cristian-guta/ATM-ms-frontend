@@ -5,7 +5,7 @@ export class ClientEndpoints{
     getAll = 'findAll';
     currentClient = 'current';
     updateClient = 'update';
-    deactivateClient = 'delete';
+    deactivateClient = 'deactivate';
     activateClient = 'activate';
     create = 'create';
 
@@ -18,19 +18,19 @@ export class ClientEndpoints{
     }
 
     getUnpagedClients(){
-        return this.api + this.getAll;
+        return this.api;
     }
     
     getUpdateClient(client: Client){
-        return this.api + this.updateClient + '/' + client.id;
+        return this.api + this.updateClient;
     }
 
     getDeactivateClient(client: Client){
-        return this.api + this.deactivateClient + '/' + client.id;
+        return this.api + this.deactivateClient;
     }
 
     getActivateClient(client: Client){
-        return this.api + this.activateClient + '/' + client.id;
+        return this.api + this.activateClient;
     }
 
     getCurrentClient(){

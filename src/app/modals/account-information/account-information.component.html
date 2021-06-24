@@ -1,8 +1,6 @@
 <div *ngIf="isModal" class="p-3 d-flex justify-content-between">
-    <!-- <div>Account information</div> -->
     <div [ngClass]="{'pl-3 pr-3': isModal}" class="toggle w-fit d-flex align-items-center">
         <span class="label pl-0">Edit information</span>
-        <!-- <ui-switch size="small" [disabled]="saving" [ngModel]="allowEdit" (ngModelChange)="onChange($event)"></ui-switch> -->
     </div>
     <i (click)="hideModal()" class="fas fa-times cursor-pointer"></i>
 </div>

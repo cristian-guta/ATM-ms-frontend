@@ -5,6 +5,9 @@ import { ToastService } from 'src/app/services/toast.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { NewClientModalComponent } from 'src/app/modals/new-client-modal/new-client-modal.component';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-clients',
@@ -23,10 +26,13 @@ export class ClientsComponent implements OnInit {
   pageSize: number = 5;
   pageIndex: number = 0;
   IsWait: boolean = true;
+  modalRef: BsModalRef;
 
   constructor(
     private clientService: ClientService,
-    private _toast: ToastService
+    private _toast: ToastService,
+    private _modal: BsModalService,
+    private _auth: AuthenticationService,
   ) { }
 
   ngOnInit() {
@@ -35,19 +41,19 @@ export class ClientsComponent implements OnInit {
 
   getData(size, index) {
     this.clientService.getClients(index, size).subscribe(result => {
-        for (let cl of result.content) {
-          if (cl.roleId == 1) {
-            cl.roleName = "USER";
-          }
-          else {
-            cl.roleName = "ADMIN";
-          }
+      for (let cl of result.content) {
+        if (cl.roleId == 1) {
+          cl.roleName = "USER";
         }
-        this.clients = result.content;
-        this.clients.paginator = this.paginator;
-        this.length = result.totalElements;
-        this.IsWait = false;
-      });
+        else {
+          cl.roleName = "ADMIN";
+        }
+      }
+      this.clients = result.content;
+      this.clients.paginator = this.paginator;
+      this.length = result.totalElements;
+      this.IsWait = false;
+    });
   }
 
   handleRequest(event: any) {
@@ -81,6 +87,17 @@ export class ClientsComponent implements OnInit {
         client.status = false;
         this._toast.showSuccess('User successfully unblocked!');
       });
+  }
+
+  openModal() {
+    this.modalRef = this._modal.show(NewClientModalComponent);
+    this.modalRef.content.onClose.subscribe((client: Client) => {
+      // this.clients.push(client);
+    });
+  }
+
+  isAdmin() {
+    return this._auth.getRole().includes('ADMIN');
   }
 
 }

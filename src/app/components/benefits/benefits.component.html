@@ -15,6 +15,14 @@
             <th mat-cell *matCellDef="let benefit">{{ benefit.description }}</th>
         </ng-container>
 
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef>Delete</th>
+            <td mat-cell *matCellDef="let benefit" class="example-button-row">
+                <button mat-stroked-button (click)="delete(benefit)"
+                    > Delete</button>
+            </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
 

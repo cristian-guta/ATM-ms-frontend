@@ -39,6 +39,7 @@ import { WebcamModule } from 'ngx-webcam';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ClientEmotionsComponent } from './components/client-emotions/client-emotions.component';
 import { AddBenefitModalComponent } from './modals/add-benefit-modal/add-benefit-modal.component';
+import { NewClientModalComponent } from './modals/new-client-modal/new-client-modal.component';
 
 
 
@@ -54,7 +55,7 @@ export function tokenGetter() {
   declarations: [
     AppComponent,
     AccountInformationComponent, SubscriptionModalComponent, BankAccountModalComponent, AccountDepositModalComponent, AccountWithdrawModalComponent, TransferMoneyModalComponent, UpdateUserDataComponent, 
-    BenefitAuditComponent, SubscriptionAuditComponent, ReviewComponent, ClientRetentionComponent, ClientEmotionsComponent, AddBenefitModalComponent,
+    BenefitAuditComponent, SubscriptionAuditComponent, ReviewComponent, ClientRetentionComponent, ClientEmotionsComponent, AddBenefitModalComponent, NewClientModalComponent,
     
   ],
   imports: [

@@ -41,8 +41,6 @@ export class SubscriptionModalComponent implements OnInit {
     });
 
     this.getBenefits();
-    // console.log(this.benefitsList);
-
   }
 
   getBenefits() {

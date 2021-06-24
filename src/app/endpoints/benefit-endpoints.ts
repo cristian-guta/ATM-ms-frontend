@@ -1,6 +1,5 @@
 export class BenefitEndpoints{
     api = 'subscription-service/benefits/'
-    
     unpagedBenefits = 'unpagedBenefits';
     bySubscriptionPaged = 'user';
 
@@ -17,6 +16,10 @@ export class BenefitEndpoints{
     }
 
     getCreate(){
+        return this.api;
+    }
+
+    delete(){
         return this.api;
     }
 

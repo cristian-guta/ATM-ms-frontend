@@ -9,6 +9,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AddBenefitModalComponent } from 'src/app/modals/add-benefit-modal/add-benefit-modal.component';
+import { ToastService } from 'src/app/services/toast.service';
 
 
 @Component({
@@ -26,17 +27,18 @@ export class BenefitsComponent implements OnInit {
   benefit: Benefit;
   subscription: Subscription;
   length: number = 0;
-  pageSize: number=5;
-  pageIndex:number = 0;
+  pageSize: number = 5;
+  pageIndex: number = 0;
   IsWait: boolean = true;
-  displayColumns: string[] = ['id', 'description'];
+  displayColumns: string[] = ['id', 'description', 'delete'];
   modalRef: BsModalRef;
 
   constructor(
     private _auth: AuthenticationService,
-    private benefitService: BenefitService,  
+    private benefitService: BenefitService,
     private _modal: BsModalService,
-      
+    private toast: ToastService
+
   ) { }
 
   applyFilter(filterValue: string) {
@@ -45,34 +47,40 @@ export class BenefitsComponent implements OnInit {
     // this.benefits.filter = filterValue;
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.getData(this.pageIndex, this.pageSize);
   }
 
-  getData(index, size){
-    if(this.isAdmin()==false){  
+  getData(index, size) {
+    if (this.isAdmin() == false) {
       this.benefitService.getBenefitsBySubscription(index, size).subscribe(result => {
         this.benefits = result.content;
         // this.benefits.paginator = this.paginator;
         this.length = result.totalElements;
-        this.IsWait=false;
+        this.IsWait = false;
       });
     }
-    else{
+    else {
       this.benefitService.getAllBenefits(index, size)
         .subscribe(result => {
           this.benefits = result.content;
           // this.benefits.paginator = this.paginator;
           this.length = result.totalElements;
-          this.IsWait=false;
-       });
+          this.IsWait = false;
+        });
     }
     // if(this.benefits.length ===0){
     //   this.benefits=[];
     // }
   }
 
-  handleRequest(event: any){
+  delete(benefit: Benefit) {
+    this.benefitService.deleteBenefit(benefit).subscribe(() => {
+      this.toast.showSuccess('Benefit deleted!');
+    })
+  }
+
+  handleRequest(event: any) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.getData(this.pageIndex, this.pageSize);
@@ -81,12 +89,12 @@ export class BenefitsComponent implements OnInit {
   openModal() {
     this.modalRef = this._modal.show(AddBenefitModalComponent);
     this.modalRef.content.onClose.subscribe((benefit: Benefit) => {
-        this.benefits.push(benefit);
+      this.benefits.push(benefit);
     });
   }
 
   isAdmin() {
     return this._auth.getRole().includes('ADMIN');
-  } 
+  }
 
 }

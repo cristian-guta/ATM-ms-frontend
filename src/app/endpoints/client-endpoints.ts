@@ -7,6 +7,7 @@ export class ClientEndpoints{
     updateClient = 'update';
     deactivateClient = 'delete';
     activateClient = 'activate';
+    create = 'create';
 
     getClientById(id: number){
         return this.api + id;
@@ -34,6 +35,10 @@ export class ClientEndpoints{
 
     getCurrentClient(){
         return this.api + this.currentClient;
+    }
+
+    createUser(){
+        return this.api + this.create;
     }
 }
 

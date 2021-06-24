@@ -14,6 +14,7 @@ export class Client {
     address?: string;
     // deactivate?: boolean;
     status?: boolean;
+    roleId?: number;
     role?: string;
     roleName?: string;
     authProvider?: AuthProvider

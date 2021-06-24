@@ -1,0 +1,64 @@
+<div class="p-3">
+    <div class="d-flex justify-content-between">
+        <div class="pb-3">New client</div>
+        <i (click)="hideModal()" class="fas fa-times cursor-pointer"></i>
+    </div>
+    <form [formGroup]="clientForm" (ngSubmit)="save()">
+        <div class="form-group">
+            <div class="input-group">
+                <input formControlName="firstName" type="text" [class.is-invalid]="isInvalid('firstName')"
+                    [class.is-valid]="isValid('firstName')" class="form-control" placeholder="First name">
+            </div>
+            <small *ngIf="isInvalid('firstName')" class="form-text text-danger">First name is required!</small>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <input formControlName="lastName" type="text" [class.is-invalid]="isInvalid('lastName')"
+                    [class.is-valid]="isValid('lastName')" class="form-control" placeholder="Last name">
+            </div>
+            <small *ngIf="isInvalid('lastName')" class="form-text text-danger">Last name is required!</small>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <input formControlName="email" type="text" [class.is-invalid]="isInvalid('email')"
+                    [class.is-valid]="isValid('email')" class="form-control" placeholder="Email">
+            </div>
+            <small *ngIf="isInvalid('email')" class="form-text text-danger">Email is required!</small>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <input formControlName="username" type="text" [class.is-invalid]="isInvalid('username')"
+                    [class.is-valid]="isValid('username')" class="form-control" placeholder="Username">
+            </div>
+            <small *ngIf="isInvalid('username')" class="form-text text-danger">Username is required!</small>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <input formControlName="password" type="password"
+                    class="form-control" placeholder="Password">
+            </div>
+            <small *ngIf="isInvalid('password')" class="form-text text-danger">Password is required!</small>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field>
+                <mat-label>Role</mat-label>
+                <mat-select multiple formControlName="role">
+                  <mat-option *ngFor="let rl of roles" [value]="rl.id">
+                    {{rl.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <small *ngIf="isInvalid('role')" class="form-text text-danger">Role must be
+                selected.</small>
+        </div>
+
+        <div class="form-group mb-0">
+            <input type="submit" [value]="client ? 'Save changes' : 'Create'" class="btn btn-sm btn-success">
+        </div>
+    </form>
+</div>

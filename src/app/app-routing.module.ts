@@ -83,6 +83,14 @@ const routes: Routes = [
     }
   },
   {
+    path: 'clientsAudit',
+    loadChildren: () => import('./components/client-audit/client-audit-routing-module').then(m => m.ClientAuditRoutingModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['ADMIN']
+    }
+  },
+  {
     path: 'subscriptionsAudit',
     loadChildren: () => import('./components/subscription-audit/subscription-audit-routing.module').then(m => m.SubscriptionAuditRoutingModule),
     canActivate: [AuthGuard],

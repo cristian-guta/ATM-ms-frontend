@@ -1,6 +1,6 @@
 import { AccountInformationComponent } from './modals/account-information/account-information.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { AuthenticationService } from './services/authentication.service';
 import { Router, NavigationEnd, ActivatedRoute, RouterOutlet } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
@@ -15,6 +15,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { ImageEndpoints } from './endpoints/image-endpoints';
 import { RestService } from './services/rest.service';
 import { ImageService } from './services/image.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @Component({

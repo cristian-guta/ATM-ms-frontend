@@ -1,0 +1,63 @@
+<div class="center">
+    <mat-progress-spinner mode="indeterminate" *ngIf="IsWait">
+    </mat-progress-spinner>
+</div>
+<div class="mat-elevation-z8">
+    <mat-table #table [dataSource]="clientsAudit" matSort>
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <th mat-cell *matCellDef="let client; ">{{ client.id }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="rev">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Rev</th>
+            <th mat-cell *matCellDef="let client; ">{{ client.rev }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="revTypeString">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Revision type</th>
+            <th mat-cell *matCellDef="let client; ">{{ client.revTypeString }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="user">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>User</th>
+            <th mat-cell *matCellDef="let client; ">{{ client.user }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="firstName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name</th>
+            <th mat-cell *matCellDef="let client">{{ client.firstName }}</th>
+        </ng-container>
+        <ng-container matColumnDef="lastName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Last name</th>
+            <th mat-cell *matCellDef="let client">{{ client.lastName }}</th>
+        </ng-container>
+        <ng-container matColumnDef="username">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
+            <th mat-cell *matCellDef="let client">{{ client.username }}</th>
+        </ng-container>
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+            <th mat-cell *matCellDef="let client">{{ client.email }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
+            <th mat-cell *matCellDef="let client">{{ client.address }}</th>
+        </ng-container>
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+            <th mat-cell *matCellDef="let client">{{ client.status }}</th>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+
+    </mat-table>
+    <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" (page)="handleRequest($event)"
+        [pageSizeOptions]="[2, 5, 10, 20]" showFirstLastButtons="true"></mat-paginator>
+</div>
+
+<div *ngIf="clientsAudit?.data?.length === 0">
+    <p>There are no client audit informations</p>
+</div>

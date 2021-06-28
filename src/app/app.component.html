@@ -49,10 +49,18 @@
         <a routerLinkActive="active" routerLink="/clients" *ngIf="isAdmin()" class="nav-item nav-link">Clients</a>
         <a routerLinkActive="active" routerLink="/operations" *ngIf="!isAdmin()"
           class="nav-item nav-link">Operations</a>
-        <a routerLinkActive="active" routerLink="/benefitsAudit" *ngIf="isAdmin()" class="nav-item nav-link">Benefits
-          audit</a>
-        <a routerLinkActive="active" routerLink="/subscriptionsAudit" *ngIf="isAdmin()"
-          class="nav-item nav-link">Subscriptions audit</a>
+
+        <button mat-button [matMenuTriggerFor]="menu" *ngIf="isAdmin()">Audit</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item routerLinkActive="active" routerLink="/benefitsAudit" *ngIf="isAdmin()"
+            class="nav-item nav-link">Benefits
+            audit</button>
+          <button mat-menu-item routerLinkActive="active" routerLink="/subscriptionsAudit" *ngIf="isAdmin()"
+            class="nav-item nav-link">Subscriptions audit</button>
+          <button mat-menu-item routerLinkActive="active" routerLink="/clientsAudit" *ngIf="isAdmin()"
+            class="nav-item nav-link">Clients audit</button>
+        </mat-menu>
+
         <a routerLinkActive="active" routerLink="/clientRetention" *ngIf="isAdmin()" class="nav-item nav-link">Clients
           retention</a>
         <a routerLinkActive="active" routerLink="/clientEmotions" *ngIf="isAdmin()" class="nav-item nav-link">Clients

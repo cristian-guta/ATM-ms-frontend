@@ -40,7 +40,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ClientEmotionsComponent } from './components/client-emotions/client-emotions.component';
 import { AddBenefitModalComponent } from './modals/add-benefit-modal/add-benefit-modal.component';
 import { NewClientModalComponent } from './modals/new-client-modal/new-client-modal.component';
-
+import {MatMenuModule} from '@angular/material/menu';
+import { ClientAuditComponent } from './components/client-audit/client-audit.component';
 
 
 export function tokenGetter() {
@@ -55,7 +56,7 @@ export function tokenGetter() {
   declarations: [
     AppComponent,
     AccountInformationComponent, SubscriptionModalComponent, BankAccountModalComponent, AccountDepositModalComponent, AccountWithdrawModalComponent, TransferMoneyModalComponent, UpdateUserDataComponent, 
-    BenefitAuditComponent, SubscriptionAuditComponent, ReviewComponent, ClientRetentionComponent, ClientEmotionsComponent, AddBenefitModalComponent, NewClientModalComponent,
+    BenefitAuditComponent, SubscriptionAuditComponent, ReviewComponent, ClientRetentionComponent, ClientEmotionsComponent, AddBenefitModalComponent, NewClientModalComponent, ClientAuditComponent,
     
   ],
   imports: [
@@ -63,6 +64,7 @@ export function tokenGetter() {
       BrowserAnimationsModule,
       AppRoutingModule,
       HttpClientModule,
+      MatMenuModule,
       JwtModule.forRoot({
           config: {
               tokenGetter: tokenGetter,

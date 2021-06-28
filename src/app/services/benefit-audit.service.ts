@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BenefitAuditEndpoints } from '../endpoints/benefit-audit-endpoints';
-import { BenefitEndpoints } from '../endpoints/benefit-endpoints';
 import { RestService } from './rest.service';
 
 @Injectable({

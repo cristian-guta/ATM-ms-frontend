@@ -73,6 +73,7 @@ export class BankAccountModalComponent implements OnInit {
     const account: Account = {
       name: this.name.value,
       amount: this.amount.value,
+      // amount: 0,
       details: this.details.value,
       clientId: this.client.id
     };

@@ -72,15 +72,13 @@ export class RegisterComponent implements OnInit {
     ngOnInit() {
         this.getSubscriptions();
         this.registerForm = this._fb.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
+            firstName: ['', [Validators.required]],
+            lastName: ['', [Validators.required]],
             username: ['', [Validators.required]],//, uniqueUsername(this._rest)],
             cnp: ['', [Validators.required]],
             email: ['', [Validators.required, Validators.email]],
-            password: ['', [Validators.required, Validators.minLength(6)], Validators.pattern(
-                "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{8,}"
-            ),],
-            confirmPassword: ['', Validators.required]
+            password: ['', [Validators.required, Validators.minLength(6)]],
+            confirmPassword: ['', [Validators.required]]
         },
             {
                 validators: checkPassword

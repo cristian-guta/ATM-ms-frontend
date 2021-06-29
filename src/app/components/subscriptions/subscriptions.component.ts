@@ -29,6 +29,7 @@ export class SubscriptionsComponent implements OnInit {
   deleteLoading = false;
   listOfClients: Client[];
   IsWait: boolean = true;
+  showOnce: boolean = true;
 
   constructor(
     private _auth: AuthenticationService,
@@ -42,6 +43,7 @@ export class SubscriptionsComponent implements OnInit {
     this.isActivated = false;
     this._clientService.getCurrentClient().subscribe((result: Client) => {
       this.client = result;
+      console.log(result.subscriptionId)
       if (result.subscriptionId > 0 && !this.isAdmin()) {
         this.subsService.getSubscription().subscribe((sub: Subscription) => {
           this.hasSubscription = true;
@@ -54,9 +56,14 @@ export class SubscriptionsComponent implements OnInit {
         this.getSubscriptions();
       }
     });
+    
   }
 
   getSubscriptions() {
+    if (this.showOnce==true) {
+      this._toast.showInfo("Make sure you have your phone number added to activate subscriptions!")
+      this.showOnce=false;
+    }
     this.subsService.getAllSubscriptions().subscribe((subs: Subscription[]) => {
       this.subscriptions = subs;
       this.IsWait = false;
@@ -90,7 +97,6 @@ export class SubscriptionsComponent implements OnInit {
 
     this.subsService.activateSubscription(subscription).subscribe(() => {
       this.client.subscriptionId = subscription.id;
-      this._clientService.updateClient(this.client).subscribe();
       this._toast.showSuccess('Successfully activated subscription ' + subscription.name + '!');
       this.hasSubscription = true;
       window.location.reload();
@@ -100,24 +106,24 @@ export class SubscriptionsComponent implements OnInit {
         this.hasSubscription = false;
       }
     );
-
   }
 
   deactivate() {
-    this.client.subscriptionId = 0;
-    this._clientService.updateClient(this.client).subscribe();
-    // this.subsService.cancelSubscription().subscribe(() => {
 
-    //   this._toast.showSuccess('Successfully deactivated subscription ' + this.subscription.name + '!');
-    //   this.hasSubscription = false;
-    //   this.deactivated = true;
-    // },
-    //   () => {
-    //     this._toast.showSuccess('Failed to deactivate subscription ' + this.subscription.name + ', please contact support team.');
-    //     this.hasSubscription = true;
-    //   }
-    // );
-    window.location.reload();
+    this.subsService.cancelSubscription().subscribe(() => {
+
+      this._toast.showSuccess('Successfully deactivated subscription ' + this.subscription.name + '!');
+      this.hasSubscription = false;
+      this.deactivated = true;
+      this.subscription = new Subscription();
+      window.location.reload();
+    },
+      () => {
+        this._toast.showSuccess('Failed to deactivate subscription ' + this.subscription.name + ', please contact support team.');
+        this.hasSubscription = true;
+      }
+    );
+    this.getSubscriptions();
   }
 
   delete(subscription: Subscription) {

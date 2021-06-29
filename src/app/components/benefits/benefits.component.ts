@@ -48,6 +48,12 @@ export class BenefitsComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.isAdmin()){
+      this.displayColumns = ['id', 'description', 'delete'];
+    }
+    else{
+      this.displayColumns = ['id', 'description'];
+    }
     this.getData(this.pageIndex, this.pageSize);
   }
 

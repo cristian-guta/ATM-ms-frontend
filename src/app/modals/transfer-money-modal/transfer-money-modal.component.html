@@ -2,10 +2,11 @@
 
     <div class="form-group">
         <div class="input-group">
-            <input formControlName="receiverId" type="number" [class.is-invalid]="!isAccountValid('receiverId')"
-                [class.is-valid]="isValid('receiverId')" class="form-control" placeholder="To what account do you want to transfer?">
+            <input formControlName="receiverId" type="number" [class.is-invalid]="!isValid('receiverId')"
+                [class.is-valid]="isValid('receiverId')" class="form-control"
+                placeholder="To what account do you want to transfer?">
         </div>
-        <small *ngIf="!isAccountValid('receiverId')" class="form-text text-danger">Account does not exit!</small>
+        <small *ngIf="!isValid('receiverId')" class="form-text text-danger">Account does not exit!</small>
     </div>
 
 
@@ -21,7 +22,7 @@
         <small *ngIf="isGreater('amount')" class="form-text text-danger">You want to transfer more than you own.</small>
         <mat-error *ngIf="transferForm.get('amount').hasError('min')">
             Minimum sum is 1 unit!
-          </mat-error>
+        </mat-error>
     </div>
 
     <div class="form-group">
@@ -32,7 +33,7 @@
     </div>
 
     <div class="form-group mb-0">
-        <input  type="submit" [disabled]="transferForm.invalid" [value]="amount ? 'Deposit': 'Please enter amount'"
-             class="btn btn-sm btn-success" > 
+        <input type="submit" [disabled]="transferForm.invalid" [value]="amount ? 'Transfer': 'Please enter amount'"
+            class="btn btn-sm btn-success">
     </div>
 </form>

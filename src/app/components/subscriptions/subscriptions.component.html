@@ -2,12 +2,12 @@
     <mat-progress-spinner mode="indeterminate" *ngIf="IsWait">
     </mat-progress-spinner>
 </div>
-<div fxLayout="row" fxLayoutAlign="space-around center" >
+<div fxLayout="row" fxLayoutAlign="space-around center">
     <div *ngIf="!hasSubscription && !isAdmin()">
         <h2>No active subscription!</h2>
     </div>
-    <button mat-stroked-button (click)="openModal()"  *ngIf="isAdmin()">New subscription</button>
-    <div  *ngIf="!hasSubscription && !isAdmin()" class="flex-container">
+    <button mat-stroked-button (click)="openModal()" *ngIf="isAdmin()">New subscription</button>
+    <div *ngIf="!hasSubscription && !isAdmin()" class="flex-container">
         <div *ngFor="let sub of subscriptions" style="margin-right: 2%;">
             <mat-card>
                 <mat-card-title>{{ sub.name }}</mat-card-title>
@@ -19,13 +19,15 @@
                     </div>
                     <p style="font-weight:bold">{{ sub.price }} RON</p>
                 </mat-card-content>
-    
+
                 <mat-card-footer>
-                    <button mat-stroked-button *ngIf="!hasSubscription" (click)="activate(sub)" [disabled]="deleteLoading">Activate subscription</button>
-                    <button mat-stroked-button *ngIf="hasSubscription" (click)="deactivate()" [disabled]="deleteLoading">Deactivate subscription</button>
+                    <button mat-stroked-button *ngIf="!hasSubscription" (click)="activate(sub)"
+                        [disabled]="deleteLoading">Activate subscription</button>
+                    <button mat-stroked-button *ngIf="hasSubscription" (click)="deactivate()"
+                        [disabled]="deleteLoading">Deactivate subscription</button>
                 </mat-card-footer>
             </mat-card>
-    
+
         </div>
     </div>
 
@@ -42,8 +44,10 @@
             </mat-card-content>
 
             <mat-card-footer>
-                <button mat-stroked-button *ngIf="!hasSubscription" (click)="activate(subscription)" [disabled]="deleteLoading">Activate subscription</button>
-                <button mat-stroked-button *ngIf="hasSubscription" (click)="deactivate()" [disabled]="deleteLoading">Deactivate subscription</button>
+                <button mat-stroked-button *ngIf="!hasSubscription" (click)="activate(subscription)"
+                    [disabled]="deleteLoading">Activate subscription</button>
+                <button mat-stroked-button *ngIf="hasSubscription" (click)="deactivate()"
+                    [disabled]="deleteLoading">Deactivate subscription</button>
             </mat-card-footer>
         </mat-card>
     </div>
@@ -51,7 +55,7 @@
 
 
     <div *ngIf="isAdmin()" class="flex-container">
-        
+
         <div *ngFor="let sub of subscriptions" style="margin-right: 2%;">
             <mat-card>
                 <mat-card-title>{{ sub.name }}</mat-card-title>
@@ -63,13 +67,15 @@
                     </div>
                     <p style="font-weight:bold">{{ sub.price }} RON</p>
                 </mat-card-content>
-    
+
                 <mat-card-footer>
-                    <button style="margin: 10px;" mat-stroked-button (click)="openSubscriptionModal(sub)">Edit subscription</button>
-                    <button style="margin: 10px;" mat-stroked-button (click)="delete(sub)" [disabled]="deleteLoading">Delete subscription</button>
+                    <button style="margin: 10px;" mat-stroked-button (click)="openSubscriptionModal(sub)">Edit
+                        subscription</button>
+                    <button style="margin: 10px;" mat-stroked-button (click)="delete(sub)"
+                        [disabled]="deleteLoading">Delete subscription</button>
                 </mat-card-footer>
             </mat-card>
-    
+
         </div>
     </div>
 </div>

@@ -20,8 +20,6 @@ export class AccountDepositModalComponent implements OnInit {
   depositForm: FormGroup;
   saving = false;  
 
-  
-
   constructor(
     private _auth: AuthenticationService,
     private accountService: AccountService,
@@ -112,11 +110,7 @@ export class AccountDepositModalComponent implements OnInit {
         this.hideModal();
         this._toast.showSuccess('Amount successfully added!');
         window.location.reload();
-      },
-        () => {
-          this.saving = false;
-          this._toast.showError('Failed to deposit the amount!');
-        });
+      });
   }
 
 }

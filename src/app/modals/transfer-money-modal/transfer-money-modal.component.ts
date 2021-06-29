@@ -6,6 +6,21 @@ import { AccountService } from 'src/app/services/account.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastService } from 'src/app/services/toast.service';
 import { Account } from 'src/app/models/account';
+import { Result } from 'src/app/models/result';
+
+
+function checkAccount(group: FormGroup) {
+  const accountId: number = +group.get('receiverId');
+  let valid: boolean = false;
+  let account: Account;
+  this.accountService.getAccount(accountId).subscribe((acc: Account) => {
+    account = acc;
+  });
+  if (account?.name) {
+    valid = true;
+  }
+  return valid;
+}
 
 @Component({
   selector: 'app-transfer-money-modal',
@@ -16,7 +31,7 @@ export class TransferMoneyModalComponent implements OnInit {
 
   onClose: Subject<Account>;
   transferForm: FormGroup;
-  saving = false;  
+  saving = false;
 
   constructor(
     private _auth: AuthenticationService,
@@ -27,29 +42,26 @@ export class TransferMoneyModalComponent implements OnInit {
   ) { }
 
   transferFrom = this.accountService.currAcct;
-  transferTo: Account;
-  
-  
 
   ngOnInit(): void {
-    
+
     this.onClose = new Subject();
     this.transferForm = this._fb.group({
-      receiverId: ['', Validators.required],
+      receiverId: ['', [Validators.required]],
       amount: ['', [Validators.required, Validators.min(1)]],
       message: ['', Validators.required]
     });
   }
 
-  get amount(){
+  get amount() {
     return this.transferForm.get('amount');
   }
 
-  get receiverId(){
+  get receiverId() {
     return this.transferForm.get('receiverId');
   }
 
-  get message(){
+  get message() {
     return this.transferForm.get('message');
   }
 
@@ -59,45 +71,54 @@ export class TransferMoneyModalComponent implements OnInit {
   }
 
   isInvalid(field): boolean {
-      const control = this.transferForm.get(field);
-      return control.touched && control.invalid;
+    const control = this.transferForm.get(field);
+    return control.touched && control.invalid;
   }
 
   isAccountValid(field): boolean {
-    const control = this.transferForm.get(field);
+    var accountId = this.transferForm.get(field).value;
+    console.log(accountId)
     let valid: boolean = false;
     let account: Account;
-    if(this.receiverId.value){
+    this.accountService.getAccount(accountId).subscribe((acc: Account) => {
+      account = acc;
+    });
+    if (account?.name) {
       valid = true;
     }
     return valid;
   }
 
-  isGreater(field): boolean{
+  isGreater(field): boolean {
     const control = this.transferForm.get(field);
-    return control.value>this.transferFrom.amount;
+    return control.value > this.transferFrom.amount;
   }
 
   isPositive(field): boolean {
     const control = this.transferForm.get(field);
-    return control.value>0;
+    return control.value > 0;
   }
-  
-  save(): void{
-    this.saving=true;
-    if(this.amount.value<=this.transferFrom.amount){
+
+  save(): void {
+    this.saving = true;
+    if (this.amount.value <= this.transferFrom.amount) {
       this.accountService.transferMoney(this.transferFrom.id, this.receiverId.value, this.amount.value)
-        .subscribe(() => {
-          this.saving = false;
-          this.onClose.next();
-          this.hideModal();
-          this._toast.showSuccess('Amount successfully transfered!');
-          // window.location.reload();
-        }, err => {
-          this._toast.showError(err.error.message);
+        .subscribe((result: Result) => {
+          if (result.status == true) {
+            this.saving = false;
+            this.onClose.next();
+            this.hideModal();
+            this._toast.showSuccess('Amount successfully transfered!');
+            window.location.reload();
+          }
+          else {
+            this._toast.showError(result.message);
+          }
+        }, error => {
+          this._toast.showError(error.error.message);
         });
     }
-    else{
+    else {
       this._toast.showError('Amount is greater than how much you own!');
     }
   }

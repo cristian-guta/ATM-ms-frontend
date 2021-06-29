@@ -46,6 +46,7 @@ export class AuthenticationService {
         if(!token){
             if(!sessionStorage.getItem('AuthToken')){
                 token = localStorage.getItem('AuthToken');
+                console.log(token)
             }
             else{
                 token = sessionStorage.getItem('AuthToken');

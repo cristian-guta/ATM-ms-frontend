@@ -7,18 +7,22 @@
                 <span class="input-group-text">RON</span>
             </div>
             <div>
-                <input type="text" class="form-control" placeholder="Credit Card #" formControlName="cardNumber">
+                <input [class.is-invalid]="isInvalid('cardNumber')" [class.is-valid]="isValid('cardNumber')" type="text"
+                    class="form-control" placeholder="Credit Card #" formControlName="cardNumber">
             </div>
             <div>
-                <input type="text" class="form-control" placeholder="Expiration Month" formControlName="expMonth">
-            </div>
-
-            <div>
-                <input type="text" class="form-control" placeholder="Expiration Year" formControlName="expYear">
+                <input [class.is-invalid]="isInvalid('expMonth')" [class.is-valid]="isValid('expMonth')" type="text"
+                    class="form-control" placeholder="Expiration Month" formControlName="expMonth">
             </div>
 
             <div>
-                <input type="text" class="form-control" placeholder="CVC" formControlName="cvc">
+                <input [class.is-invalid]="isInvalid('expYear')" [class.is-valid]="isValid('expYear')" type="text"
+                    class="form-control" placeholder="Expiration Year" formControlName="expYear">
+            </div>
+
+            <div>
+                <input [class.is-invalid]="isInvalid('cvc')" [class.is-valid]="isValid('cvc')" type="password"
+                    class="form-control" placeholder="CVC" formControlName="cvc">
             </div>
         </div>
         <small *ngIf="isInvalid('amount')" class="form-text text-danger">Amount is required.</small>

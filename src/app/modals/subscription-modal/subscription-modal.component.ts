@@ -22,6 +22,7 @@ export class SubscriptionModalComponent implements OnInit {
   subscriptionForm: FormGroup;
   benefitsList: Benefit[] = [];
   saving = false;
+  networks = ['ORANGE', 'TELEKOM', 'VODAFONE'];
 
   constructor(
     private subService: SubscriptionService,
@@ -37,7 +38,8 @@ export class SubscriptionModalComponent implements OnInit {
     this.subscriptionForm = this._fb.group({
       name: [this.subscription ? this.subscription.name : '', Validators.required],
       price: [this.subscription ? this.subscription.price : null, Validators.required],
-      benefits: [this.subscription ? this.subscription.benefits.map(benefit => benefit.id) : [], Validators.required]
+      benefits: [this.subscription ? this.subscription.benefits.map(benefit => benefit.id) : [], Validators.required],
+      subscriptionNetwork: [this.subscription ? this.subscription.subscriptionNetwork : null],
     });
 
     this.getBenefits();
@@ -66,6 +68,10 @@ export class SubscriptionModalComponent implements OnInit {
     return this.subscriptionForm.get('benefits');
   }
 
+  get subscriptionNetwork(): AbstractControl {
+    return this.subscriptionForm.get('subscriptionNetwork');
+  }
+
   isValid(field): boolean {
     const control = this.subscriptionForm.get(field);
     return control.touched && control.valid;
@@ -84,7 +90,8 @@ export class SubscriptionModalComponent implements OnInit {
       benefitIds: this.benefits.value
         .filter((benefit: number) => this.benefitsList
           .map((ben: Benefit) => ben.id)
-          .includes(benefit))
+          .includes(benefit)),
+      subscriptionNetwork: this.subscriptionNetwork.value
 
     };
 

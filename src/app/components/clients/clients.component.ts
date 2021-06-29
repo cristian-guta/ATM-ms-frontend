@@ -20,7 +20,7 @@ export class ClientsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   clients = new MatTableDataSource<Client>();
-  displayColumns: string[] = ['id', 'firstName', 'lastName', 'username', 'role', 'email', 'address', 'actions'];
+  displayColumns: string[] = ['id', 'firstName', 'lastName', 'username', 'role', 'email', 'telephoneNumber', 'address', 'actions'];
 
   length: number;
   pageSize: number = 5;

@@ -40,4 +40,12 @@ export class SubscriptionService{
     activateSubscription(subscription: Subscription){
         return this.rest.put(this.subscriptionEnds.activateSub(subscription), subscription);
     }
+
+    getByNetwork(){
+        return this.rest.get(this.subscriptionEnds.getByNtw())
+    }
+
+    getAllForRegister(){
+        return this.rest.get(this.subscriptionEnds.getAllForRegister());
+    }
 }

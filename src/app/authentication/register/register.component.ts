@@ -12,6 +12,7 @@ import { AuthProvider } from 'src/app/models/authProvider';
 import { ToastService } from 'src/app/services/toast.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 import { Subscription } from 'src/app/models/subscription';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 export const uniqueUsername = (rest: RestService, time: number = 1000): AsyncValidatorFn => {
     return (control: AbstractControl): Observable<{ [key: string]: boolean } | null> => {
@@ -75,10 +76,12 @@ export class RegisterComponent implements OnInit {
             firstName: ['', [Validators.required]],
             lastName: ['', [Validators.required]],
             username: ['', [Validators.required]],//, uniqueUsername(this._rest)],
+            telephoneNumber: ['', [Validators.required]],
             cnp: ['', [Validators.required]],
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(6)]],
-            confirmPassword: ['', [Validators.required]]
+            confirmPassword: ['', [Validators.required]],
+            
         },
             {
                 validators: checkPassword
@@ -113,6 +116,10 @@ export class RegisterComponent implements OnInit {
         return this.registerForm.get('cnp');
     }
 
+    get telephoneNumber(): AbstractControl {
+        return this.registerForm.get('telephoneNumber');
+    }
+
     isValid(field): boolean {
         const control = this.registerForm.get(field);
         return control.touched && control.valid;
@@ -133,7 +140,8 @@ export class RegisterComponent implements OnInit {
                 email: this.email.value,
                 password: this.password.value,
                 confirmPassword: this.confirmPassword.value,
-                authProvider: AuthProvider.local
+                authProvider: AuthProvider.local,
+                telephoneNumber: this.telephoneNumber.value
             };
             this._rest.post(this._authEnds.register, registerInfo)
                 .subscribe(
@@ -152,7 +160,7 @@ export class RegisterComponent implements OnInit {
     }
 
     getSubscriptions() {
-        this.subsService.getAllSubscriptions().subscribe((subs: Subscription[]) => {
+        this.subsService.getAllForRegister().subscribe((subs: Subscription[]) => {
             this.subscriptions = subs;
             this.IsWait = false;
         });

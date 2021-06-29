@@ -41,6 +41,11 @@
             <th mat-cell *matCellDef="let client">{{ client.email }}</th>
         </ng-container>
 
+        <ng-container matColumnDef="telephoneNumber">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Telephone number</th>
+            <th mat-cell *matCellDef="let client">{{ client.telephoneNumber }}</th>
+        </ng-container>
+
         <ng-container matColumnDef="address">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
             <th mat-cell *matCellDef="let client">{{ client.address }}</th>

@@ -21,7 +21,7 @@ export class ClientAuditComponent implements OnInit {
   pageIndex: number = 0;
   IsWait: boolean = true;
 
-  displayColumns: string[] = ['id', 'rev', 'revTypeString', 'user', 'firstName', 'lastName', 'username', 'email', 'address', 'status'];
+  displayColumns: string[] = ['id', 'rev', 'revTypeString', 'user', 'firstName', 'lastName', 'username', 'email', 'address', 'status', 'telephoneNumber'];
 
   constructor(
     private clientAuditService: ClientAuditService,

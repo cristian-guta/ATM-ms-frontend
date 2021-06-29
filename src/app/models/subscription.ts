@@ -6,5 +6,6 @@ export class Subscription {
     price?: number;
     benefits?: Benefit[];
     benefitIds?: number[];
+    subscriptionNetwork?: string;
     deleted?: boolean;
 }

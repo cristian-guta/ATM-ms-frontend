@@ -22,4 +22,5 @@ export class Client {
     subscriptionId?: number;
     deleting?: boolean;
     activationDate?: Date;
+    telephoneNumber?: string;
 }

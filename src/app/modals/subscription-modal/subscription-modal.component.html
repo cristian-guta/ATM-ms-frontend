@@ -21,21 +21,33 @@
             </div>
             <small *ngIf="isInvalid('price')" class="form-text text-danger">Price is required.</small>
         </div>
-        <div class = "form-group">
+        <div class="form-group">
             <mat-form-field>
-                <mat-label>Benefits</mat-label>
-                <mat-select multiple formControlName="benefits">
-                  <mat-option *ngFor="let bnf of benefitsList" [value]="bnf.id">
-                    {{bnf.description}}
+                <mat-label>Network</mat-label>
+                <mat-select formControlName="subscriptionNetwork">
+                  <mat-option *ngFor="let ntw of networks" [value]="ntw">
+                    {{ntw}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <small *ngIf="isInvalid('benefits')" class="form-text text-danger">At least one benefit must be
+              <small *ngIf="isInvalid('subscriptionNetwork')" class="form-text text-danger">Network must be
+                selected.</small>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field>
+                <mat-label>Benefits</mat-label>
+                <mat-select multiple formControlName="benefits">
+                    <mat-option *ngFor="let bnf of benefitsList" [value]="bnf.id">
+                        {{bnf.description}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <small *ngIf="isInvalid('benefits')" class="form-text text-danger">At least one benefit must be
                 selected.</small>
         </div>
         <div class="form-group mb-0">
-            <input  type="submit" [value]="subscription ? 'Save changes' : 'Create'"
-                 class="btn btn-sm btn-success" > 
+            <input type="submit" [value]="subscription ? 'Save changes' : 'Create'" class="btn btn-sm btn-success">
         </div>
     </form>
 </div>

@@ -36,37 +36,37 @@ export class SubscriptionsComponent implements OnInit {
     private _modal: BsModalService,
     private _toast: ToastService,
     private _clientService: ClientService
-  ) {}
+  ) { }
 
-  ngOnInit(){
-    this.isActivated=false;
+  ngOnInit() {
+    this.isActivated = false;
     this._clientService.getCurrentClient().subscribe((result: Client) => {
       this.client = result;
-      if(result.subscriptionId>0 && !this.isAdmin()){
+      if (result.subscriptionId > 0 && !this.isAdmin()) {
         this.subsService.getSubscription().subscribe((sub: Subscription) => {
           this.hasSubscription = true;
           this.subscription = sub;
         });
         this.IsWait = false;
       }
-      else{
+      else {
         this.hasSubscription = false;
         this.getSubscriptions();
       }
     });
   }
 
-  getSubscriptions(){
+  getSubscriptions() {
     this.subsService.getAllSubscriptions().subscribe((subs: Subscription[]) => {
-      this.subscriptions = subs;   
-      this.IsWait = false;  
+      this.subscriptions = subs;
+      this.IsWait = false;
     });
   }
 
   openModal() {
     this.modalRef = this._modal.show(SubscriptionModalComponent);
     this.modalRef.content.onClose.subscribe((subscription: Subscription) => {
-        this.subscriptions.push(subscription);
+      this.subscriptions.push(subscription);
     });
   }
 
@@ -74,20 +74,20 @@ export class SubscriptionsComponent implements OnInit {
     return this._auth.getRole().includes('ADMIN');
   }
 
-  isAnonymous(){
+  isAnonymous() {
     return this._auth.getRole().includes('ANONYMOUS');
   }
 
-  isUser(){
+  isUser() {
     return this._auth.getRole().includes('USER');
   }
 
-  removeSubscription(subscription){
-    this.subscriptions = this.subscriptions.filter((sub: Subscription) => sub.id!== subscription.id);
+  removeSubscription(subscription) {
+    this.subscriptions = this.subscriptions.filter((sub: Subscription) => sub.id !== subscription.id);
   }
 
-  activate(subscription: Subscription){
-    
+  activate(subscription: Subscription) {
+
     this.subsService.activateSubscription(subscription).subscribe(() => {
       this.client.subscriptionId = subscription.id;
       this._clientService.updateClient(this.client).subscribe();
@@ -100,10 +100,10 @@ export class SubscriptionsComponent implements OnInit {
         this.hasSubscription = false;
       }
     );
-    
+
   }
 
-  deactivate(){    
+  deactivate() {
     this.client.subscriptionId = 0;
     this._clientService.updateClient(this.client).subscribe();
     // this.subsService.cancelSubscription().subscribe(() => {
@@ -121,29 +121,29 @@ export class SubscriptionsComponent implements OnInit {
   }
 
   delete(subscription: Subscription) {
-    
+
     this.deleteLoading = true;
 
     this.subsService.deleteSubscription(subscription)
-    .subscribe(() => {
+      .subscribe(() => {
         this._toast.showSuccess('Subscription successfully deleted.');
         this.deleteAction.emit(subscription);
         this.deleteLoading = false;
-    },
+      },
         () => {
-            this._toast.showError('Failed to delete subscription.');
-            this.deleteLoading = false;
+          this._toast.showError('Failed to delete subscription.');
+          this.deleteLoading = false;
         });
-    
+
     window.location.reload();
   }
 
   openSubscriptionModal(sub: Subscription) {
     this.modalRef = this._modal.show(SubscriptionModalComponent, { initialState: { subscription: sub } });
     this.modalRef.content.onClose.subscribe((subscription: Subscription) => {
-        sub.name = subscription.name;
-        sub.price = subscription.price;
-        sub.benefits = subscription.benefits;
+      sub.name = subscription.name;
+      sub.price = subscription.price;
+      sub.benefits = subscription.benefits;
     });
   }
 

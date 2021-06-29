@@ -99,7 +99,6 @@ export class AccountDepositModalComponent implements OnInit {
 
   chargeCard(token: string, amount: number) {
     const headers = new HttpHeaders({'token': token, 'amount': amount.toString()});
-    console.log("Card");
     this.http.post('http://localhost:8765/payment-service/payment/charge', {}, {headers: headers})
       .subscribe(resp => {
         console.log(resp);

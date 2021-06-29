@@ -6,6 +6,8 @@ export class SubscriptionEndpoints{
     cancelSubscription = 'cancelSubscription';
     updateSubscription = 'updateSubscription';
     activateSubscription = 'activateSubscription';
+    getByNetwork = 'phone';
+    allForRegister = 'all'
 
     getDelete(subscription: Subscription): string{
         return this.api + subscription.id;
@@ -29,5 +31,13 @@ export class SubscriptionEndpoints{
 
     getCreateSubscription(){
         return this.api;
+    }
+
+    getByNtw(){
+        return this.api + this.getByNetwork;
+    }
+
+    getAllForRegister(){
+        return this.api + this.allForRegister
     }
 }

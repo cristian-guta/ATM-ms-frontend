@@ -65,6 +65,7 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
             role: [{ value: '', disabled: true }, Validators.required],
             email: [{ value: '' }, [Validators.required, Validators.email]],
             address: [{ value: '' }, Validators.required],
+            telephoneNumber: [{value: ''}, Validators.required],
         });
         this.getUserInfo();
         // this.httpClient.get('http://localhost:8765/client-service/image').subscribe((image: ImageModel) => {
@@ -89,7 +90,8 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
                     username: this.currentUser.username,
                     role: this.currentUser.role,
                     email: this.currentUser.email,
-                    address: this.currentUser.address
+                    address: this.currentUser.address,
+                    telephoneNumber: this.currentUser.telephoneNumber,
                 });
             });
 
@@ -154,6 +156,10 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
         return this.accountForm.get('role');
     }
 
+    get telephoneNumber(): AbstractControl {
+        return this.accountForm.get('telephoneNumber');
+    }
+
     isValid(field): boolean {
         const control = this.accountForm.get(field);
         return control.touched && control.valid;
@@ -175,7 +181,8 @@ export class AccountInformationComponent implements OnInit, AfterViewInit {
             address: this.address.value,
             status: this.currentUser.status,
             authProvider: this.currentUser.authProvider,
-            subscriptionId: this.currentUser.subscriptionId
+            subscriptionId: this.currentUser.subscriptionId,
+            telephoneNumber: this.telephoneNumber.value,
         };
         this._userService.updateClient(userInfo)
             .subscribe(() => {

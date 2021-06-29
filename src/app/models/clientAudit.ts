@@ -20,4 +20,5 @@ export class ClientAudit{
     authProvider?: AuthProvider;
     subscription?: Subscription;
     subscriptionId?: number;
+    telephoneNumber?: string;
 }

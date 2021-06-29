@@ -5,5 +5,6 @@ export class SubscriptionAudit{
     revTypeString?: string;
     user?: string;
     price?: number;
+    subscriptionNetwork?: string;
     name?: string;
 }

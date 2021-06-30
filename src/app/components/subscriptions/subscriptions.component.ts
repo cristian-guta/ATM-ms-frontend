@@ -60,10 +60,10 @@ export class SubscriptionsComponent implements OnInit {
   }
 
   getSubscriptions() {
-    if (this.showOnce==true) {
-      this._toast.showInfo("Make sure you have your phone number added to activate subscriptions!")
-      this.showOnce=false;
-    }
+    // if (this.showOnce==true) {
+    //   this._toast.showInfo("Make sure you have your phone number added to activate subscriptions!")
+    //   this.showOnce=false;
+    // }
     this.subsService.getAllSubscriptions().subscribe((subs: Subscription[]) => {
       this.subscriptions = subs;
       this.IsWait = false;

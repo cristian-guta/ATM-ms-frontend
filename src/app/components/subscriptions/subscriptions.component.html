@@ -1,81 +1,122 @@
 <div class="center">
-    <mat-progress-spinner mode="indeterminate" *ngIf="IsWait">
-    </mat-progress-spinner>
+  <mat-progress-spinner mode="indeterminate" *ngIf="IsWait">
+  </mat-progress-spinner>
 </div>
-<div fxLayout="row" fxLayoutAlign="space-around center">
-    <div *ngIf="!hasSubscription && !isAdmin()">
-        <h2>No active subscription!</h2>
+<div>
+  <div *ngIf="!hasSubscription && !isAdmin()">
+    <h2>No active subscription!</h2>
+  </div>
+  <button
+    mat-flat-button
+    style="background-color: #343a40; color: white; margin-top: 20px; margin-bottom: 20px;"
+    (click)="openModal()"
+    *ngIf="isAdmin()"
+  >
+    New subscription
+  </button>
+  <div *ngIf="!hasSubscription && !isAdmin()" class="flex-container">
+    <div *ngFor="let sub of subscriptions" style="margin-right: 2%">
+      <mat-card>
+        <mat-card-title>{{ sub.name }}</mat-card-title>
+        <h2>{{ sub.subscriptionNetwork }}</h2>
+        <br />
+        <mat-card-content>
+          <div *ngFor="let ben of sub.benefits">
+            <h5>{{ ben.description }}</h5>
+          </div>
+          <p style="font-weight: bold">{{ sub.price }} RON</p>
+        </mat-card-content>
+
+        <mat-card-footer>
+          <button
+            mat-stroked-button
+            *ngIf="!hasSubscription"
+            (click)="activate(sub)"
+            [disabled]="deleteLoading"
+          >
+            Activate subscription
+          </button>
+          <button
+            mat-stroked-button
+            *ngIf="hasSubscription"
+            (click)="deactivate()"
+            [disabled]="deleteLoading"
+          >
+            Deactivate subscription
+          </button>
+        </mat-card-footer>
+      </mat-card>
     </div>
-    <button mat-stroked-button (click)="openModal()" *ngIf="isAdmin()">New subscription</button>
-    <div *ngIf="!hasSubscription && !isAdmin()" class="flex-container">
-        <div *ngFor="let sub of subscriptions" style="margin-right: 2%;">
-            <mat-card>
-                <mat-card-title>{{ sub.name }}</mat-card-title>
-                <h2>{{sub.subscriptionNetwork}}</h2>
-                <br>
-                <mat-card-content>
-                    <div *ngFor="let ben of sub.benefits">
-                        <h5>{{ ben.description }}</h5>
-                    </div>
-                    <p style="font-weight:bold">{{ sub.price }} RON</p>
-                </mat-card-content>
+  </div>
 
-                <mat-card-footer>
-                    <button mat-stroked-button *ngIf="!hasSubscription" (click)="activate(sub)"
-                        [disabled]="deleteLoading">Activate subscription</button>
-                    <button mat-stroked-button *ngIf="hasSubscription" (click)="deactivate()"
-                        [disabled]="deleteLoading">Deactivate subscription</button>
-                </mat-card-footer>
-            </mat-card>
-
+  <div *ngIf="hasSubscription && !isAdmin()">
+    <mat-card>
+      <mat-card-title>{{ subscription.name }}</mat-card-title>
+      <h2>{{ subscription.subscriptionNetwork }}</h2>
+      <br />
+      <mat-card-content>
+        <div *ngFor="let ben of subscription.benefits">
+          <h5>{{ ben.description }}</h5>
         </div>
+        <p style="font-weight: bold">{{ subscription.price }} RON</p>
+      </mat-card-content>
+
+      <mat-card-footer>
+        <button
+          mat-stroked-button
+          *ngIf="!hasSubscription"
+          (click)="activate(subscription)"
+          [disabled]="deleteLoading"
+        >
+          Activate subscription
+        </button>
+        <button
+          mat-stroked-button
+          *ngIf="hasSubscription"
+          (click)="deactivate()"
+          [disabled]="deleteLoading"
+        >
+          Deactivate subscription
+        </button>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+
+  <div
+    *ngIf="isAdmin()"
+    fxLayout="row wrap"
+    fxLayoutAlign="space-between center"
+  >
+    <div *ngFor="let sub of subscriptions" fxFlex="30">
+      <mat-card style="border: 1px solid lightgray;" >
+        <mat-card-title>{{ sub.name }}</mat-card-title>
+        <h2>{{ sub.subscriptionNetwork }}</h2>
+        <br />
+        <mat-card-content>
+          <div *ngFor="let ben of sub.benefits">
+            <h5>{{ ben.description }}</h5>
+          </div>
+          <p style="font-weight: bold">{{ sub.price }} RON</p>
+        </mat-card-content>
+
+        <mat-card-footer>
+          <button
+            style="margin: 10px"
+            mat-stroked-button
+            (click)="openSubscriptionModal(sub)"
+          >
+            Edit subscription
+          </button>
+          <button
+            style="margin: 10px"
+            mat-stroked-button
+            (click)="delete(sub)"
+            [disabled]="deleteLoading"
+          >
+            Delete subscription
+          </button>
+        </mat-card-footer>
+      </mat-card>
     </div>
-
-    <div *ngIf="hasSubscription && !isAdmin()">
-        <mat-card>
-            <mat-card-title>{{ subscription.name }}</mat-card-title>
-            <h2>{{subscription.subscriptionNetwork}}</h2>
-            <br>
-            <mat-card-content>
-                <div *ngFor="let ben of subscription.benefits">
-                    <h5>{{ ben.description }}</h5>
-                </div>
-                <p style="font-weight:bold">{{ subscription.price }} RON</p>
-            </mat-card-content>
-
-            <mat-card-footer>
-                <button mat-stroked-button *ngIf="!hasSubscription" (click)="activate(subscription)"
-                    [disabled]="deleteLoading">Activate subscription</button>
-                <button mat-stroked-button *ngIf="hasSubscription" (click)="deactivate()"
-                    [disabled]="deleteLoading">Deactivate subscription</button>
-            </mat-card-footer>
-        </mat-card>
-    </div>
-
-
-
-    <div *ngIf="isAdmin()" class="flex-container">
-
-        <div *ngFor="let sub of subscriptions" style="margin-right: 2%;">
-            <mat-card>
-                <mat-card-title>{{ sub.name }}</mat-card-title>
-                <h2>{{sub.subscriptionNetwork}}</h2>
-                <br>
-                <mat-card-content>
-                    <div *ngFor="let ben of sub.benefits">
-                        <h5>{{ ben.description }}</h5>
-                    </div>
-                    <p style="font-weight:bold">{{ sub.price }} RON</p>
-                </mat-card-content>
-
-                <mat-card-footer>
-                    <button style="margin: 10px;" mat-stroked-button (click)="openSubscriptionModal(sub)">Edit
-                        subscription</button>
-                    <button style="margin: 10px;" mat-stroked-button (click)="delete(sub)"
-                        [disabled]="deleteLoading">Delete subscription</button>
-                </mat-card-footer>
-            </mat-card>
-
-        </div>
-    </div>
+  </div>
 </div>

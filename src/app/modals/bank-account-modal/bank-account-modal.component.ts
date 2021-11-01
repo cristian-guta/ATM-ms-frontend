@@ -22,6 +22,7 @@ export class BankAccountModalComponent implements OnInit {
   saving = false;
   hasAccount: boolean = false;
   client: Client;
+  currencies: String[] = ["EURO", "RON", "USD"];
 
   constructor(
     private _auth: AuthenticationService,
@@ -38,7 +39,8 @@ export class BankAccountModalComponent implements OnInit {
       name: [this.account ? this.account.name : '', Validators.required],
       amount: [this.account ? this.account.amount : null, Validators.required],
       details: [this.account ? this.account.details : null, Validators.required],
-      clientId: [this.account ? this.account.clientId : null]
+      clientId: [this.account ? this.account.clientId : null],
+      currencyName: [this.account ? this.account.currency.toString() : null]
     });
     this._clientService.getCurrentClient().subscribe((result:Client) => {
       this.client = result;
@@ -57,6 +59,10 @@ export class BankAccountModalComponent implements OnInit {
     return this.accountForm.get('details');
   }
 
+  get currencyName(): AbstractControl {
+    return this.accountForm.get('currencyName');
+  }
+
   isValid(field): boolean {
     const control = this.accountForm.get(field);
     return control.touched && control.valid;
@@ -72,10 +78,11 @@ export class BankAccountModalComponent implements OnInit {
     this.saving=true;
     const account: Account = {
       name: this.name.value,
-      // amount: this.amount.value,
-      amount: 0,
+      amount: this.amount.value,
+      // amount: 0,
       details: this.details.value,
-      clientId: this.client.id
+      clientId: this.client.id,
+      currency: this.currencyName.value   
     };
     if(this.account){
       account.id = this.account.id;

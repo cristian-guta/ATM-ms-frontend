@@ -28,7 +28,7 @@ export class AccountsComponent implements OnInit {
   allAccounts: MatTableDataSource<Account>;
   displayColumnsAdmin: string[];
 
-  clientAccount: Account;
+  clientAccount: Account[] = [];
   currentClient: Client;
   loading = true;
   modalRef: BsModalRef;
@@ -47,6 +47,7 @@ export class AccountsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    
     if (this.isAdmin()) {
       this.displayColumnsAdmin = ['id', 'name', 'amount', 'details', 'owner'];
     }
@@ -58,11 +59,13 @@ export class AccountsComponent implements OnInit {
       this.currentClient = client;
       if (!this.isAdmin()) {
         this._accountService.getAccountByCNP(this.currentClient.id)
-          .subscribe((result: Account) => {
-            this.clientAccount = result;
+          .subscribe((result: Account[]) => {
+            this.clientAccount=result;
+            console.log(this.clientAccount)
             this.loading = false;
             this.IsWait = false;
           });
+          
       }
       else {
         this.getData(this.pageSize, this.pageIndex);

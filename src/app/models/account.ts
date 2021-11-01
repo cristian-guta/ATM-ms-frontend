@@ -1,4 +1,5 @@
 import { Client } from './client';
+import { Currency } from './currency';
 
 export class Account {
     id?: number;
@@ -7,4 +8,5 @@ export class Account {
     details?: string;
     clientId?: number;
     client?: Client;
+    currency?: Currency;
 }

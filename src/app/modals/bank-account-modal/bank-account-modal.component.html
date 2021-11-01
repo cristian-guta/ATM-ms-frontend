@@ -19,7 +19,7 @@
             </div>
             <small *ngIf="isInvalid('details')" class="form-text text-danger">Details are required.</small>
         </div>
-        <!-- <div class="form-group">
+        <div class="form-group">
             <div class="input-group">
                 <input formControlName="amount" type="number" [class.is-invalid]="isInvalid('amount')"
                     [class.is-valid]="isValid('amount')" class="form-control" placeholder="100">
@@ -28,7 +28,19 @@
                 </div>
             </div>
             <small *ngIf="isInvalid('amount')" class="form-text text-danger">Amount is required.</small>
-        </div> -->
+        </div>
+        <div class="form-group">
+            <mat-form-field>
+                <mat-label>Currency</mat-label>
+                <mat-select formControlName="currencyName">
+                  <mat-option *ngFor="let currency of currencies" [value]="currency">
+                    {{currency}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <small *ngIf="isInvalid('currencyName')" class="form-text text-danger">Currency must be
+                selected.</small>
+        </div>
         <div class="form-group">
             <div class="input-group">
                 <input formControlName="clientId" type="number" class="form-control" style="display: none;">

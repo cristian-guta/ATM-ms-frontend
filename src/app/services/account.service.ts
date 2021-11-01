@@ -15,17 +15,18 @@ export class AccountService {
     ) { }
 
     currAcct: Account;
+    baseUrl: String = 'http://localhost:8765/';
 
     getAccountByCNP(id: number) {
         let params = new HttpParams();
         params = params.append('id', id.toString());
-        return this.httpClient.get('http://localhost:8765/' + this.accountEnds.getAccountByCNP(), { params: params });
+        return this.httpClient.get(this.baseUrl + this.accountEnds.getAccountByCNP(), { params: params });
     }
 
     getAccount(id: number) {
         let params = new HttpParams();
         params = params.append('id', id.toString());
-        return this.httpClient.get('http://localhost:8765/' + this.accountEnds.getAccount(), { params: params });
+        return this.httpClient.get(this.baseUrl + this.accountEnds.getAccount(), { params: params });
     }
 
     getAllAccounts(page, size) {
@@ -39,7 +40,7 @@ export class AccountService {
     deleteAccount(account: Account) {
         let params = new HttpParams();
         params = params.append('id', account.id.toString());
-        return this.httpClient.delete('http://localhost:8765/' + this.accountEnds.getDelete(), { params: params });
+        return this.httpClient.delete(this.baseUrl + this.accountEnds.getDelete(), { params: params });
     }
 
     updateAccount(account: Account) {
@@ -50,14 +51,14 @@ export class AccountService {
         let params = new HttpParams();
         params = params.append('id', id.toString())
         params = params.append('amount', amount.toString());
-        return this.httpClient.put('http://localhost:8765/' + this.accountEnds.getDeposit(), {}, { params: params });
+        return this.httpClient.put(this.baseUrl + this.accountEnds.getDeposit(), {}, { params: params });
     }
 
     withdrawMoney(id: number, amount: number) {
         let params = new HttpParams();
         params = params.append('id', id.toString())
         params = params.append('amount', amount.toString());
-        return this.httpClient.put('http://localhost:8765/' + this.accountEnds.getWithdraw(), {}, { params: params });
+        return this.httpClient.put(this.baseUrl + this.accountEnds.getWithdraw(), {}, { params: params });
     }
 
     transferMoney(senderAccountId: number, receiverAccountId: number, amount: number) {
@@ -65,7 +66,7 @@ export class AccountService {
         params = params.append('senderId', senderAccountId.toString())
         params = params.append('receiverId', receiverAccountId.toString());
         params = params.append('amount', amount.toString());
-        return this.httpClient.put('http://localhost:8765/' + this.accountEnds.getTransfer(), {}, { params: params });
+        return this.httpClient.put(this.baseUrl + this.accountEnds.getTransfer(), {}, { params: params });
     }
 
 }

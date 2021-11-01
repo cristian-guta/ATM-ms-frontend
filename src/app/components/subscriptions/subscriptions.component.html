@@ -24,7 +24,7 @@
           <div *ngFor="let ben of sub.benefits">
             <h5>{{ ben.description }}</h5>
           </div>
-          <p style="font-weight: bold">{{ sub.price }} RON</p>
+          <p style="font-weight: bold">{{ sub.price }} {{sub.currency}}</p>
         </mat-card-content>
 
         <mat-card-footer>
@@ -58,7 +58,7 @@
         <div *ngFor="let ben of subscription.benefits">
           <h5>{{ ben.description }}</h5>
         </div>
-        <p style="font-weight: bold">{{ subscription.price }} RON</p>
+        <p style="font-weight: bold">{{ subscription.price }} {{subscription.currency}}</p>
       </mat-card-content>
 
       <mat-card-footer>
@@ -96,7 +96,7 @@
           <div *ngFor="let ben of sub.benefits">
             <h5>{{ ben.description }}</h5>
           </div>
-          <p style="font-weight: bold">{{ sub.price }} RON</p>
+          <p style="font-weight: bold">{{ sub.price }} {{sub.currency}}</p>
         </mat-card-content>
 
         <mat-card-footer>

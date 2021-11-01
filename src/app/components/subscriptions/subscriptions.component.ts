@@ -43,11 +43,11 @@ export class SubscriptionsComponent implements OnInit {
     this.isActivated = false;
     this._clientService.getCurrentClient().subscribe((result: Client) => {
       this.client = result;
-      console.log(result.subscriptionId)
       if (result.subscriptionId > 0 && !this.isAdmin()) {
         this.subsService.getSubscription().subscribe((sub: Subscription) => {
           this.hasSubscription = true;
           this.subscription = sub;
+          
         });
         this.IsWait = false;
       }
@@ -66,6 +66,7 @@ export class SubscriptionsComponent implements OnInit {
     // }
     this.subsService.getAllSubscriptions().subscribe((subs: Subscription[]) => {
       this.subscriptions = subs;
+      console.log(this.subscriptions[0])
       this.IsWait = false;
     });
   }

@@ -30,7 +30,7 @@
           <div *ngFor="let ben of sub.benefits">
             <h5>{{ ben.description }}</h5>
           </div>
-          <p style="font-weight:bold">{{ sub.price }} RON</p>
+          <p style="font-weight:bold">{{ sub.price }} {{sub.currency}}</p>
         </mat-card-content>
       </mat-card>
 

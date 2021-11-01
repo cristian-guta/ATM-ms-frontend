@@ -23,6 +23,7 @@ export class SubscriptionModalComponent implements OnInit {
   benefitsList: Benefit[] = [];
   saving = false;
   networks = ['ORANGE', 'TELEKOM', 'VODAFONE'];
+  currencies: String[] = ["EURO", "RON", "USD"];
 
   constructor(
     private subService: SubscriptionService,
@@ -40,6 +41,7 @@ export class SubscriptionModalComponent implements OnInit {
       price: [this.subscription ? this.subscription.price : null, Validators.required],
       benefits: [this.subscription ? this.subscription.benefits.map(benefit => benefit.id) : [], Validators.required],
       subscriptionNetwork: [this.subscription ? this.subscription.subscriptionNetwork : null],
+      currencyName: [this.subscription ? this.subscription.currency : null]
     });
 
     this.getBenefits();
@@ -72,6 +74,10 @@ export class SubscriptionModalComponent implements OnInit {
     return this.subscriptionForm.get('subscriptionNetwork');
   }
 
+  get currencyName(): AbstractControl {
+    return this.subscriptionForm.get("currencyName");
+  }
+
   isValid(field): boolean {
     const control = this.subscriptionForm.get(field);
     return control.touched && control.valid;
@@ -91,7 +97,8 @@ export class SubscriptionModalComponent implements OnInit {
         .filter((benefit: number) => this.benefitsList
           .map((ben: Benefit) => ben.id)
           .includes(benefit)),
-      subscriptionNetwork: this.subscriptionNetwork.value
+      subscriptionNetwork: this.subscriptionNetwork.value,
+      currency: this.currencyName.value
 
     };
 
